@@ -1,0 +1,219 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font: 14px isans;
+    direction: rtl;
+}
+@font-face {
+font-family: "FontAwesome";
+font-weight: normal;
+    font-display: auto;
+font-style: normal;
+src: url("fontawesome-webfont.woff2") format("woff2");
+} 
+
+@font-face {
+    font-family: isans;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/eot/IRANSansWeb_Bold.eot');
+    src: url('../fonts/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../fonts/woff2/IRANSansWeb_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: isans;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot');
+    src: url('../fonts/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../fonts/woff2/IRANSansWeb_Medium.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/woff/IRANSansWeb_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: isans;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/eot/IRANSansWeb_Light.eot');
+    src: url('../fonts/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../fonts/woff2/IRANSansWeb_Light.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/woff/IRANSansWeb_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/ttf/IRANSansWeb_Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: isans;
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot');
+    src: url('../fonts/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../fonts/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/woff/IRANSansWeb_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: isans;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/eot/IRANSansWeb.eot');
+    src: url('../fonts/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../fonts/woff2/IRANSansWeb.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('../fonts/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+.wrapper{
+    height: 500px;
+    width: 25%;
+    display: block;
+    border-radius: 6px;
+    margin: 20px auto;
+    background:-webkit-linear-gradient(top,#7579ff,#b224ef);
+    background: linear-gradient(top,#7579ff,#b224ef);
+}
+#login-img{
+    color: #fff;
+    font-size: 70px;
+    display: block;
+    margin-bottom: 50px;
+}
+#login-img i {
+    margin: 0 37%;
+
+}
+#login-img h1 {
+    margin: -20px 38%;
+    user-select: none;
+}
+#login-form{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+}
+
+.input-div i{
+    color: #fff;
+    font-size: 20px;
+}
+
+.input-div input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    width: 90%;
+    float: left;
+    transition: all 0.35s;
+}
+.input-div input::placeholder{
+    color: #fff;
+    
+}
+
+
+#icon-holder-user, #icon-holder-pass{
+    padding: 0 0 0 7px;
+    position: absolute;
+    transition: all 0.4s;
+}
+
+.input-div{
+    position: relative;
+    margin-top: 40px;
+}
+.input-div::before{
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    margin-top: 30px;
+    opacity: 0.3;
+    transition: all 0.4s;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+.input-div::after{
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    margin-top: 30px;
+    opacity: 0.1;
+}
+#username-input:focus {
+    width: 100%;
+}
+#password-input:focus {
+    width: 100%;
+}
+.opacity-fill::before {
+    opacity: 1;
+    transform: scaleX(1);
+}
+.clear{
+    clear:both;
+}
+.remember{
+    margin-top: 25px;
+    color: #fff;
+}
+.remember label {
+    user-select: none;
+    font-weight: 400;
+}
+#sub-btn{
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    margin-top: 15px;
+    border: none;
+    padding: 5px;
+    border-radius: 34px;
+    outline: none;
+    position: relative;
+    color: #fff;
+    background-color: transparent;
+}
+
+
+#sub-btn::after, #sub-btn::before{
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    transition: all 0.4s;
+    right: 0;
+    bottom: 0;
+    transition: all 0.6s ease;
+    
+}
+#sub-btn::after{
+    transform: scale(0);
+    transform-origin: bottom;
+    
+}
+#sub-btn:hover::after{
+    top: 0;
+    transform: scale(1);
+
+}
+
+
+
+
+
+
+
+
+
+
