@@ -59,6 +59,26 @@
                     $('#pass-div').removeClass('opacity-fill');        
                 }
             });
+
+            // codes for ajax request's
+            $('#login-form').submit((e)=>{
+                e.preventDefault();
+                let username = $('#username-input').val();
+                let password = $('#password-input').val();
+                alert(username);
+                $.ajax({
+                    url:'auth.php',
+                    type:'POST',
+                    data:{username:username,passsword:passsword},
+                    success:(responce)=>{
+                        alert(responce);
+                    },
+                    error:(err)=>{
+                        alert("Error : ".err);
+                    }
+                });
+
+            });
   
         });
 

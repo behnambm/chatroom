@@ -78,6 +78,11 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     background:-webkit-linear-gradient(top,#7579ff,#b224ef);
     background: linear-gradient(top,#7579ff,#b224ef);
 }
+@media(max-width:768px){
+    .wrapper{
+        width: 80%;
+    }
+}
 #login-img{
     color: #fff;
     font-size: 70px;
