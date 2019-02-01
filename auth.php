@@ -1,2 +1,4 @@
 <?php
-echo 1;
+if(isset($_POST['username'],$_POST['password'])){
+    echo $_POST['password'];
+}
