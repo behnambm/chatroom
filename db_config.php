@@ -1,0 +1,46 @@
+<?php
+
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'behnam_db';
+
+function setup(){
+    global $db_host,$db_name,$db_pass,$db_user;
+    try{
+        $con = new PDO('mysql:host='.$db_host.';charset=utf8;',$db_user,$db_pass);
+        // set the PDO error mode to exception
+        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // create a database
+        $sql = "CREATE DATABASE IF NOT EXISTS behnam_db CHARACTER SET utf8 COLLATE utf8_persian_ci;";
+        $con->exec($sql);
+
+        //select database
+        $con->exec('USE behnam_db;');
+
+        // create users table
+        $sql2 = "CREATE TABLE IF NOT EXISTS users (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(32) NOT NULL,
+            password VARCHAR(32) NOT NULL,
+            display_name VARCHAR(64) NOT NULL,
+            email VARCHAR(64) UNIQUE
+            );";
+        $con->exec($sql2);
+
+        // create cookies table
+        $sql3 = "CREATE TABLE IF NOT EXISTS cookie_id (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            cookie_hash varchar(128) UNIQUE NOT NULL
+            );";
+        $con->exec($sql3);
+
+
+
+    }catch(PDOException $e){
+    echo $sql . "<br>" . $e->getMessage();
+    }
+}
+
+

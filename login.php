@@ -1,4 +1,19 @@
-<?php session_start();?><!DOCTYPE html>
+<?php 
+session_start();
+require_once 'functions.php';
+if(isset($_SESSION['isLogin'])){
+    header('Location:index.php');
+}
+if(isset($_COOKIE['isLogin'])){
+    if(check_cookie($_COOKIE['isLogin'])){
+        header('Location:index.php');
+    }
+}
+
+require_once 'db_config.php';
+setup();
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +26,7 @@
     <link rel="stylesheet" href="files/css/style.css">
 </head>
 <body>
-    <div class="container" style="background-color:#e6e6e6;width:100%;height:100%;position:fixed">
+    <div class="container">
         <div class="wrapper">
             <form action="" method="post" id="login-form">
                 <span id="login-img"><i class="fa fa-user-circle"></i><h1>ورود</h1></span>
@@ -29,7 +44,7 @@
                     <input type="password" name="logpassword" placeholder="رمز عبور " id="password-input">
                 </div><div class="clear"></div>
                 <div class="remember">
-                    <input type="checkbox" name="rememberme" id="remember-me">
+                    <input type="checkbox" name="rememberme" id="remember-me" value="rememberme">
                     <label for="remember-me">مرا به خاطر بسپار</label>
                 </div><div class="clear"></div>
                 <button type="submit" id="sub-btn">ورود</button>
@@ -59,17 +74,16 @@
                     $('#pass-div').removeClass('opacity-fill');        
                 }
             });
-
             // codes for ajax request
             $('#login-form').submit((e)=>{
                 e.preventDefault();
                 let username = $('#username-input').val();
                 let password = $('#password-input').val();
-                
+                let remember = $('#remember-me').prop('checked');
                 $.ajax({
                     url:'auth.php',
                     type:'POST',
-                    data:{username:username,password:password},
+                    data:{username:username,password:password,remember:remember},
                     success:(responce)=>{
                         alert(responce);
                     },
