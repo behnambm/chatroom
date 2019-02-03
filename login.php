@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require_once 'functions.php';
-if(isset($_SESSION['isLogin'])){
+if(isset($_SESSION['isLogin']) && $_SESSION['isLogin'] == true){
     header('Location:index.php');
 }
 if(isset($_COOKIE['isLogin'])){
@@ -48,7 +48,14 @@ setup();
                     <label for="remember-me">مرا به خاطر بسپار</label>
                 </div><div class="clear"></div>
                 <button type="submit" id="sub-btn">ورود</button>
-            </form>
+            </form><div class="clear"></div>
+
+            <div class="line login-line">
+                <div class="inner-line"></div>
+            </div>
+
+            <a href="register.php" id="register">ثبت نام</a>
+
         </div>
     </div>
     <script src="files/js/bootstrap.min.js"></script>
@@ -74,6 +81,10 @@ setup();
                     $('#pass-div').removeClass('opacity-fill');        
                 }
             });
+
+
+
+
             // codes for ajax request
             $('#login-form').submit((e)=>{
                 e.preventDefault();
@@ -83,7 +94,7 @@ setup();
                 $.ajax({
                     url:'auth.php',
                     type:'POST',
-                    data:{username:username,password:password,remember:remember},
+                    data:{logusername:username,logpassword:password,logremember:remember},
                     success:(responce)=>{
                         alert(responce);
                     },

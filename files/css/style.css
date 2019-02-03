@@ -91,22 +91,36 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     .wrapper{
         width: 80% !important;
     }
+    #register-img h1{
+        font-size: 26px !important;
+    }
 }
-#login-img{
+#login-img, #register-img{
     color: #fff;
     font-size: 70px;
     display: block;
     margin-bottom: 50px;
 }
-#login-img i {
+
+#login-img i{
     margin: 0 37%;
+
+}
+#register-img i{
+    margin: 0 30%;
 
 }
 #login-img h1 {
     margin: -20px 38%;
     user-select: none;
 }
-#login-form{
+#register-img h1 {
+    margin: -20px 32%;
+    user-select: none;
+    display: block;
+    font-size: 30px;
+}
+#login-form , #register-form{
     display: block;
     margin: 0 auto;
     width: 80%;
@@ -132,12 +146,17 @@ src: url("fontawesome-webfont.woff2") format("woff2");
 }
 
 
-#icon-holder-user, #icon-holder-pass{
+#icon-holder-user, #icon-holder-pass, #icon-holder-email, #icon-holder-displayname{
     padding: 0 0 0 7px;
     position: absolute;
     transition: all 0.4s;
 }
-
+#icon-holder-email i {
+    font-size: 15px;
+}
+#icon-holder-displayname i {
+    font-size: 17px;
+}
 .input-div{
     position: relative;
     margin-top: 40px;
@@ -169,6 +188,12 @@ src: url("fontawesome-webfont.woff2") format("woff2");
 #password-input:focus {
     width: 100%;
 }
+#email-input:focus {
+    width: 100%;
+}
+#displayname-input:focus{
+    width: 100%;
+}
 .opacity-fill::before {
     opacity: 1;
     transform: scaleX(1);
@@ -197,7 +222,10 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     color: #fff;
     background-color: transparent;
 }
-
+.reg-btn{
+    margin-top: 30px !important;
+    margin-bottom: 35px !important;
+}
 
 #sub-btn::after, #sub-btn::before{
     content: "";
@@ -209,7 +237,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     right: 0;
     bottom: 0;
     transition: all 0.6s ease;
-    
+
 }
 #sub-btn::after{
     transform: scale(0);
@@ -221,13 +249,44 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     transform: scale(1);
 
 }
+#sub-btn:focus:after{
+    top: 0;
+    transform: scale(1);
+
+}
 
 
+.line{
+    width: 90%;
+    height: 1px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.6),rgba(255,255,255,0.09) , transparent);
+    margin-top: 20px;
+    z-index: 1;
+    margin: 0 auto;
+    margin-top: 20px;
+}
 
+.inner-line{
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.9), transparent);
+    height: 1px;
+    z-index: 2;
+    display: block;
+    width: 100%;
+}
+.login-line {
+    margin: 40px 0;
+}
+a#login , a#register{
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+}
 
-
-
-
-
+.reg-wrapper{
+    height: auto;
+    padding-bottom: 30px;
+}
 
 
