@@ -69,7 +69,7 @@ function register_user($user, $pass, $email, $displayname){
     global $con;
     if(get_user_by_username($user)){
         if(get_user_by_email($email)){
-            $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?);");
+            $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?,1);");
             $stmt->execute(array(strtolower($user), encrypt_pass($pass), $displayname, strtolower($email) ));
             $count = $stmt->rowCount();
             if($count > 0 ){
@@ -86,3 +86,15 @@ function register_user($user, $pass, $email, $displayname){
 }
 
 
+function add_profile_path_to_db($username, $path){
+    global $con;
+    $stmt = $con->prepare("UPDATE users SET profile_pic = ? WHERE username = ?");
+    $stmt->execute(array($path, $username));
+    $count = $stmt->rowCount();
+    if($count == 0){
+        return true;
+    }else{
+        return false;
+    }
+    
+}

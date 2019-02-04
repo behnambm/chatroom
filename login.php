@@ -1,11 +1,11 @@
 <?php 
 session_start();
 require_once 'functions.php';
-if(isset($_SESSION['isLogin']) && $_SESSION['isLogin'] == true){
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
     header('Location:index.php');
 }
-if(isset($_COOKIE['isLogin'])){
-    if(check_cookie($_COOKIE['isLogin'])){
+if(isset($_COOKIE['logged_in'])){
+    if(check_cookie($_COOKIE['logged_in'])){
         header('Location:index.php');
     }
 }

@@ -34,8 +34,9 @@ function setup(){
             username VARCHAR(32) NOT NULL,
             password VARCHAR(32) NOT NULL,
             display_name VARCHAR(64) NOT NULL,
-            email VARCHAR(64) UNIQUE
-            );";
+            email VARCHAR(64) UNIQUE,
+    		profile_pic varchar(128) UNIQUE NOT NULL
+            )";
         $con->exec($sql2);
         file_put_contents('db.conf','USERS_TABLE_CREATED::1;',FILE_APPEND);
 

@@ -11,7 +11,7 @@ body{
     background-color: #fff !important;
     width:100%;
     height:100%;
-    position:fixed
+    position: fixed;
 }
 
 @font-face {
@@ -99,15 +99,18 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     color: #fff;
     font-size: 70px;
     display: block;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
-
+#register-img{
+    font-size: 60px;
+}
 #login-img i{
     margin: 0 37%;
 
 }
 #register-img i{
-    margin: 0 30%;
+    float: right;
+    margin-right: 40%;
 
 }
 #login-img h1 {
@@ -115,15 +118,15 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     user-select: none;
 }
 #register-img h1 {
-    margin: -20px 32%;
+    margin: -20px 36%;
     user-select: none;
     display: block;
-    font-size: 30px;
+    font-size: 23px;
 }
 #login-form , #register-form{
     display: block;
     margin: 0 auto;
-    width: 80%;
+    width: 85%;
 }
 
 .input-div i{
@@ -150,6 +153,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     padding: 0 0 0 7px;
     position: absolute;
     transition: all 0.4s;
+    right: 0;
 }
 #icon-holder-email i {
     font-size: 15px;
@@ -172,6 +176,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     transition: all 0.4s;
     transform: scaleX(0);
     transform-origin: right;
+    right: 0;
 }
 .input-div::after{
     content: "";
@@ -181,6 +186,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     position: absolute;
     margin-top: 30px;
     opacity: 0.1;
+    right: 0;
 }
 #username-input:focus {
     width: 100%;
@@ -274,7 +280,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     width: 100%;
 }
 .login-line {
-    margin: 40px 0;
+    margin: 40px auto;
 }
 a#login , a#register{
     color: #fff;
@@ -287,6 +293,99 @@ a#login , a#register{
 .reg-wrapper{
     height: auto;
     padding-bottom: 30px;
+    margin-top: 30px;
 }
 
 
+#profilepic-input::-webkit-file-upload-button {
+    visibility: hidden;
+
+}
+#profilepic-input{
+    display: none;
+}
+#profilepic-div::after{
+display: none;
+}
+#icon-holder-profilepic i {
+    font-size: 16px;
+}
+#icon-holder-profilepic{
+    color: #fff;
+    float: right;
+    margin-right: 7px;
+    margin-top: 15px;
+}
+#profilepic-div label{
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
+    display: block;
+}
+
+#icon-holder-profilepic i{
+    float: right;
+    margin-left: 10px;
+}
+
+
+#profilepic-div{
+    margin-top: 25px;
+}
+
+
+
+/* plugin  */
+
+
+.label {
+    cursor: pointer;
+}
+
+.progress {
+display: none;
+margin-bottom: 1rem;
+}
+
+.alert {
+display: none;
+}
+
+.img-container img {
+max-width: 100%;
+}
+.modal-backdrop.show{
+    z-index: -1;
+}
+
+.rounded{
+    width: 50px;
+    height: 50px;
+    float: right;
+}
+
+.modal-backdrop{
+width: 0;
+height: 0;
+display: none;
+}
+@media (min-width: 1200px){
+    .container {
+        max-width: 2000px !important;
+    }
+}
+.modal-header .close{
+    margin-left: 0;
+}
+.modal-footer{
+    display: block;
+}
+#crop{
+    float: right;
+}
+  /* plugin  */
+
+
+#sitename{
+    margin: 0 5px 0 10px;
+}
