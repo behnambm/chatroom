@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php session_start();?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -100,17 +100,13 @@
         </div>
       </div>
     </div>
-
-
-
-
     </div>  
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script src="files/js/jquery-3.1.1.js"></script>
 <script src="files/js/bootstrap.bundle.min.js"></script>
 <script src="files/dist/cropper.js"></script>
 <script type="text/javascript">
-var formDATA = null;
+var formDATA = new FormData();
 window.addEventListener('DOMContentLoaded', function () {
     var avatar = document.getElementById('avatar');
     var image = document.getElementById('image');
@@ -165,16 +161,25 @@ window.addEventListener('DOMContentLoaded', function () {
         canvas.toBlob(function (blob) {
         var formData = new FormData();
         formData.append('avatar', blob, 'avatar.jpg');
-            formDATA = formData;
+        formDATA.append('avatar', blob, 'avatar.jpg');
         });
     }
+
     });
 });
+
+// document.getElementById('register-form').addEventListener('submit', function(){        
+//     if(formDATA.get('avatar')==null){
+//     }else{
+//     }
+// });
+
 //      plugin for crop ^^^^
 //******************************************************************************************************
 $(document).ready(()=>{
-        let ww = $(window).width();
-        $('.container').width(ww);
+    console.log(formDATA.get('avatar'));
+    let ww = $(window).width();
+    $('.container').width(ww);
         
     $('#register-form input').focus((e)=>{
         let id = $(e.target).attr('id');
@@ -208,7 +213,8 @@ $(document).ready(()=>{
             $('#displayname-div').removeClass('opacity-fill');        
         }
     });
-    // codes for ajax request
+
+
     $('#register-form').submit((e)=>{
         e.preventDefault();
         let username = $('#username-input').val();
@@ -219,27 +225,29 @@ $(document).ready(()=>{
         formDATA.append('regpassword',password);
         formDATA.append('regemail',email);
         formDATA.append('regdisplayname',displayname);
-        console.log(formDATA);
         $.ajax({
             url:'auth.php',
             type:'POST',
             chace:false,
             contentType:false,
             processData:false,
-            // data:new FormData(e.target),
             data:formDATA,
             success:(responce)=>{
                 if(responce == 'ERR_DUP_USERNAME'){
                     alert('این نام کاربری قبلا ثبت شده است.');
                 }else if(responce == 'ERR_DUP_EMAIL'){
                     alert('این ایمیل قبلا ثبت شده است.');
+                }else if(responce == 'OK'){
+                    window.location.replace("index.php");
                 }
             },
             error:(err)=>{
                 alert("Error : ".err);
             }
         });
-    });            
+    }); 
+
+           
     $('#profilepic-input').change((e)=>{
         let fileName = (e.target.files[0].name);
         $('#profilepic-div label ').text(fileName);

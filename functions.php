@@ -1,4 +1,5 @@
 <?php
+
 require_once 'db_config.php';
 
 try{
@@ -97,4 +98,12 @@ function add_profile_path_to_db($username, $path){
         return false;
     }
     
+}
+function redirect_to($add){
+    header("Location:{$add}");
+}
+function logout(){
+    unset($_SESSION['logged_in'],$_SESSION['username']);
+    header('Location:login.php');
+    return true;
 }
