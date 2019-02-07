@@ -15,21 +15,66 @@ function encrypt_pass($pass){
     return $res;
 }
 
-
-function check_cookie($cook){
+function get_cookie_info_by_user($user){
+    $data = get_user_info($user);
+    $id = $data['id'];
+    $res = get_cookie_info($id);
+    return $res;
+}
+function check_cookie($hash,$data=false){
     global $con;
-    $stmt = $con->prepare("SELECT * FROM cookie_id WHERE cookie_hash = '?' ");
-    $stmt->execute(array($cook));
+    $stmt = $con->prepare("SELECT * FROM cookie_id WHERE cookie_hash = ?");
+    $stmt->execute(array($hash));
     $count = $stmt->rowCount();
-    if($count > 0){
+    $res = $stmt->fetchAll();
+    if($data==true){
+        return $res[0];
+    }
+    if($count > 0 ){    
         return true;
+    }else{
+        return false;
+    }
+}
+function get_cookie_info($id){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM cookie_id WHERE id = ? ");
+    $stmt->execute(array($id));
+    $count = $stmt->rowCount();
+    $res = $stmt->fetchAll();
+    if($count > 0){
+        return $res[0];
     }else{
         return false;
     }
 }
 
 
+function set_session($user, $path, $display, $ip){
+    $_SESSION['logged_in'] = 'yes';
+    $_SESSION['username'] = $user;
+    $_SESSION['profilepic'] = $path;
+    $_SESSION['displayname'] = $display;
+    $_SESSION['ip'] = $ip;
+}
 
+function get_user_info($username,$id=null){
+    global $con;
+    if(isset($username)){
+        $stmt = $con->prepare("SELECT * FROM users WHERE username=?");
+        $stmt->execute(array($username));
+    }else{
+        $stmt = $con->prepare("SELECT * FROM users WHERE id=?");
+        $stmt->execute(array($id));
+    }
+    $count = $stmt->rowCount();
+    $res = $stmt->fetchAll(2);
+    if($count > 0){
+        return $res[0];
+    }else{
+        return false;
+    }
+}
 function doLogin($user, $pass){
     global $con;
     $stmt = $con->prepare("SELECT * FROM users WHERE username=? AND password=?");
@@ -42,6 +87,17 @@ function doLogin($user, $pass){
     }
 }
 
+
+function get_real_ip(){
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }else{
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
 function get_user_by_username($username){
     global $con;
     $stmt = $con->prepare("SELECT * FROM users WHERE username=?");
@@ -66,15 +122,31 @@ function get_user_by_email($email){
     }
 }
 
+function create_cookie_hash($txt){
+    $salt = '&ASFUH&!*@$^&';
+    $res = sha1(md5($salt.$txt).sha1($txt));
+    return $res;
+}
+
 function register_user($user, $pass, $email, $displayname){
     global $con;
     if(get_user_by_username($user)){
         if(get_user_by_email($email)){
-            $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?,1);");
-            $stmt->execute(array(strtolower($user), encrypt_pass($pass), $displayname, strtolower($email) ));
-            $count = $stmt->rowCount();
+            $path = "files/images/user.png";
+            $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?,?) ");
+            $stmt->execute(array(strtolower($user), encrypt_pass($pass), $displayname, strtolower($email) ,$path));
+            $count = $stmt->rowCount();    
             if($count > 0 ){
-                return true;
+                $res = get_user_info($user);
+                $id = $res['id'];
+                $stmt2 = $con->prepare("INSERT INTO cookie_id VALUES(?,?)");
+                $stmt2->execute(array($id, create_cookie_hash($user)));
+                $count2 = $stmt2->rowCount();
+                if($count2 > 0){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }
@@ -104,6 +176,8 @@ function redirect_to($add){
 }
 function logout(){
     unset($_SESSION['logged_in'],$_SESSION['username']);
+    setcookie('logged_in','',1);
+    setcookie('hash','',1);
     header('Location:login.php');
     return true;
 }

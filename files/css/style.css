@@ -163,7 +163,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
 }
 .input-div{
     position: relative;
-    margin-top: 40px;
+    margin-top: 45px;
 }
 .input-div::before{
     content: "";
@@ -419,7 +419,7 @@ display: none;
 .header-widget ul li {
     list-style: none;
     margin: 5px 0;
-    padding-left: 15px;
+    padding-left: 30px;
 }
 
 .header-widget ul li a {
@@ -438,4 +438,34 @@ display: none;
     height: 32px;
     border-radius: 50%;
     margin-left: 25px;
+    user-select: none;
+}
+
+.profile-pic{
+    display: inline-block;
+}
+
+#register-form #displayname-div,#register-form #pass-div{
+    margin-top: 7px;
+}
+.err{
+    text-align: right;
+    margin-top: 13px;
+    color: #f58989;
+    visibility: hidden;
+}
+.err-log{
+    text-align: right;
+    margin-top: 20px;
+    color: #64b5f6;
+    padding: 0 10px;
+    visibility: hidden;
+}
+.err-log i {
+    font-size: 15px;
+    padding: 0 5px;
+}
+.login-line{
+    margin: 26px auto;
+
 }

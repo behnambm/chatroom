@@ -1,17 +1,15 @@
 <?php 
 session_start();
-require_once 'functions.php';
-if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
-    header('Location:index.php');
-}
-if(isset($_COOKIE['logged_in'])){
-    if(check_cookie($_COOKIE['logged_in'])){
-        header('Location:index.php');
-    }
-}
-
 require_once 'db_config.php';
 setup();
+require_once 'functions.php';
+if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) && $_COOKIE['logged_in'] == 'yes' && check_cookie($_COOKIE['hash'])){
+    redirect_to('index.php');        
+}
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
+    redirect_to('index.php'); 
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,13 +47,11 @@ setup();
                 </div><div class="clear"></div>
                 <button type="submit" id="sub-btn">ورود</button>
             </form><div class="clear"></div>
-
+            <div class="err-log"><i class="fa fa-exclamation-circle"></i>نام کاربری یا رمز عبور اشتباه است.</div>
             <div class="line login-line">
                 <div class="inner-line"></div>
             </div>
-
             <a href="register.php" id="register">ثبت نام</a>
-
         </div>
     </div>
     <script src="files/js/bootstrap.min.js"></script>
@@ -81,34 +77,30 @@ setup();
                     $('#pass-div').removeClass('opacity-fill');        
                 }
             });
-
-
-
-
             // codes for ajax request
             $('#login-form').submit((e)=>{
                 e.preventDefault();
                 let username = $('#username-input').val();
                 let password = $('#password-input').val();
                 let remember = $('#remember-me').prop('checked');
+                $('.err-log').css('visibility','hidden');
                 $.ajax({
                     url:'auth.php',
                     type:'POST',
                     data:{logusername:username,logpassword:password,logremember:remember},
                     success:(responce)=>{
-                        alert(responce);
+                        if(responce == 'OK'){
+                            window.location.replace('index.php');
+                        }else if(responce == 'ERR_USER_PASS'){
+                            $('.err-log').css('visibility','visible');
+                        }
                     },
                     error:(err)=>{
                         alert("Error : ".err);
                     }
                 });
             });
-
-
         });
-
-
-
     </script>
 </body>
 </html>

@@ -1,13 +1,35 @@
 <?php
 session_start();
-if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != 'yes'){
-   header('Location:login.php'); 
+require_once 'functions.php';
+$cookie_flag = false;
+$session_flag = false;
+if(!isset($_COOKIE['logged_in'],$_COOKIE['hash'])){
+   $cookie_flag = true;
+}
+// else{
+//    $cookie_info = check_cookie($_COOKIE['hash'],true);
+//    $cook_id = $cookie_info['id'];
+//    $user = get_user_info(null,$cook_id);
+//    set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip());
+// }
+
+
+if(!isset($_SESSION['logged_in'])){
+   $session_flag =true;
+}
+if($session_flag && $cookie_flag){
+   redirect_to('login.php');
+}elseif(isset($_COOKIE['logged_in'],$_COOKIE['hash']) && $_COOKIE['logged_in'] == 'yes'){
+   $cookie_info = check_cookie($_COOKIE['hash'],true);
+   $cook_id = $cookie_info['id'];
+   $user = get_user_info(null,$cook_id);
+   set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip());
 }
 
-require_once 'functions.php';
 
 if(isset($_GET['logout']) && $_GET['logout']==1){
    logout();
+   redirect_to('login.php');
 }
 
 ?>
@@ -39,6 +61,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          </div>
       </div>
       <div class="clear"></div>
+      <h1><?php echo $_SESSION['displayname'];?></h1>
    </div>
    <script src="files/js/jquery-3.1.1.js"></script>
    <script>
@@ -53,6 +76,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
          }
       });
+
 
    });
 
