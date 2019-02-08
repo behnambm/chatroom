@@ -6,7 +6,7 @@ try{
     $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",'root','');
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(PDOException $e){
-    echo 'BM_Error ::'.$e->getMessage();
+    echo 'BM_ERROR_FUNC_FILE ::'.$e->getMessage();
 }
 
 function encrypt_pass($pass){
@@ -50,9 +50,10 @@ function get_cookie_info($id){
 }
 
 
-function set_session($user, $path, $display, $ip){
+function set_session($user, $path, $display, $ip,$id){
     $_SESSION['logged_in'] = 'yes';
     $_SESSION['username'] = $user;
+    $_SESSION['user_id'] = $id;
     $_SESSION['profilepic'] = $path;
     $_SESSION['displayname'] = $display;
     $_SESSION['ip'] = $ip;

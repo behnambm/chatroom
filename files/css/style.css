@@ -389,6 +389,8 @@ display: none;
     background-color: #f5f5f5;
     border-radius: 5px;
     padding: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 #sitename{
     margin: 0 5px 0 10px;
@@ -401,7 +403,10 @@ display: none;
 .header-widget {
     position: relative;
 }
-
+.header-widget span {
+    display: inline-block;
+    text-align: right;
+}
 .header-widget ul {
     width: auto;
     position: absolute;
@@ -468,4 +473,61 @@ display: none;
 .login-line{
     margin: 26px auto;
 
+}
+
+.user-table{
+    text-align: right;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 40px;
+    box-shadow: 0 0 1px 0 #000000;
+    overflow: hidden;
+}
+@media(max-width:440px){
+    .user-table{
+        width: 80%;
+    }
+}
+@media(max-width:370px){
+    .user-table{
+        width: 90%;
+    }
+}
+@media(max-width:330px){
+    .user-table{
+        width: 98%;
+    }
+    .user-table th {
+        font-size: 12px;
+    }
+
+    .container{
+        padding: 0 5px;
+    }
+}
+.user-table img {
+    width: 32px;
+    height: 32px;
+    margin: 0 5px;
+    border-radius: 30px;
+}
+.user-table button {
+    box-shadow: none;
+    outline: none;
+    font-size: 11px;
+    padding: 4px;
+}
+.btn-primary:focus {
+    box-shadow: none !important;
+}
+@media (min-width: 768px){
+    .container {
+        max-width: none;
+    }
+}
+
+@media (min-width: 576px){
+    .container {
+        max-width: none;
+    }
 }

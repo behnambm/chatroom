@@ -4,16 +4,7 @@ require_once 'functions.php';
 $cookie_flag = false;
 $session_flag = false;
 if(!isset($_COOKIE['logged_in'],$_COOKIE['hash'])){
-   $cookie_flag = true;
-}
-// else{
-//    $cookie_info = check_cookie($_COOKIE['hash'],true);
-//    $cook_id = $cookie_info['id'];
-//    $user = get_user_info(null,$cook_id);
-//    set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip());
-// }
-
-
+   $cookie_flag = true;}
 if(!isset($_SESSION['logged_in'])){
    $session_flag =true;
 }
@@ -23,15 +14,12 @@ if($session_flag && $cookie_flag){
    $cookie_info = check_cookie($_COOKIE['hash'],true);
    $cook_id = $cookie_info['id'];
    $user = get_user_info(null,$cook_id);
-   set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip());
+   set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id']);
 }
-
-
 if(isset($_GET['logout']) && $_GET['logout']==1){
    logout();
    redirect_to('login.php');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +38,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       <div class="header">
          <h1 class="site-name"><a href="index.php">چت روم</a></h1>
          <div class="header-widget">
+            <span><?php echo $_SESSION['displayname'];?></span>
             <div class="profile-pic">
             <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic" alt="<?php echo $_SESSION['displayname'];?>">
             <i class="fa fa-caret-left left"></i>
@@ -61,7 +50,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          </div>
       </div>
       <div class="clear"></div>
-      <h1><?php echo $_SESSION['displayname'];?></h1>
+      
+
+<div class="user-table"></div>
+
    </div>
    <script src="files/js/jquery-3.1.1.js"></script>
    <script>
@@ -76,8 +68,21 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
          }
       });
+      
+      
 
+      (()=>{
+         $.ajax({
+            url:'fetch_user.php',
+            type:'POST',
+            data:'',
+            success:(data)=>{
+               $('.user-table').html(data);
+            }
+         });
+      })()
 
+      
    });
 
 

@@ -10,7 +10,7 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
     $remember = $_POST['logremember'];
     if(doLogin($username, $password)){
         $user = get_user_info($_POST['logusername']);
-        set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip());
+        set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id']);
         
         // echo $remember, gettype($remember);
         if($remember == 'true'){
@@ -31,6 +31,7 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
 }else if(isset($_POST['regusername'],$_POST['regpassword'],$_POST['regdisplayname'],$_POST['regemail']) ){
     $res = register_user($_POST['regusername'], $_POST['regpassword'], $_POST['regemail'], $_POST['regdisplayname']);
     if($res == 1){
+        $user = get_user_info($_POST['regusername']);
         if(isset($_FILES['avatar'])){
             $path = 'profile_img';
             $img = $_FILES['avatar']['name'];
@@ -45,14 +46,14 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
             }
             if(move_uploaded_file($tmp, $path)){
                 add_profile_path_to_db($_POST['regusername'], $path);
-                set_session($_POST['regusername'], $path, $_POST['regdisplayname'], get_real_ip());
+                set_session($_POST['regusername'], $path, $_POST['regdisplayname'], get_real_ip(),$user['id']);
                 echo 'OK';
                 
             }else{
                 echo 'ERR_MOVING_PIC';
             }
         }else{
-            set_session($_POST['regusername'], 'files/images/user.png', $_POST['regdisplayname'], get_real_ip());
+            set_session($_POST['regusername'], 'files/images/user.png', $_POST['regdisplayname'], get_real_ip(),$user['id']);
             echo 'OK';
         }
 
