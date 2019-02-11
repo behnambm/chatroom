@@ -25,7 +25,7 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
 </head>
 <body>
     <div class="container">
-        <div class="wrapper">
+        <div class="wrapper log-wrapper">
             <form action="" method="post" id="login-form">
                 <span id="login-img"><i class="fa fa-user-circle"></i><h1>ورود</h1></span>
                 <div class="clear"></div>
@@ -46,8 +46,21 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
                     <label for="remember-me">مرا به خاطر بسپار</label>
                 </div><div class="clear"></div>
                 <button type="submit" id="sub-btn">ورود</button>
+                <div class="loading">
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                </div> 
             </form><div class="clear"></div>
-            <div class="err-log"><i class="fa fa-exclamation-circle"></i>نام کاربری یا رمز عبور اشتباه است.</div>
+            <div class="err-log">   
+                  
+                <i class="fa fa-exclamation-circle"></i>نام کاربری یا رمز عبور اشتباه است.</div>
+                
             <div class="line login-line">
                 <div class="inner-line"></div>
             </div>
@@ -88,7 +101,11 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
                     url:'auth.php',
                     type:'POST',
                     data:{logusername:username,logpassword:password,logremember:remember},
+                    beforeSend:()=>{
+                        $('.loading').css('visibility','visible');
+                    },
                     success:(responce)=>{
+                        $('.loading').css('visibility','hidden');
                         if(responce == 'OK'){
                             window.location.replace('index.php');
                         }else if(responce == 'ERR_USER_PASS'){

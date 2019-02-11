@@ -175,6 +175,7 @@ function add_profile_path_to_db($username, $path){
 function redirect_to($add){
     header("Location:{$add}");
 }
+
 function logout(){
     unset($_SESSION['logged_in'],$_SESSION['username']);
     setcookie('logged_in','',1);
@@ -182,3 +183,40 @@ function logout(){
     header('Location:login.php');
     return true;
 }
+
+function set_id_to_login_details($id){
+    global $con;
+    $stmt = $con->prepare("INSERT INTO login_details VALUES(null,?,null,'')");
+    $stmt->execute(array($id));
+    $count = $stmt->rowCount();
+    if($count > 0 ){
+        return true;
+    }else{
+        return false;
+    }
+}
+function get_login_details($user_id){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM login_details WHERE user_id = ? ORDER BY login_details_id DESC LIMIT 1");
+    $stmt->execute(array($user_id));
+    $count = $stmt->rowCount();    
+    if($count > 0){
+        $res = $stmt->fetchAll();
+        return $res[0];
+    }else{
+        return false;
+    }
+}   
+
+
+function fetch_user_last_activity($user_id){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM login_details WHERE user_id = ? ORDER BY last_activity DESC LIMIT 1");
+    $stmt->execute(array($user_id));
+    $res = $stmt->fetchAll();
+    $data = $res[0];
+    return $data['last_activity'];
+
+}
+
+

@@ -8,8 +8,12 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
     $username = $_POST['logusername'];
     $password = $_POST['logpassword'];
     $remember = $_POST['logremember'];
+
     if(doLogin($username, $password)){
         $user = get_user_info($_POST['logusername']);
+        set_id_to_login_details($user['id']);
+        $log_det = get_login_details($user['id']);
+        $_SESSION['login_details_id'] = $log_det['login_details_id'];
         set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id']);
         
         // echo $remember, gettype($remember);
@@ -32,6 +36,10 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
     $res = register_user($_POST['regusername'], $_POST['regpassword'], $_POST['regemail'], $_POST['regdisplayname']);
     if($res == 1){
         $user = get_user_info($_POST['regusername']);
+
+        set_id_to_login_details($user['id']);
+        $log_det = get_login_details($user['id']);
+        $_SESSION['login_details_id'] = $log_det['login_details_id'];
         if(isset($_FILES['avatar'])){
             $path = 'profile_img';
             $img = $_FILES['avatar']['name'];

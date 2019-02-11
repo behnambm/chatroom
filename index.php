@@ -30,7 +30,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    <title>Chat Room</title>
    <link rel="stylesheet" href="files/css/font-awesome.min.css">
    <link rel="stylesheet" href="files/css/bootstrap-4.1.2.min.css">
-   <script src="files/js/jquery-3.1.1.js"></script>
+   <link rel="stylesheet" href="files/css/jquery-ui.css">
    <link rel="stylesheet" href="files/css/style.css">
 </head>
 <body>
@@ -44,8 +44,9 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             <i class="fa fa-caret-left left"></i>
             </div>
             <ul>
-               <li><a href="profile.php">پروفایل</a></li>
+               <li><a href="panel/">پروفایل</a></li>
                <li><a href="?logout=1">خروج</a></li>
+               
             </ul>
          </div>
       </div>
@@ -53,11 +54,45 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       
 
 <div class="user-table"></div>
+<div id="chat-box-container"></div>
 
+
+
+
+      </div>
    </div>
    <script src="files/js/jquery-3.1.1.js"></script>
+   <script src="files/js/jquery-ui.js"></script>
+
    <script>
+
    $(document).ready(()=>{
+
+
+
+   function make_chat_box(user_name,user_id){
+
+      let boxContent = '<div class="chat-box" id="user-dialog-'+user_id+'" title="چت با : '+user_name+'">';
+      boxContent += '<div class="chat-history" id="chat-history-'+user_id+'" data-touserid="'+user_id+'"></div>';
+      boxContent += '<div class="form-group">';
+      boxContent += '<textarea name="chat-message-'+user_id+'" id="chat-message-'+user_id+'" class="form-control"></textarea> ';
+      boxContent +='</div><div class="form-group" align="right">';
+      boxContent +='<button id="'+user_id+'" name="send-chat" class="btn btn-info send-chat">ارسال</button>';
+      boxContent +='</div></div>';
+      $('#chat-box-container').html(boxContent);
+   }
+      $(document).on('click','.chat-btn',(e)=>{
+
+         let toUserName = $(e.target).data('tousername');
+         let toUserId = $(e.target).data('touserid');
+         make_chat_box(toUserName, toUserId);
+         $("#user-dialog-"+toUserId).dialog({
+            autoOpen:false,
+            width:300
+         });
+         $('#user-dialog-'+toUserId).dialog('open');
+      });
+
       $('.profile-pic').click((e)=>{
          if($('.header-widget i').hasClass('left')){
             $('.header-widget i').css('transform','rotate(-90deg)').addClass('down').removeClass('left');
@@ -69,9 +104,13 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          }
       });
       
-      
+      setInterval(() => {
+         fetchUser();
+         updateActivity();
+      }, 4500);
+      fetchUser();
 
-      (()=>{
+      function fetchUser() {
          $.ajax({
             url:'fetch_user.php',
             type:'POST',
@@ -80,7 +119,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                $('.user-table').html(data);
             }
          });
-      })()
+      } 
+
+      function updateActivity(){
+         $.ajax({
+            url:'update_last_activity.php',
+            type:'POST',
+            success:()=>{
+            }
+         });
+      }
+
 
       
    });

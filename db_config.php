@@ -7,25 +7,24 @@ $db_name = 'behnam_db';
 
 function setup(){
     $db_file_content = file_get_contents('db.conf');
-    if($db_file_content == 'DATABASE_CONNECT::1;DATABASE_CREATED::1;USE_DATABASE::1;USERS_TABLE_CREATED::1;COOKIE_TABLE_CREATED::1;'){
+    if($db_file_content == 'DATABASE_CONNECT::1;IS_DATABASE_CREATED::1;USE_DATABASE::1;IS_USERS_TABLE_CREATED::1;IS_COOKIE_TABLE_CREATED::1;IS_LOGIN_DETAILS_TABLE_CREATED::1;'){
         return true;
     }
     global $db_host,$db_name,$db_pass,$db_user;
     try{
         $con = new PDO('mysql:host='.$db_host.';charset=utf8;',$db_user,$db_pass);
-        file_put_contents('db.conf','DATABASE_CONNECT::1;');
+        file_put_contents('db.conf','DATABASE_CONNECT::1;'.PHP_EOL);
         // set the PDO error mode to exception
         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // create a database
-        // hex code ==  'DATABASE_CREATED::1;' 
         $sql = "CREATE DATABASE IF NOT EXISTS behnam_db CHARACTER SET utf8 COLLATE utf8_persian_ci;";
         $con->exec($sql);
-        file_put_contents('db.conf','DATABASE_CREATED::1;',FILE_APPEND);
+        file_put_contents('db.conf','IS_DATABASE_CREATED::1;'.PHP_EOL,FILE_APPEND);
 
         //select database
         $con->exec('USE behnam_db;');
-        file_put_contents('db.conf','USE_DATABASE::1;',FILE_APPEND);
+        file_put_contents('db.conf','USE_DATABASE::1;'.PHP_EOL,FILE_APPEND);
 
 
         // create users table
@@ -38,7 +37,7 @@ function setup(){
     		profile_pic varchar(64) NOT NULL
             )";
         $con->exec($sql2);
-        file_put_contents('db.conf','USERS_TABLE_CREATED::1;',FILE_APPEND);
+        file_put_contents('db.conf','IS_USERS_TABLE_CREATED::1;'.PHP_EOL,FILE_APPEND);
 
 
         // create cookies table
@@ -47,12 +46,26 @@ function setup(){
             cookie_hash varchar(128) UNIQUE NOT NULL
             );";
         $con->exec($sql3);
-        file_put_contents('db.conf','COOKIE_TABLE_CREATED::1;',FILE_APPEND);
+        file_put_contents('db.conf','IS_COOKIE_TABLE_CREATED::1;'.PHP_EOL,FILE_APPEND);
+
+        // create login details table
+        $sql4 = "CREATE TABLE IF NOT EXISTS `login_details` (
+            `login_details_id` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY ,
+            `user_id` int(11) NOT NULL,
+            `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `is_type` enum('no','yes') NOT NULL
+          )";
+        $con->exec($sql4);
+        file_put_contents('db.conf','IS_LOGIN_DETAILS_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
+
+
 
     }catch(PDOException $e){
     echo $sql . "<br>" . $e->getMessage();
     }
 
 }
+
+
 
 

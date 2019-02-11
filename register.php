@@ -60,7 +60,20 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
                 </label>
                  </div><div class="clear"></div>
                 <button type="submit" class="reg-btn" id="sub-btn">ثبت نام</button>
-            </form><div class="clear"></div>
+                <div class="loading">
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                    <div class="obj"></div>
+                </div>
+            </form>
+
+            <div class="clear"></div>
+            
             <div class="line">
                 <div class="inner-line"></div>
             </div>
@@ -214,8 +227,10 @@ $(document).ready(()=>{
             beforeSend:()=>{
                 $('.err-user').css('visibility','hidden');
                 $('.err-email').css('visibility','hidden');
+                $('.loading').css('visibility','visible');
             },
             success:(responce)=>{
+                $('.loading').css('visibility','hidden');
                 if(responce == 'ERR_DUP_USERNAME'){
                     $('.err-user').css('visibility','visible');
                 }else if(responce == 'ERR_DUP_EMAIL'){
