@@ -7,7 +7,7 @@ $db_name = 'behnam_db';
 
 function setup(){
     $db_file_content = file_get_contents('db.conf');
-    if($db_file_content == 'DATABASE_CONNECT::1;IS_DATABASE_CREATED::1;USE_DATABASE::1;IS_USERS_TABLE_CREATED::1;IS_COOKIE_TABLE_CREATED::1;IS_LOGIN_DETAILS_TABLE_CREATED::1;'){
+    if($db_file_content == 'DATABASE_CONNECT::1;IS_DATABASE_CREATED::1;USE_DATABASE::1;IS_USERS_TABLE_CREATED::1;IS_COOKIE_TABLE_CREATED::1;IS_LOGIN_DETAILS_TABLE_CREATED::1;IS_CHAT_MESSAGE_TABLE_CREATED::1;'){
         return true;
     }
     global $db_host,$db_name,$db_pass,$db_user;
@@ -48,7 +48,7 @@ function setup(){
         $con->exec($sql3);
         file_put_contents('db.conf','IS_COOKIE_TABLE_CREATED::1;'.PHP_EOL,FILE_APPEND);
 
-        // create login details table
+        // create login_details TABLE
         $sql4 = "CREATE TABLE IF NOT EXISTS `login_details` (
             `login_details_id` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY ,
             `user_id` int(11) NOT NULL,
@@ -58,7 +58,19 @@ function setup(){
         $con->exec($sql4);
         file_put_contents('db.conf','IS_LOGIN_DETAILS_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
 
-
+        // create chat_message TABLE
+        $sql5 = "CREATE TABLE IF NOT EXISTS chat_message (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            from_user_id VARCHAR(32) NOT NULL,
+                to_user_id VARCHAR(32) NOT NULL,
+                chat_message TEXT,
+                timestamp VARCHAR(16),
+                status VARCHAR(2) DEFAULT '0' ,
+                is_sent VARCHAR(2) DEFAULT '0' ,
+                is_seen VARCHAR(2) DEFAULT '0'
+            )";
+        $con->exec($sql5);
+        file_put_contents('db.conf','IS_CHAT_MESSAGE_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
 
     }catch(PDOException $e){
     echo $sql . "<br>" . $e->getMessage();

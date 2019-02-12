@@ -23,7 +23,7 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
 <body>
      <div class="container">   
         <div class="wrapper reg-wrapper">
-            <form action="" method="post" enctype="multipart/form-data" id="register-form" >
+            <form action="" method="post" enctype="multipart/form-data" id="register-form" autocomplete="off" >
                 <span id="register-img"><i class="fa fa-user-plus"></i><h1>ثبت نام</h1></span>
                 <div class="clear"></div>
                 <div class="input-div" id="user-div">
@@ -36,7 +36,7 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
                     <span id="icon-holder-displayname">
                         <i class="fa fa-eye"></i>
                     </span>
-                    <input type="text" name="regdisplayname" placeholder="نام (جهت نمایش)" id="displayname-input" required >
+                    <input type="text" name="regdisplayname" placeholder="نام (جهت نمایش)" id="displayname-input"  required >
                 </div><div class="clear"></div>
                 <div class="input-div" id="email-div">
                     <span id="icon-holder-email">
@@ -51,13 +51,13 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
                     <input type="password" name="regpassword" placeholder="رمز عبور " id="password-input" required >
                 </div><div class="clear"></div>
                 <div class="input-div" id="profilepic-div">
-                <label class="label" data-toggle="tooltip">
-                    <img class="rounded" id="avatar" src="files/images/user.png" alt="avatar">
-                    <input type="file" class="sr-only" id="input" name="image" accept="image/*">
-                </label>
-                <label for="input" id="icon-holder-profilepic">
-                        انتخاب عکس پروفایل
-                </label>
+                    <label class="label" data-toggle="tooltip">
+                        <img class="rounded" id="avatar" src="files/images/user.png" alt="avatar">
+                        <input type="file" class="sr-only" id="input" name="image" accept="image/*">
+                    </label>
+                    <label for="input" id="icon-holder-profilepic">
+                            انتخاب عکس پروفایل
+                    </label>
                  </div><div class="clear"></div>
                 <button type="submit" class="reg-btn" id="sub-btn">ثبت نام</button>
                 <div class="loading">
@@ -79,28 +79,33 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
             </div>
             <a href="login.php" id="login">ورود به حساب کاربری</a>
         </div>
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalLabel">برش عکس</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="img-container">
-              <img id="image" src="files/images/user.png">
+
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">برش عکس</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <img id="image" src="files/images/user.png">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">لغو</button>
+                    <button type="button" class="btn btn-primary" id="crop">برش</button>
+                </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">لغو</button>
-            <button type="button" class="btn btn-primary" id="crop">برش</button>
-          </div>
         </div>
-      </div>
     </div>
-    </div>  
+
+
+
+</div>  
 <script src="files/js/jquery-3.1.1.js"></script>
 <script src="files/js/bootstrap.bundle.min.js"></script>
 <script src="files/dist/cropper.js"></script>
@@ -151,20 +156,20 @@ window.addEventListener('DOMContentLoaded', function () {
     $modal.modal('hide');
     if (cropper) {
         canvas = cropper.getCroppedCanvas({
-        width: 150,
-        height: 150,
+        width: 300,
+        height: 300,
         });
         initialAvatarURL = avatar.src;
         avatar.src = canvas.toDataURL();
         canvas.toBlob(function (blob) {
         var formData = new FormData();
-        formData.append('avatar', blob, 'avatar.jpg');
-        formDATA.append('avatar', blob, 'avatar.jpg');
+        formData.append('avatar', blob, 'avatar.png');
+        formDATA.append('avatar', blob, 'avatar.png');
         });
     }
     });
 });
-
+    
 //      plugin for crop ^^^^
 //******************************************************************************************************
 $(document).ready(()=>{

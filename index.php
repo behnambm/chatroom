@@ -68,8 +68,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
    $(document).ready(()=>{
 
-
-
+   let interval = null;
    function make_chat_box(user_name,user_id){
 
       let boxContent = '<div class="chat-box" id="user-dialog-'+user_id+'" title="چت با : '+user_name+'">';
@@ -88,10 +87,34 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          make_chat_box(toUserName, toUserId);
          $("#user-dialog-"+toUserId).dialog({
             autoOpen:false,
-            width:300
+            width:350
          });
+         let to_user_id  = $(e.target).data('touserid');
+         let message = $('#chat-message-'+to_user_id).val();
          $('#user-dialog-'+toUserId).dialog('open');
+         console.log(to_user_id);
+         interval = setInterval(() => {
+            $.ajax({
+               url:'fetch_chat_history.php',
+               type:'POST',
+               data:{
+                  to_user_id:to_user_id
+               },
+               success:(responce)=>{
+                  $('#chat-history-'+to_user_id).html(responce);
+               }
+            });
+            console.log('interval');
+         }, 1000);
+
       });
+
+      $(document).on('click','.ui-dialog-titlebar-close' , (e)=>{
+         clearInterval(interval);
+         console.log('clear Interval');
+      });
+
+
 
       $('.profile-pic').click((e)=>{
          if($('.header-widget i').hasClass('left')){
@@ -103,11 +126,31 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
          }
       });
-      
+      $(document).on('click','.send-chat',(e)=>{
+         let to_user_id  = $(e.target).prop('id');
+         let message = $('#chat-message-'+to_user_id).val();
+         console.log(to_user_id +'------'+message);
+         $('#chat-message-'+to_user_id).val('');
+
+         if(message != ''){
+            $.ajax({
+               url:'insert_chat.php',
+               type:'POST',
+               data:{
+                  to_user_id:to_user_id,
+                  chat_message:message
+               },
+               success:(responce)=>{
+                  $('#chat-history-'+to_user_id).html(responce);
+               }
+            });
+         }
+
+      });
       setInterval(() => {
          fetchUser();
          updateActivity();
-      }, 4500);
+      }, 5000);
       fetchUser();
 
       function fetchUser() {

@@ -50,13 +50,14 @@ function get_cookie_info($id){
 }
 
 
-function set_session($user, $path, $display, $ip,$id){
+function set_session($user, $path, $display, $ip,$id,$email){
     $_SESSION['logged_in'] = 'yes';
     $_SESSION['username'] = $user;
     $_SESSION['user_id'] = $id;
     $_SESSION['profilepic'] = $path;
     $_SESSION['displayname'] = $display;
     $_SESSION['ip'] = $ip;
+    $_SESSION['email'] = $email;
 }
 
 function get_user_info($username,$id=null){
@@ -219,4 +220,68 @@ function fetch_user_last_activity($user_id){
 
 }
 
+
+
+function fetch_chat_history($from_user_id, $to_user_id){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM chat_message WHERE 
+    (from_user_id = ? AND to_user_id = ?)
+    OR (from_user_id = ? AND to_user_id = ?) 
+    ORDER BY timestamp ASC");
+    $stmt->execute(array($from_user_id , $to_user_id , $to_user_id , $from_user_id));
+    $res = $stmt->fetchAll();
+    $output = '<ul class="list-unstyled">';
+
+    foreach($res as $row){
+        $time = $row['timestamp'];
+        $time = explode(' ', $time);
+
+        // DATE
+        $date = $time[0];
+        $date = explode('-',$date);
+
+
+        // TIME
+        $time = $time[1];
+        $time = explode(':',$time);
+        $hour = $time[0];
+        $min = $time[1];
+
+
+        if($row['from_user_id'] == $from_user_id){
+            $tick1 = '';
+            $tick2 = '';
+            if($row['is_sent'] == '1'){
+                $tick1 = 'fa fa-check';
+            }
+            if($row['is_seen'] == '1'){
+                $tick2 = 'fa fa-check';
+            }
+
+            $output .= '
+            <li class="message-you">
+                <p>'.$row['chat_message'].'
+                    <div class="message-time">
+                        <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                    </div>
+                </p>
+            </li>';
+        }else{
+        // $user = get_user_info(null, $row['from_user_id']);
+        // $user_name = '<b class="user-username">'.$user['username'].'</b>';
+
+        $output .= '
+        <li class="message-other">
+            <p>'. $row['chat_message'].'
+                <div class="message-time">
+                    <small><em>'.$hour.':'.$min.'</em></small>
+                </div>
+            </p>
+        </li>';
+        }
+
+    }
+    $output .= '</ul>';
+    return $output;
+}
 
