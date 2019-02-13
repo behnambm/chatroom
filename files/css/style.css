@@ -19,7 +19,6 @@ a:hover{
     position: fixed;
     padding: 0;
 }
-
 @font-face {
 font-family: "FontAwesome";
 font-weight: normal;
@@ -27,7 +26,6 @@ font-weight: normal;
 font-style: normal;
 src: url("fontawesome-webfont.woff2") format("woff2");
 } 
-
 @font-face {
     font-family: isans;
     font-style: normal;
@@ -38,7 +36,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     url('../fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
 }
-
 @font-face {
     font-family: isans;
     font-style: normal;
@@ -49,7 +46,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     url('../fonts/woff/IRANSansWeb_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/ttf/IRANSansWeb_Medium.ttf') format('truetype');
 }
-
 @font-face {
     font-family: isans;
     font-style: normal;
@@ -60,7 +56,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     url('../fonts/woff/IRANSansWeb_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/ttf/IRANSansWeb_Light.ttf') format('truetype');
 }
-
 @font-face {
     font-family: isans;
     font-style: normal;
@@ -71,7 +66,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     url('../fonts/woff/IRANSansWeb_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
 }
-
 @font-face {
     font-family: isans;
     font-style: normal;
@@ -82,7 +76,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     url('../fonts/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
 }
-
 .wrapper{
     height: 500px;
     width: 25%;
@@ -92,7 +85,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     background:-webkit-linear-gradient(top,#7579ff,#b224ef);
     background: linear-gradient(top,#7579ff,#b224ef);
 }
-
 @media(max-width:768px){
     .wrapper{
         width: 80% !important;
@@ -114,12 +106,10 @@ src: url("fontawesome-webfont.woff2") format("woff2");
 }
 #login-img i{
     margin: 0 37%;
-
 }
 #register-img i{
     display: block;
     text-align: center;
-
 }
 #login-img h1 {
     margin: -20px 38%;
@@ -135,12 +125,10 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     margin: 0 auto;
     width: 85%;
 }
-
 .input-div i{
     color: #fff;
     font-size: 20px;
 }
-
 .input-div input {
     background: transparent;
     border: none;
@@ -154,8 +142,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     color: #fff;
     
 }
-
-
 #icon-holder-user, #icon-holder-pass, #icon-holder-email, #icon-holder-displayname{
     padding: 0 0 0 7px;
     position: absolute;
@@ -195,16 +181,7 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     opacity: 0.1;
     right: 0;
 }
-#username-input:focus {
-    width: 100%;
-}
-#password-input:focus {
-    width: 100%;
-}
-#email-input:focus {
-    width: 100%;
-}
-#displayname-input:focus{
+#username-input:focus, #password-input:focus, #email-input:focus, #displayname-input:focus {
     width: 100%;
 }
 .opacity-fill::before {
@@ -240,7 +217,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     margin-top: 30px !important;
     margin-bottom: 35px !important;
 }
-
 #sub-btn::after, #sub-btn::before{
     content: "";
     height: 2px;
@@ -251,25 +227,19 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     right: 0;
     bottom: 0;
     transition: all 0.6s ease;
-
 }
 #sub-btn::after{
     transform: scale(0);
     transform-origin: bottom;
-    
 }
 #sub-btn:hover::after{
     top: 0;
     transform: scale(1);
-
 }
 #sub-btn:focus:after{
     top: 0;
     transform: scale(1);
-
 }
-
-
 .line{
     width: 90%;
     height: 1px;
@@ -279,7 +249,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     margin: 0 auto;
     margin-top: 20px;
 }
-
 .inner-line{
     background: linear-gradient(to right, transparent, rgba(255,255,255,0.9), transparent);
     height: 1px;
@@ -287,7 +256,6 @@ src: url("fontawesome-webfont.woff2") format("woff2");
     display: block;
     width: 100%;
 }
-
 a#login , a#register{
     color: #fff;
     text-align: center;
@@ -295,17 +263,13 @@ a#login , a#register{
     margin-top: 10px;
     text-decoration: none;
 }
-
 .reg-wrapper{
     height: auto;
     padding-bottom: 30px;
     margin-top: 10px;
 }
-
-
 #profilepic-input::-webkit-file-upload-button {
     visibility: hidden;
-
 }
 #profilepic-input{
     display: none;
@@ -328,48 +292,35 @@ display: none;
     cursor: pointer;
     display: block;
 }
-
 #icon-holder-profilepic i{
     float: right;
     margin-left: 10px;
 }
-
-
 #profilepic-div{
     margin-top: 25px;
 }
-
-
-
 /* plugin  */
-
-
 .label {
     cursor: pointer;
 }
-
 .progress {
 display: none;
 margin-bottom: 1rem;
 }
-
 .alert {
 display: none;
 }
-
 .img-container img {
 max-width: 100%;
 }
 .modal-backdrop.show{
     z-index: -1;
 }
-
 .rounded{
     width: 50px;
     height: 50px;
     float: right;
 }
-
 .modal-backdrop{
 width: 0;
 height: 0;
@@ -389,8 +340,7 @@ display: none;
 #crop{
     float: right;
 }
-  /* plugin  */
-
+  /* plugin ^^ */
 .header{
     background-color: #fff;
     padding: 5px;
@@ -423,13 +373,10 @@ display: none;
     border-radius: 3px;
     display: none;
 }
-
-
 .header-widget ul li {
     list-style: none;
     margin: 5px 0;
 }
-
 .header-widget ul li a {
     text-decoration: none;
     color: #2b2b2b;
@@ -458,11 +405,9 @@ display: none;
     margin-left: 25px;
     user-select: none;
 }
-
 .profile-pic{
     display: inline-block;
 }
-
 #register-form #displayname-div,#register-form #pass-div{
     margin-top: 7px;
 }
@@ -487,8 +432,6 @@ display: none;
     margin: 15px auto;
 
 }
-
-
 .user-table{
     text-align: right;
     width: 70%;
@@ -514,8 +457,6 @@ display: none;
     .user-table th {
         font-size: 12px;
     }
-
-
 }
 .user-table img {
     width: 32px;
@@ -538,13 +479,11 @@ display: none;
         max-width: none;
     }
 }
-
 @media (min-width: 576px){
     .container {
         max-width: none;
     }
 }
-
 .user-table span.badge{
     padding: 5px;
 }
@@ -552,10 +491,6 @@ display: none;
     padding: 10px;
     position: relative;
 }
-
-
-
-
 @media(max-width:1030px){
     .reg-wrapper{
         width: 30%;
@@ -576,7 +511,6 @@ display: none;
         width: 40%;
     }
 }
-
 @media(max-width:768px){
     .wrapper{
         width: 50% !important;
@@ -602,17 +536,11 @@ display: none;
         margin-top: 10px;
     }
 }
-
-
-
 @media(max-width:280px){
     .wrapper{
         width: 95% !important;
     }
 }
-
-
-
 .loading{
     align-items: center;
     display: flex;
@@ -621,7 +549,6 @@ display: none;
     left: 38%;
     visibility: hidden;
 }
-
 .loading .obj{
     background-color: #fff;
     height: 35px;
@@ -655,8 +582,6 @@ display: none;
 .obj:nth-child(8){
     animation-delay: 0.7s;
 }
-
-
 @keyframes load{
     0%{
         height: 0; 
@@ -668,19 +593,13 @@ display: none;
         height: 0;
     }
 }
-
-
-
 #register-form{
     position: relative;
     margin-bottom: 60px;
 }
-
-
 .fetch-displayname{
     margin-right: 20px;
 }
-
 .displayname-link{
     color: #2f2f2f;
 }
@@ -688,16 +607,13 @@ display: none;
     color: #747474;
 
 }
-
 #edit-profile-link{
     display: none;
 }
-
 .dialog{
     border: 1px solid #000;
     background-color: #fff;
 }
-
 .ui-widget .ui-widget{
     outline: none;
 }
@@ -712,8 +628,6 @@ display: none;
     padding: 10px;
     text-align: right;
 }
-
-
 .ui-draggable .ui-dialog-titlebar{
     font: 14px isans;
     text-align: right;
@@ -728,7 +642,6 @@ textarea.form-control:focus{
     outline: none;
     box-shadow: none;
 }
-
 .left-group , .right-group{
     margin-top: 10px;
 }
@@ -744,7 +657,6 @@ textarea.form-control:focus{
     text-align: center;
     color: #fff;
 }
-
 .left-group li.head{
     background: rgb(64,29,222);
     background: linear-gradient(90deg, rgba(64,29,222,1) 0%, rgba(180,51,212,1) 56%, rgba(233,30,99,1) 100%);
@@ -755,7 +667,6 @@ textarea.form-control:focus{
     font-size: 16px;
     color: #666;
 }
-
 .right-group legend::after{
     content: "";
     position: absolute;
@@ -766,7 +677,6 @@ textarea.form-control:focus{
     bottom: 0;
     background: linear-gradient(90deg,transparent 9% , #007bff);
 }
-
 .list-unstyled li.message-you{
     background-color: #e3f9e2;
     padding: 5px;
@@ -799,16 +709,8 @@ textarea.form-control:focus{
     display: flex;
     flex-direction: column-reverse;
 }
-
 .is-typing{
     position: absolute;
     right: 50px;
     bottom: 0;
 }
-
-/* @media(max-width:500px){
-    .is-typing{
-        right: 50px;
-        bottom: 0;
-    }
-} */
