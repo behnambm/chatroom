@@ -285,3 +285,20 @@ function fetch_chat_history($from_user_id, $to_user_id){
     return $output;
 }
 
+function fetch_unseen_chat($from_user_id , $to_user_id){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND status = ?");
+    $stmt->execute(array($from_user_id , $to_user_id , '0'));
+    $count = $stmt->rowCount();
+    $output = '';
+    if($count > 0){
+        $output .= '<small class="unseen-chat" style="    position: absolute;
+        background-color: red;
+        padding: 3px 6px 2px 4px;
+        border-radius: 10px;
+        bottom: -8px;
+        left: -8px;">'.$count.'</small>';
+        return $output;
+    }
+    
+}

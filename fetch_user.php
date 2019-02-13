@@ -3,6 +3,9 @@
 session_start();
 require_once 'functions.php';
 date_default_timezone_set('Asia/Tehran');
+
+
+
 $stmt = $con->prepare("SELECT * FROM users WHERE id != {$_SESSION['user_id']}");
 $stmt->execute();
 $count = $stmt->rowCount();
@@ -31,7 +34,7 @@ if($count > 0){
         $output .= '  <tr>
         <th scope="row"><img src="'.$row['profile_pic'].'">'.$row['display_name'].'</th>
         <td>'.$status.'</td>
-        <td><button type="button" class="chat-btn btn btn-primary btn-sm" data-tousername="'.$row['username'].'" data-touserid="'.$row['id'].'">شروع چت</button></td>
+        <td><button type="button" class="chat-btn btn btn-primary btn-sm" data-tousername="'.$row['username'].'" data-touserid="'.$row['id'].'">شروع چت'.fetch_unseen_chat($row['id'],$_SESSION['user_id']).'</button></td>
       </tr>';
     }
     $output .= '  </tbody>
