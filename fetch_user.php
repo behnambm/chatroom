@@ -32,7 +32,7 @@ if($count > 0){
 
         }
         $output .= '  <tr>
-        <th scope="row"><img src="'.$row['profile_pic'].'">'.$row['display_name'].'</th>
+        <th scope="row"><img src="'.$row['profile_pic'].'">'.$row['display_name'].'<small class="is-typing" style="display:'.fetch_is_type($row['id']).'">در حال نوشتن ...</small></th>
         <td>'.$status.'</td>
         <td><button type="button" class="chat-btn btn btn-primary btn-sm" data-tousername="'.$row['username'].'" data-touserid="'.$row['id'].'">شروع چت'.fetch_unseen_chat($row['id'],$_SESSION['user_id']).'</button></td>
       </tr>';

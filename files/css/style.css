@@ -550,6 +550,7 @@ display: none;
 }
 .user-table th {
     padding: 10px;
+    position: relative;
 }
 
 
@@ -799,3 +800,15 @@ textarea.form-control:focus{
     flex-direction: column-reverse;
 }
 
+.is-typing{
+    position: absolute;
+    right: 50px;
+    bottom: 0;
+}
+
+/* @media(max-width:500px){
+    .is-typing{
+        right: 50px;
+        bottom: 0;
+    }
+} */

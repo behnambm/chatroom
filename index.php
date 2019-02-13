@@ -75,7 +75,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             let boxContent = '<div class="chat-box" id="user-dialog-'+user_id+'" title="چت با : '+user_name+'">';
             boxContent += '<div class="chat-history" id="chat-history-'+user_id+'" data-touserid="'+user_id+'"></div>';
             boxContent += '<div class="form-group">';
-            boxContent += '<textarea name="chat-message-'+user_id+'" id="chat-message-'+user_id+'" class="form-control"></textarea> ';
+            boxContent += '<textarea name="chat-message-'+user_id+'" id="chat-message-'+user_id+'" class="form-control txtarea-box"></textarea> ';
             boxContent +='</div><div class="form-group" align="right">';
             boxContent +='<button id="'+user_id+'" name="send-chat" class="btn btn-info send-chat">ارسال</button>';
             boxContent +='</div></div>';
@@ -150,6 +150,33 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             fetchUser();
             updateActivity();
          }, 5000);
+         $(document).on('focus','.txtarea-box',(e)=>{
+            let is_type = 'yes';
+            $.ajax({
+               url:'update_is_type_status.php',
+               type:'POST',
+               data:{
+                  is_type:is_type
+               },
+               success:()=>{
+
+               }
+            });
+         });
+
+         $(document).on('blur','.txtarea-box',(e)=>{
+            let is_type = 'no';
+            $.ajax({
+               url:'update_is_type_status.php',
+               type:'POST',
+               data:{
+                  is_type:is_type
+               },
+               success:()=>{
+                  
+               }
+            });
+         });
          //----------------------------------------------------------------------------------------------------
          // fetch user's list from database
          fetchUser();

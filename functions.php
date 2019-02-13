@@ -302,3 +302,23 @@ function fetch_unseen_chat($from_user_id , $to_user_id){
     }
     
 }
+
+function fetch_is_type($user_id){
+    global $con;
+    $stmt = $con->prepare("SELECT is_type FROM login_details WHERE user_id = ? ORDER BY last_activity DESC LIMIT 1");
+    $stmt->execute(array($user_id));
+    $count = $stmt->rowCount();
+    $res = $stmt->fetchAll();
+    $res2 = $res[0];
+    $output = 'none';
+    if($res2['is_type'] == 'yes'){
+        // $output .= '<small class="is-typing" style="
+        // position: absolute;
+        // margin-top: 6px;
+        // margin-right: 5px;
+        // ">در حال نوشتن ...</small>';
+        $output = 'block';
+    }
+    return $output;
+    
+}
