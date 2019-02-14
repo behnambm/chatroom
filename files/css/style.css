@@ -714,3 +714,12 @@ textarea.form-control:focus{
     right: 50px;
     bottom: 0;
 }
+#display-change, #email-change, #all-change{
+    color: #28a745;
+    display: none;
+}
+#display-change i , #email-change i, #all-change i{
+    font-size: 12px;
+    margin-right: 10px;
+    margin-left: 5px;
+}

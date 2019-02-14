@@ -60,18 +60,19 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                     <li class="list-group-item">
                         <fieldset>
                             <legend>جزئیات حساب</legend>
-                            <form action="" method="post">
+                            <form action="" method="post" id="email-displayname-change">
                                 <div class="form-group" style="margin-top:10px">
-                                    <label for="up-displayname">نام نمایشی:</label>
+                                    <label for="up-displayname">نام نمایشی:</label><small id="display-change"><i class="fa fa-check"></i>تغییر نام با موفقیت انجام شد.</small>
                                     <input type="text" class="form-control" name="updisplayname" id="up-displayname" value="<?php echo $_SESSION['displayname'];?>">
                                     <small class="form-text text-muted">این فیلد نام کاربری نیست و فقط جهت نمایش در سایت است.</small>
                                 </div>
 
                                 <div class="form-group" style="margin-top:10px">
-                                    <label for="up-email">ایمیل:</label>
+                                    <label for="up-email">ایمیل:</label><small id="email-change"><i class="fa fa-check"></i>تغییر ایمیل با موفقیت انجام شد.</small>
                                     <input type="email" class="form-control" name="upemail" id="up-email" value="<?php echo $_SESSION['email'];?>">
                                 </div>
                                 <button class="btn btn-primary">بروز رسانی</button>
+                                <small id="all-change"><i class="fa fa-check"></i>تغییرات با موفقیت انجام شد.</small>
                             </form>
                             <form action="" method="post">
                                 
@@ -139,72 +140,97 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
 
     <script type="text/javascript">
+        $(document).ready(()=>{
+            $('#email-displayname-change').submit((e)=>{
+                e.preventDefault();
+                let up_display_name = $('#up-displayname').val();
+                let up_email = $('#up-email').val();
+                $.ajax({
+                    url:'update_email_displayname.php',
+                    type:"POST",
+                    data:{
+                        up_display_name: up_display_name,
+                        up_email: up_email
+                    },
+                    success:(responce)=>{
+                        if(responce == 'OK_EMAIL'){
+                            $('#up_email').val(up_email);
+                            $('#email-change').fadeIn().delay(3000).fadeOut('slow');
+                        }else if(responce == 'OK_DISPLAYNAME'){
+                            $('#up_displayname').val(up_display_name);
+                            $('#display-change').fadeIn().delay(3000).fadeOut('slow');
+                        }else if(responce == 'OK_NAME_EMAIL'){
+                            $('#all-change').fadeIn().delay(3000).fadeOut('slow');
+                        }
+                        
+                    }
+                });
+            });
+        });
 
         var formDATA = new FormData();
-window.addEventListener('DOMContentLoaded', function () {
-    var avatar = document.getElementById('avatar');
-    var image = document.getElementById('image');
-    var input = document.getElementById('input');
-    var $modal = $('#modal');
-    var cropper;
-    $('[data-toggle="tooltip"]').tooltip();
-    input.addEventListener('change', function (e) {
-    var files = e.target.files;
-    var done = function (url) {
-        input.value = '';
-        image.src = url;
-        $modal.modal('show');
-    };
-    var reader;
-    var file;
-    var url;
-    if (files && files.length > 0) {
-        file = files[0];
-        if (URL) {
-        done(URL.createObjectURL(file));
-        } else if (FileReader) {
-        reader = new FileReader();
-        reader.onload = function (e) {
-            done(reader.result);
-        };
-        reader.readAsDataURL(file);
-        }
-    }
-    });
-    $modal.on('shown.bs.modal', function () {
-    cropper = new Cropper(image, {
-        aspectRatio: 1,
-        viewMode: 3,
-    });
-    }).on('hidden.bs.modal', function () {
-    cropper.destroy();
-    cropper = null;
-    });
-    document.getElementById('crop').addEventListener('click', function () {
-    var initialAvatarURL;
-    var canvas;
-    $modal.modal('hide');
-    if (cropper) {
-        canvas = cropper.getCroppedCanvas({
-        width: 300,
-        height: 300,
+        window.addEventListener('DOMContentLoaded', function () {
+            var avatar = document.getElementById('avatar');
+            var image = document.getElementById('image');
+            var input = document.getElementById('input');
+            var $modal = $('#modal');
+            var cropper;
+            $('[data-toggle="tooltip"]').tooltip();
+            input.addEventListener('change', function (e) {
+            var files = e.target.files;
+            var done = function (url) {
+                input.value = '';
+                image.src = url;
+                $modal.modal('show');
+            };
+            var reader;
+            var file;
+            var url;
+            if (files && files.length > 0) {
+                file = files[0];
+                if (URL) {
+                    done(URL.createObjectURL(file));
+                } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function (e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            });
+            $modal.on('shown.bs.modal', function () {
+            cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 3,
+            });
+            }).on('hidden.bs.modal', function () {
+            cropper.destroy();
+            cropper = null;
+            });
+            document.getElementById('crop').addEventListener('click', function () {
+                var initialAvatarURL;
+                var canvas;
+                $modal.modal('hide');
+                if (cropper) {
+                    canvas = cropper.getCroppedCanvas({
+                    width: 300,
+                    height: 300,
+                    });
+                    initialAvatarURL = avatar.src;
+                    avatar.src = canvas.toDataURL();
+                    canvas.toBlob(function (blob) {
+                    var formData = new FormData();
+                    formData.append('avatar', blob, 'avatar.png');
+                    formDATA.append('avatar', blob, 'avatar.png');
+                    });
+                }
+            });
         });
-        initialAvatarURL = avatar.src;
-        avatar.src = canvas.toDataURL();
-        canvas.toBlob(function (blob) {
-        var formData = new FormData();
-        formData.append('avatar', blob, 'avatar.png');
-        formDATA.append('avatar', blob, 'avatar.png');
-        });
-    }
-    });
-});
     
 
 
-    $(document).ready(()=>{
 
-    });
     </script>
 </body>
 </html>
