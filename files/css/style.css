@@ -723,3 +723,23 @@ textarea.form-control:focus{
     margin-right: 10px;
     margin-left: 5px;
 }
+
+.panel-profile-pic{
+    display: inline-block;
+    float: right;
+    padding: 5px;
+}
+
+#panel-holder-profilepic{
+    float: right;
+    margin-top: 17px;
+    cursor: pointer;
+}
+#profilepic-change{
+    margin-top: 20px;
+}
+#profile-pic-change-btn{
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}

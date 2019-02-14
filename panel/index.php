@@ -46,10 +46,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         <span class="display-name"><?php echo $_SESSION['displayname'];?></span>
                         <span class="username">نام کاربری : <?php echo $_SESSION['username'];?></span>
                     </li>
-                    <li class="list-group-item">
-                        <a href="edit-account/" id="edit-profile-link">مشخصات فردی</a>
-                        <span id="edit-profile">مشخصات فردی</span>
-                </li>
                     <!-- IF UESR IS ADMIN HERE GONNA SHOW "  مدیریت  " -->
                     <li class="list-group-item"><a href="?logout=1">خروج</a></li>
                 </ul>
@@ -74,8 +70,15 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 <button class="btn btn-primary">بروز رسانی</button>
                                 <small id="all-change"><i class="fa fa-check"></i>تغییرات با موفقیت انجام شد.</small>
                             </form>
-                            <form action="" method="post">
-                                
+                            <form action="" method="post" id="profilepic-change">
+                                <label class="label panel-profile-pic" data-toggle="tooltip">
+                                    <img class="rounded" id="avatar" src="../files/images/user.png" alt="avatar">
+                                    <input type="file" class="sr-only" id="input" name="image" accept="image/*">
+                                </label>
+                                <label for="input" id="panel-holder-profilepic">
+                                    تغییر عکس پروفایل
+                                </label>
+                                <button class="btn btn-primary" id="profile-pic-change-btn">تغییر</button>
                             </form>
                         </fieldset>
                     </li>
@@ -93,13 +96,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
 
     
-    <label class="label" data-toggle="tooltip">
-        <img class="rounded" id="avatar" src="../files/images/user.png" alt="avatar">
-        <input type="file" class="sr-only" id="input" name="image" accept="image/*">
-    </label>
-    <label for="input" id="icon-holder-profilepic">
-        انتخاب عکس پروفایل
-    </label>
+
 
 
 
