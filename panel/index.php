@@ -70,7 +70,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 <button class="btn btn-primary">بروز رسانی</button>
                                 <small id="all-change"><i class="fa fa-check"></i>تغییرات با موفقیت انجام شد.</small>
                             </form>
-                            <form action="" method="post" id="profilepic-change">
+                            <form action="" method="post" id="profilepic-change" enctype="multipart/form-data">
                                 <label class="label panel-profile-pic" data-toggle="tooltip">
                                     <img class="rounded" id="avatar" src="../files/images/user.png" alt="avatar">
                                     <input type="file" class="sr-only" id="input" name="image" accept="image/*">
@@ -79,7 +79,11 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                     تغییر عکس پروفایل
                                 </label>
                                 <button class="btn btn-primary" id="profile-pic-change-btn">تغییر</button>
-                            </form>
+                            </form><div class="clear"></div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+
                         </fieldset>
                     </li>
                 </ul>
@@ -137,35 +141,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
 
     <script type="text/javascript">
-        $(document).ready(()=>{
-            $('#email-displayname-change').submit((e)=>{
-                e.preventDefault();
-                let up_display_name = $('#up-displayname').val();
-                let up_email = $('#up-email').val();
-                $.ajax({
-                    url:'update_email_displayname.php',
-                    type:"POST",
-                    data:{
-                        up_display_name: up_display_name,
-                        up_email: up_email
-                    },
-                    success:(responce)=>{
-                        if(responce == 'OK_EMAIL'){
-                            $('#up_email').val(up_email);
-                            $('#email-change').fadeIn().delay(3000).fadeOut('slow');
-                        }else if(responce == 'OK_DISPLAYNAME'){
-                            $('#up_displayname').val(up_display_name);
-                            $('#display-change').fadeIn().delay(3000).fadeOut('slow');
-                        }else if(responce == 'OK_NAME_EMAIL'){
-                            $('#all-change').fadeIn().delay(3000).fadeOut('slow');
-                        }
-                        
-                    }
-                });
-            });
-        });
+
 
         var formDATA = new FormData();
+        let changeState = false;
         window.addEventListener('DOMContentLoaded', function () {
             var avatar = document.getElementById('avatar');
             var image = document.getElementById('image');
@@ -211,8 +190,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 $modal.modal('hide');
                 if (cropper) {
                     canvas = cropper.getCroppedCanvas({
-                    width: 300,
-                    height: 300,
+                    width: 450,
+                    height: 450,
                     });
                     initialAvatarURL = avatar.src;
                     avatar.src = canvas.toDataURL();
@@ -226,7 +205,67 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         });
     
 
+        $(document).ready(()=>{
 
+            $('#input').change((e)=>{
+                changeState = true;
+                console.log(changeState);
+            });
+            $('#profilepic-change').submit((e)=>{
+                e.preventDefault();
+                if(changeState){
+                    $.ajax({
+                        url:'change_profile_pic.php',
+                        type:'POST',
+                        data:formDATA,
+                        processData: false,
+                        contentType: false,
+                        xhr:()=>{
+                            let xhr = new XMLHttpRequest();
+                            xhr.upload.addEventListener('progress',(e)=>{
+                                if(e.lengthComputable){
+                                    let percentComplete = Math.round( (e.loaded * 100) / e.total );
+                                    $('.progress').css('display','block').delay(4000).fadeOut('slow');
+                                    $(".progress-bar").css('width',percentComplete+'%');
+                                    $('.progress-bar').text(percentComplete+'%');
+                                }
+                            });
+                            return xhr;
+                        },
+                        success:(responce)=>{
+                            alert(responce);
+                        }
+                    });
+                }
+
+            });
+
+            $('#email-displayname-change').submit((e)=>{
+                e.preventDefault();
+                let up_display_name = $('#up-displayname').val();
+                let up_email = $('#up-email').val();
+                $.ajax({
+                    url:'update_email_displayname.php',
+                    type:"POST",
+                    data:{
+                        up_display_name: up_display_name,
+                        up_email: up_email
+                    },
+                    success:(responce)=>{
+                        if(responce == 'OK_EMAIL'){
+                            $('#up_email').val(up_email);
+                            $('#email-change').fadeIn().delay(3000).fadeOut('slow');
+                        }else if(responce == 'OK_DISPLAYNAME'){
+                            $('#up_displayname').val(up_display_name);
+                            $('#display-change').fadeIn().delay(3000).fadeOut('slow');
+                        }else if(responce == 'OK_NAME_EMAIL'){
+                            $('#all-change').fadeIn().delay(3000).fadeOut('slow');
+                        }
+                        
+                    }
+                });
+            });
+        });
 
     </script>
 </body>
