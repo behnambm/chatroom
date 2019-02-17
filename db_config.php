@@ -1,8 +1,8 @@
 <?php
 
 $db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
+$db_user = 'admin';
+$db_pass = 'behnam1312';
 $db_name = 'behnam_db';
 
 function setup(){

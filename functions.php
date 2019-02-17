@@ -3,7 +3,7 @@
 require_once 'db_config.php';
 
 try{
-    $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",'root','');
+    $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",$db_user,$db_pass);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(PDOException $e){
     echo 'BM_ERROR_FUNC_FILE ::'.$e->getMessage();
