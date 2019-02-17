@@ -47,10 +47,12 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         <span class="username">نام کاربری : <?php echo $_SESSION['username'];?></span>
                     </li>
                     <!-- IF UESR IS ADMIN HERE GONNA SHOW "  مدیریت  " -->
+                    <li class="list-group-item" id="personal-details">مشخصات شخصی</li>
+                    <li class="list-group-item" id="delete-account-link">حذف حساب کاربری</li>
                     <li class="list-group-item"><a href="?logout=1">خروج</a></li>
                 </ul>
             </div>
-            <div class="right-group col-xl-9 col-lg-9 col-md-9">
+            <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9">
                 <ul class="list-group">
                     <li class="list-group-item active">ویرایش مشخصات فردی</li>
                     <li class="list-group-item">
@@ -88,6 +90,13 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                     </li>
                 </ul>
             </div>
+            <div class="right-group delete-account col-xl-9 col-lg-9 col-md-9">
+                <ul class="list-group">
+                    <li class="list-group-item active">حذف حساب کاربری</li>
+                    <li class="list-group-item">
+                    adasd</li>
+                </ul>
+            </div> 
         </div>
 
 
@@ -206,6 +215,16 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
     
 
         $(document).ready(()=>{
+
+            $('#delete-account-link').click((e)=>{
+                $('.personal-detail').css('display','none');
+                $('.delete-account').fadeIn(700);
+            });
+            $('#personal-details').click((e)=>{
+                $('.personal-detail').fadeIn(700);
+                $('.delete-account').css('display','none');
+
+            });
 
             $('#input').change((e)=>{
                 changeState = true;
