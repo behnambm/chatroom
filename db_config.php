@@ -72,6 +72,7 @@ function setup(){
         $con->exec($sql5);
         file_put_contents('db.conf','IS_CHAT_MESSAGE_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
 
+
     }catch(PDOException $e){
     echo $sql . "<br>" . $e->getMessage();
     }

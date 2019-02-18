@@ -637,6 +637,8 @@ display: none;
 }
 textarea.form-control{
     font: 14px isans;
+    direction: ltr;
+    text-align: right;
 }
 textarea.form-control:focus{
     outline: none;
@@ -644,6 +646,7 @@ textarea.form-control:focus{
 }
 .left-group , .right-group{
     margin-top: 10px;
+    margin-bottom: 70px;
 }
 .left-group .list-group li img{
     height: 100px;
@@ -676,6 +679,10 @@ textarea.form-control:focus{
     left: 0;
     bottom: 0;
     background: linear-gradient(90deg,transparent 9% , #007bff);
+}
+.list-unstyled li p {
+    direction: ltr;
+    text-align: right;
 }
 .list-unstyled li.message-you{
     background-color: #e3f9e2;
@@ -750,4 +757,28 @@ textarea.form-control:focus{
 .left-group li {
     color: #007bff;
     cursor: pointer;
+}
+
+#change-pass-form input{
+    width: 40%;
+}
+#change-pass-form i {
+    font-size: 20px;
+    margin-right: 20px;
+    position: relative;
+    top: 4px;
+    padding: 0 5px;
+}
+#change-pass-alert{
+    font-weight: 500;
+    font-size: 12px;
+}
+small.warning {
+    color: #fd7e14;
+}
+small.danger{
+    color: #ff3737;
+}
+small.success{
+    color: #28a745;
 }

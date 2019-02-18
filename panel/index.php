@@ -7,21 +7,7 @@ if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != 'yse'){
 if(isset($_GET['logout']) && $_GET['logout']==1){
     logout();
     redirect_to('../login.php');
- }
-
-
-
-// echo $_SESSION['logged_in'] ."<br>";
-// echo $_SESSION['username'].'<br>';
-// echo $_SESSION['user_id']."<br>";
-// echo $_SESSION['profilepic']."<br>";
-// echo $_SESSION['displayname']."<br>";
-// echo $_SESSION['ip']."<br>";
-// echo $_SESSION['login_details_id']."<br>";
-
-
-
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +57,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 </div>
                                 <button class="btn btn-primary">بروز رسانی</button>
                                 <small id="all-change"><i class="fa fa-check"></i>تغییرات با موفقیت انجام شد.</small>
-                            </form>
+                            </form><hr>
                             <form action="" method="post" id="profilepic-change" enctype="multipart/form-data">
                                 <label class="label panel-profile-pic" data-toggle="tooltip">
                                     <img class="rounded" id="avatar" src="../files/images/user.png" alt="avatar">
@@ -85,6 +71,23 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                             <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                             </div>
+                            <hr>
+                            <form action="" id="change-pass-form">
+                                <div class="form-group">
+                                    <label for="old-password">رمز عبور قبلی :</label>
+                                    <input type="password" class="form-control" name="oldpassword" id="old-password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">رمز عبور جدید :</label>
+                                    <input type="password" class="form-control" name="newpassword" id="new-password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="re-new-password">تکرار رمز عبور :</label>
+                                    <input type="password" class="form-control" name="renewpassword" id="re-new-password">
+                                </div>
+                                <button class="btn btn-success" id="change-pass-btn">تایید</button>
+                                <small id="change-pass-alert"></small>
+                            </form>
 
                         </fieldset>
                     </li>
@@ -281,6 +284,36 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                             $('#all-change').fadeIn().delay(3000).fadeOut('slow');
                         }
                         
+                    }
+                });
+            });
+
+            $('#change-pass-form').submit((e)=>{
+                e.preventDefault();
+                let oldPass = $('#old-password').val();
+                let newPass = $('#new-password').val();
+                let reNewPass = $('#re-new-password').val();
+
+                $.ajax({
+                    url:'change_password.php',
+                    type:'POST',
+                    data:{
+                        old_password: oldPass,
+                        new_password: newPass,
+                        re_new_password: reNewPass
+                    },
+                    success:(responce)=>{
+                        if(responce == 'OK'){
+                            $('#change-pass-alert').html('<i class="fa fa-check"></i>رمز شما با موفقیت تغییر کرد.').fadeIn().addClass('success').removeClass('danger','warning').delay(2000).fadeOut('slow');
+                        }else if(responce == 'ERR_DATA_NOT_EQUAL'){
+                            $('#change-pass-alert').html('<i class="fa fa-times"></i>رمز جدید با تکرار مطابقت ندارد.').fadeIn().addClass('danger').removeClass('warning','success').delay(2000).fadeOut('slow');
+                        }else if(responce == 'ERR_OLD_PASS'){
+                            $('#change-pass-alert').html('<i class="fa fa-times"></i>رمز قبلی شما درست نمی باشد.').fadeIn().addClass('danger').removeClass('warning','success').delay(2000).fadeOut('slow');
+                        }else if(responce == 'ERR_NO_DATA_SENT'){
+                            $('#change-pass-alert').html('<i class="fa fa-exclamation-triangle"></i>لطفا فیلد ها را پر کنید.').fadeIn().addClass('warning').removeClass('danger','success').delay(2000).fadeOut('slow');
+                        }else if(responce == 'ERR_OLD_EQUAL_WITH_NEW'){
+                            $('#change-pass-alert').html('<i class="fa fa-exclamation-triangle"></i>لطفا یک رمز جدید انتخاب کنید.').fadeIn().addClass('warning').removeClass('danger','success').delay(2000).fadeOut('slow');
+                        }
                     }
                 });
             });
