@@ -1,7 +1,7 @@
 <?php
 
 require_once 'db_config.php';
-
+ini_set('display_errors',1);
 try{
     $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",$db_user,$db_pass);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -267,9 +267,6 @@ function fetch_chat_history($from_user_id, $to_user_id){
                 </p>
             </li>';
         }else{
-        // $user = get_user_info(null, $row['from_user_id']);
-        // $user_name = '<b class="user-username">'.$user['username'].'</b>';
-
         $output .= '
         <li class="message-other">
             <p>'. $row['chat_message'].'
@@ -287,14 +284,17 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
 function fetch_unseen_chat($from_user_id , $to_user_id){
     global $con;
-    $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND status = ?");
+    $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND is_seen = ?");
     $stmt->execute(array($from_user_id , $to_user_id , '0'));
     $count = $stmt->rowCount();
     $output = '';
     if($count > 0){
+        if($count > 99){
+            $count = '99+';
+        }
         $output .= '<small class="unseen-chat" style="    position: absolute;
         background-color: red;
-        padding: 3px 6px 2px 4px;
+        padding: 3px 5px 0px 4px;
         border-radius: 10px;
         bottom: -8px;
         left: -8px;">'.$count.'</small>';
@@ -312,13 +312,94 @@ function fetch_is_type($user_id){
     $res2 = $res[0];
     $output = 'none';
     if($res2['is_type'] == 'yes'){
-        // $output .= '<small class="is-typing" style="
-        // position: absolute;
-        // margin-top: 6px;
-        // margin-right: 5px;
-        // ">در حال نوشتن ...</small>';
         $output = 'block';
     }
     return $output;
     
 }
+
+function fetch_group_chat_history($user_id){
+    global $con;
+    // if want to check user is BANED or kicked from group you should check it here.  
+    $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = '0' ORDER BY timestamp ASC;");
+    $stmt->execute();
+    $count = $stmt->rowCount();
+    if($count > 0){
+        $data = $stmt->fetchAll();
+        $output = '<ul style="list-style: none;">';
+        foreach($data as $row){
+            $time = $row['timestamp'];
+            $time = explode(' ', $time);
+    
+            // DATE
+            $date = $time[0];
+            $date = explode('-',$date);
+            
+            // TIME
+            $time = $time[1];
+            $time = explode(':',$time);
+            $hour = $time[0];
+            $min = $time[1];
+            $user = get_user_info(null,$row['from_user_id']);
+            if($row['from_user_id'] == $_SESSION['user_id']){
+                $tick1 = '';
+                $tick2 = '';
+                if($row['is_sent'] == '1'){
+                    $tick1 = 'fa fa-check';
+                }
+                if($row['is_seen'] == '1'){
+                    $tick2 = 'fa fa-check';
+                }
+    
+                $output .= '
+                <li class="group-you">
+                    <p>'.$row['chat_message'].'
+                        <span class="message-time">
+                            <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                        </span>
+                    </p>
+                </li>';
+            }else{
+            $output .= '
+            <li class="group-other">
+                <img src="'.$user['profile_pic'].'" id="history-img" >
+                <p class="history-text"><span class="group-user-name">'.$user['username'].'</span> <span>'. $row['chat_message'].'</span>
+                    <span class="message-time">
+                        <small><em>'.$hour.':'.$min.'</em></small>
+                    </span>
+                </p>
+            </li>';
+            }
+        }
+        $output .= '</ul>';
+        return $output;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

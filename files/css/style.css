@@ -372,6 +372,7 @@ display: none;
     box-shadow: 0 0 2px 0 #000;
     border-radius: 3px;
     display: none;
+    z-index: 1;
 }
 .header-widget ul li {
     list-style: none;
@@ -436,7 +437,7 @@ display: none;
     text-align: right;
     width: 70%;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 0;
     box-shadow: 0 0 1px 0 #000000;
     overflow: hidden;
 }
@@ -444,15 +445,24 @@ display: none;
     .user-table{
         width: 80%;
     }
+    .group-chat-div{
+        width: 80% !important;
+    }
 }
 @media(max-width:370px){
     .user-table{
         width: 90%;
     }
+    .group-chat-div{
+        width: 90% !important;
+    }
 }
 @media(max-width:330px){
     .user-table{
         width: 98%;
+    }
+    .group-chat-div{
+        width: 98% !important;
     }
     .user-table th {
         font-size: 12px;
@@ -620,7 +630,7 @@ display: none;
 .chat-box{
     width: 100% !important;
 }
-.chat-history{
+.chat-history , .group-chat-history{
     height: 300px;
     overflow-y: scroll;
     box-shadow: 0 0 2px 0 #000;
@@ -711,7 +721,7 @@ textarea.form-control:focus{
     bottom: 0;
     right: 5px;
 }
-.chat-history{
+.chat-history, .group-chat-history{
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
@@ -732,7 +742,7 @@ textarea.form-control:focus{
 }
 
 .panel-profile-pic{
-    display: inline-block;
+    /* display: inline-block; */
     float: right;
     padding: 5px;
 }
@@ -762,6 +772,21 @@ textarea.form-control:focus{
 #change-pass-form input{
     width: 40%;
 }
+@media(max-width:500px){
+    #change-pass-form input {
+        width: 55%;
+    }
+}
+@media(max-width:400px){
+    #change-pass-form input {
+        width: 70%;
+    }
+}
+@media(max-width:300px){
+    #change-pass-form input {
+        width: 90%;
+    }
+}
 #change-pass-form i {
     font-size: 20px;
     margin-right: 20px;
@@ -782,3 +807,98 @@ small.danger{
 small.success{
     color: #28a745;
 }
+
+.group-chat-div{
+    text-align: right;
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+#send-group-message{
+    float: right;
+    font: 14px isans;
+}
+
+.group-other{
+    color: #000;
+    font: 12px isans;
+    width: 95%;
+    float: left;
+    margin-top: 12px;
+    position: relative;
+}
+.group-other img , .group-you img{
+    width: 30px;
+    border-radius: 20px;
+    float: left;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.group-other p.history-text , .group-you p.history-text{
+    direction: ltr;
+    text-align: right;
+    background-color: #e2f3f9;
+    float: left;
+    margin: 0 10px;
+    margin-left: 36px;
+    width: auto;
+    min-width: 30%;
+    position: relative;
+    padding: 10px 5px;
+    max-width: 85%;
+    padding-bottom: 17px;
+    border-radius: 4px;
+    padding-top: 15px;
+}
+.group-other p.history-text{
+    direction: rtl;
+}
+.group-you {
+    float: right;
+    width: 100%;
+}
+.group-you p{
+    background-color: #e3f9e2;
+    padding: 5px;
+    border-radius: 5px;
+    color: #000;
+    font: 12px isans;
+    width: auto;
+    float: right;
+    position: relative;
+    min-width: 30%;
+    padding-bottom: 17px;
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+.group-other .group-user-name{
+    left: 5px;
+    top: 0;
+    position: absolute;
+}
+@-moz-document url-prefix() {
+    .message-time small em{
+        float: right;
+    }
+    .message-time small i{
+        float: right;
+        margin-top: 3px;
+    }
+  }
+
+  #start-group-chat{
+      position: relative;
+  }
+  #group-msg-count{
+    display: none;
+    font-size: 10px;
+    position: absolute;
+    background-color: red;
+    padding: 2px 6px 0 5px;
+    border-radius: 10px;
+    bottom: -6px;
+    left: -6px;
+    color: #fff;
+  }

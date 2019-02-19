@@ -65,7 +65,6 @@ function setup(){
                 to_user_id VARCHAR(32) NOT NULL,
                 chat_message TEXT,
                 timestamp VARCHAR(16),
-                status VARCHAR(2) DEFAULT '0' ,
                 is_sent VARCHAR(2) DEFAULT '0' ,
                 is_seen VARCHAR(2) DEFAULT '0'
             )";

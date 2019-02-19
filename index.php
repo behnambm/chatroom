@@ -41,10 +41,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    <link rel="stylesheet" href="files/css/style.css">
 </head>
 <body>
-   <div class="container">
-      <div class="header">
-         <h1 class="site-name"><a href="index.php">چت روم</a></h1>
-         <div class="header-widget">
+    <div class="container">
+       <div class="header">
+            <h1 class="site-name"><a href="index.php">چت روم</a></h1>
+            <div class="header-widget">
             <span><?php echo $_SESSION['displayname'];?></span>
             <div class="profile-pic">
             <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic" alt="<?php echo $_SESSION['displayname'];?>">
@@ -54,23 +54,42 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                <li><a href="panel/"><i class="fa fa-edit"></i>پروفایل</a></li>
                <li><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
             </ul>
-         </div>
-      </div><div class="clear"></div>
-   <div class="user-table"></div>
-   <div id="chat-box-container"></div>
+        </div>
+        </div><div class="clear"></div>
+
+        <div class="group-chat-div">
+            <button class="btn btn-warning btn-sm" id="start-group-chat">چت گروهی<span id="group-msg-count"></span></button>
+            
+        </div>
+    <div class="user-table">
+    </div>
+    <div id="chat-box-container"></div>
+
+    <div id="group-chat-dialog" title="چت گروهی">
+        <div class="group-chat-history"></div>
+        <div class="form-group">
+            <textarea name="group-chat-message" id="group-chat-message" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <button name="send_group_message" id="send-group-message" class="btn btn-info">ارسال</button>
+        </div>
+
+        
+
+    </div>
 
 
 
-
-      </div>
-   </div>
-   <script src="files/js/jquery-3.1.1.js"></script>
-   <script src="files/js/jquery-ui.js"></script>
-   <script type="text/javascript">
-      $(document).ready(()=>{
+        </div>
+    </div>
+    <script src="files/js/jquery-3.1.1.js"></script>
+    <script src="files/js/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(()=>{
          let interval = null;
+         let gorupInterval = null;
          //----------------------------------------------------------------------------------------------------
-         // this function is structure of chat dialog
+         // this function is structure of single chat dialog
          function make_chat_box(user_name,user_id){
             let boxContent = '<div class="chat-box" id="user-dialog-'+user_id+'" title="چت با : '+user_name+'">';
             boxContent += '<div class="chat-history" id="chat-history-'+user_id+'" data-touserid="'+user_id+'"></div>';
@@ -94,8 +113,9 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             let to_user_id  = $(e.target).data('touserid');
             let message = $('#chat-message-'+to_user_id).val();
             $('#user-dialog-'+toUserId).dialog('open');
-            console.log(to_user_id);
+            
             interval = setInterval(() => {
+                console.log('user Interval');
                $.ajax({
                   url:'fetch_chat_history.php',
                   type:'POST',
@@ -106,13 +126,21 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                      $('#chat-history-'+to_user_id).html(responce);
                   }
                });
-               console.log('interval');
-            }, 1000);
+               
+            }, 500);
          });   
          //----------------------------------------------------------------------------------------------------
          // click event for close chat dialog 
          $(document).on('click','.ui-dialog-titlebar-close' , (e)=>{
-            clearInterval(interval);
+            let tmp = $(e.target).parents('.ui-dialog').attr('aria-describedby');
+            if( tmp == 'group-chat-dialog'){
+                clearInterval(groupInterval);  
+            }else{
+                clearInterval(interval);
+            }
+
+            
+
          });
          //----------------------------------------------------------------------------------------------------
          $('.profile-pic').click((e)=>{
@@ -149,7 +177,21 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          setInterval(() => {
             fetchUser();
             updateActivity();
-         }, 5000);
+            $.ajax({
+                url:'group_chat.php',
+                type:'POST',
+                data:{
+                    action:'msg_count'
+                },
+                success:(responce)=>{
+                    if(responce != 0){
+                        $('#group-msg-count').html(responce).fadeIn('fast');
+                    }else{
+                        $('#group-msg-count').css('display','none');
+                    }
+                }
+            });
+         }, 2000);
          $(document).on('focus','.txtarea-box',(e)=>{
             let is_type = 'yes';
             $.ajax({
@@ -200,7 +242,58 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                }
             });
          }
-      });
+
+         //----------------------------------------------------------------------------------------------------
+         $('#group-chat-dialog').dialog({
+             autoOpen:false,
+             width:350
+         });
+
+         $('#start-group-chat').click((e)=>{
+             $('#group-chat-dialog').dialog('open');
+             
+         });
+
+        $('#send-group-message').click((e)=>{
+            let chatMsg = $('#group-chat-message').val();
+            let action = 'insert';
+            $('#group-chat-message').val('');
+            if(chatMsg != ''){ 
+                $.ajax({
+                    url:'group_chat.php',
+                    type:'POST',
+                    data:{
+                        group_chat_message: chatMsg,
+                        action:action
+                    },
+                    success:(responce)=>{
+                        $('.group-chat-history').html(responce);
+                    }
+                });
+            }
+        });
+
+
+        $('#start-group-chat').click((e)=>{
+            groupInterval = setInterval(()=>{
+                console.log('group Interval');
+                $.ajax({
+                    url:'group_chat.php',
+                    type:'POST',
+                    data:{
+                        action:'fetch'
+                    },
+                    success:(responce)=>{
+                        
+                        $('.group-chat-history').html(responce);
+                    }
+                });
+            },500);
+
+        });
+
+
+    });
    </script>
 </body>
 </html>

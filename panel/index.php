@@ -313,7 +313,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                             $('#change-pass-alert').html('<i class="fa fa-exclamation-triangle"></i>لطفا فیلد ها را پر کنید.').fadeIn().addClass('warning').removeClass('danger','success').delay(2000).fadeOut('slow');
                         }else if(responce == 'ERR_OLD_EQUAL_WITH_NEW'){
                             $('#change-pass-alert').html('<i class="fa fa-exclamation-triangle"></i>لطفا یک رمز جدید انتخاب کنید.').fadeIn().addClass('warning').removeClass('danger','success').delay(2000).fadeOut('slow');
-                        }
+                        }  
                     }
                 });
             });
