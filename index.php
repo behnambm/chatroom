@@ -194,11 +194,14 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          }, 2000);
          $(document).on('focus','.txtarea-box',(e)=>{
             let is_type = 'yes';
+            let to_user_id = $(e.target).attr('id').split('-');
+            
             $.ajax({
                url:'update_is_type_status.php',
                type:'POST',
                data:{
-                  is_type:is_type
+                  is_type:is_type,
+                  to_user_id:to_user_id[2]
                },
                success:()=>{
 
@@ -208,11 +211,14 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
          $(document).on('blur','.txtarea-box',(e)=>{
             let is_type = 'no';
+            let to_user_id = $(e.target).attr('id').split('-');
+
             $.ajax({
                url:'update_is_type_status.php',
                type:'POST',
                data:{
-                  is_type:is_type
+                  is_type:is_type,
+                  to_user_id:to_user_id[2]
                },
                success:()=>{
                   

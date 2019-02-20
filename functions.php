@@ -187,7 +187,7 @@ function logout(){
 
 function set_id_to_login_details($id){
     global $con;
-    $stmt = $con->prepare("INSERT INTO login_details VALUES(null,?,null,'')");
+    $stmt = $con->prepare("INSERT INTO login_details VALUES(null,?,null,'',null)");
     $stmt->execute(array($id));
     $count = $stmt->rowCount();
     if($count > 0 ){
@@ -215,9 +215,9 @@ function fetch_user_last_activity($user_id){
     $stmt = $con->prepare("SELECT * FROM login_details WHERE user_id = ? ORDER BY last_activity DESC LIMIT 1");
     $stmt->execute(array($user_id));
     $res = $stmt->fetchAll();
-    $data = $res[0];
-    return $data['last_activity'];
-
+    foreach($res as $row){
+        return $row['last_activity'];
+    }
 }
 
 
@@ -305,17 +305,21 @@ function fetch_unseen_chat($from_user_id , $to_user_id){
 
 function fetch_is_type($user_id){
     global $con;
-    $stmt = $con->prepare("SELECT is_type FROM login_details WHERE user_id = ? ORDER BY last_activity DESC LIMIT 1");
+    $stmt = $con->prepare("SELECT is_type,typing_target FROM login_details WHERE user_id = ? ORDER BY last_activity DESC LIMIT 1");
     $stmt->execute(array($user_id));
     $count = $stmt->rowCount();
     $res = $stmt->fetchAll();
-    $res2 = $res[0];
     $output = 'none';
-    if($res2['is_type'] == 'yes'){
-        $output = 'block';
+
+    foreach($res as $row){
+
+        if($row['typing_target'] == $_SESSION['user_id']){
+            if($row['is_type'] == 'yes')
+            $output = 'block';
+        }
     }
     return $output;
-    
+
 }
 
 function fetch_group_chat_history($user_id){

@@ -53,7 +53,8 @@ function setup(){
             `login_details_id` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY ,
             `user_id` int(11) NOT NULL,
             `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `is_type` enum('no','yes') NOT NULL
+            `is_type` enum('no','yes') NOT NULL,
+            typing_target VARCHAR(2)
           )";
         $con->exec($sql4);
         file_put_contents('db.conf','IS_LOGIN_DETAILS_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
