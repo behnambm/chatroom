@@ -24,8 +24,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 <body style="text-align: right;">
     <div class="container-fluid">
         <div class="row">
-
-            <div class="left-group col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="header header-responsive">
+                <button id="btn-show-menu"><i class="fa fa-bars"></i></button>
+                <a href="?logout=1">خروج</a>
+            </div>
+            <div class="menu-holder">
+                <ul class="list-group">
+                <li class="list-group-item" id="personal-li-link">مشخصات شخصی</li>
+                <li class="list-group-item" id="delete-li-link">حذف حساب کاربری</li>
+                </ul>
+            </div>
+            <div class="left-group col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-12">
                 <ul class="list-group">
                     <li class="list-group-item head">
                         <img src="../<?php echo $_SESSION['profilepic'];?>" alt="<?php echo $_SESSION['displayname'];?>">
@@ -38,7 +47,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                     <li class="list-group-item"><a href="?logout=1">خروج</a></li>
                 </ul>
             </div>
-            <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9">
+            <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9 col-sm-8" >
                 <ul class="list-group">
                     <li class="list-group-item active">ویرایش مشخصات فردی</li>
                     <li class="list-group-item">
@@ -93,7 +102,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                     </li>
                 </ul>
             </div>
-            <div class="right-group delete-account col-xl-9 col-lg-9 col-md-9">
+            <div class="right-group delete-account col-xl-9 col-lg-9 col-md-9 col-sm-8">
                 <ul class="list-group">
                     <li class="list-group-item active">حذف حساب کاربری</li>
                     <li class="list-group-item">
@@ -218,7 +227,40 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
     
 
         $(document).ready(()=>{
+            function checkWidth(){
+                if($(window).width() <= 576){
+                    $('.left-group').hide();
+                    $('.header').show();
+                }else{
+                    $('.left-group').show();
+                    $('.header').hide();
+                }
+            }
 
+            $('#btn-show-menu').click((e)=>{
+                if($('.menu-holder').hasClass('open')){
+                    $('#btn-show-menu').css('color','#000');
+                    $('#btn-show-menu').css('background-color','#fff');
+                    $('.menu-holder').slideUp('slow').removeClass('open');
+                }else{
+                    $('.menu-holder').slideDown('slow').addClass('open');
+                    $('#btn-show-menu').css('background-color','#007bff');
+                    $('#btn-show-menu').css('color','#fff');
+                }
+            });
+            $('#personal-li-link').click((e)=>{
+                $('.personal-detail').fadeIn(700);
+                $('.delete-account').hide(10);
+            });
+            $('#delete-li-link').click((e)=>{
+                $('.personal-detail').hide(10);
+                $('.delete-account').fadeIn(700);
+            });
+
+            checkWidth();
+            $(window).resize(()=>{
+                checkWidth();
+            });
             $('#delete-account-link').click((e)=>{
                 $('.personal-detail').css('display','none');
                 $('.delete-account').fadeIn(700);
@@ -228,6 +270,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 $('.delete-account').css('display','none');
 
             });
+
+            // update last activity 
+            setInterval(function updateActivity(){
+                $.ajax({
+                    url:'../update_last_activity.php',
+                    type:'POST',
+                    success:()=>{
+                    }
+                });
+            },2000);
+
 
             $('#input').change((e)=>{
                 changeState = true;

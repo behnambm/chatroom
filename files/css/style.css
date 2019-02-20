@@ -902,3 +902,31 @@ small.success{
     left: -6px;
     color: #fff;
   }
+  .header-responsive{
+      width: 100%;
+  }
+  .header-responsive button{
+    width: 45px;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 1px 0 #1b1b1b; 
+  }
+  .header-responsive a {
+    float: left;
+    padding: 0 15px;
+    color: #dc3545;
+  }
+
+.menu-holder{
+    width: 100%;
+    display: none;
+}
+
+.menu-holder li {
+    color: #007bff;
+
+}
+.menu-holder li:hover{
+    cursor: pointer;
+}
