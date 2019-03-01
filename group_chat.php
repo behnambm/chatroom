@@ -28,8 +28,9 @@ if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
             }
         }
     }else{
-        echo 'ERR_INVALID_ACTION';
+        echo '<script>window.location = "login.php"</script>';
+
     }
 }else{
-    echo 'ERR_NO_DATA_SENT';
+    echo '<script>window.location = "login.php"</script>';
 }

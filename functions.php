@@ -1,7 +1,7 @@
 <?php
 
 require_once 'db_config.php';
-ini_set('display_errors',1);
+// ini_set('display_errors',1);
 try{
     $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",$db_user,$db_pass);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -247,6 +247,16 @@ function fetch_chat_history($from_user_id, $to_user_id){
         $hour = $time[0];
         $min = $time[1];
 
+        $current_id = $row['id'];
+        $stmt = $con->prepare("SELECT * FROM chat_message WHERE id = ?");
+        $stmt->execute(array($current_id+1));
+        $data2 = $stmt->fetchAll(2);
+        $next_date = null;
+        foreach($data2 as $row2){
+            $next_date =  $row2['timestamp'];
+        }
+
+        $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
 
         if($row['from_user_id'] == $from_user_id){
             $tick1 = '';
@@ -331,6 +341,7 @@ function fetch_group_chat_history($user_id){
     if($count > 0){
         $data = $stmt->fetchAll();
         $output = '<ul style="list-style: none;">';
+
         foreach($data as $row){
             $time = $row['timestamp'];
             $time = explode(' ', $time);
@@ -338,13 +349,26 @@ function fetch_group_chat_history($user_id){
             // DATE
             $date = $time[0];
             $date = explode('-',$date);
-            
+
             // TIME
             $time = $time[1];
             $time = explode(':',$time);
             $hour = $time[0];
             $min = $time[1];
             $user = get_user_info(null,$row['from_user_id']);
+
+
+            $current_id = $row['id'];
+            $stmt = $con->prepare("SELECT * FROM chat_message WHERE id = ?");
+            $stmt->execute(array($current_id+1));
+            $data2 = $stmt->fetchAll(2);
+            $next_date = null;
+            foreach($data2 as $row2){
+                $next_date =  $row2['timestamp'];
+            }
+
+            $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
+
             if($row['from_user_id'] == $_SESSION['user_id']){
                 $tick1 = '';
                 $tick2 = '';
@@ -374,7 +398,15 @@ function fetch_group_chat_history($user_id){
                 </p>
             </li>';
             }
+
+            if($sub > 0){
+                $tmp = strtotime($next_date);
+                $tmp = date('F j',$tmp);
+                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            }
+
         }
+
         $output .= '</ul>';
         return $output;
     }

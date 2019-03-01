@@ -3,7 +3,10 @@
 session_start();
 require_once 'functions.php';
 date_default_timezone_set('Asia/Tehran');
+if(!isset($_SESSION['logged_in'])){
+  echo '<script>window.location = "login.php"</script>';
 
+}
 
 
 $stmt = $con->prepare("SELECT * FROM users WHERE id != {$_SESSION['user_id']}");

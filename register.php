@@ -156,8 +156,8 @@ window.addEventListener('DOMContentLoaded', function () {
     $modal.modal('hide');
     if (cropper) {
         canvas = cropper.getCroppedCanvas({
-        width: 300,
-        height: 300,
+        width: 800,
+        height: 800,
         });
         initialAvatarURL = avatar.src;
         avatar.src = canvas.toDataURL();

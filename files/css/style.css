@@ -854,6 +854,7 @@ small.success{
 }
 .group-other p.history-text{
     direction: rtl;
+    overflow: hidden;
 }
 .group-you {
     float: right;
@@ -910,7 +911,8 @@ small.success{
     background-color: #fff;
     outline: none;
     border: none;
-    box-shadow: 0 0 1px 0 #1b1b1b; 
+    box-shadow: 0 0 1px 0 #1b1b1b;
+    border-radius: 1px;
   }
   .header-responsive a {
     float: left;
@@ -929,4 +931,19 @@ small.success{
 }
 .menu-holder li:hover{
     cursor: pointer;
+}
+
+.new-time{
+    font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    width: 96%;
+    user-select: none;
+}
+
+.new-time strong{
+    background-color: #353535;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0 5px;
 }

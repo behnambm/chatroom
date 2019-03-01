@@ -2,6 +2,9 @@
 session_start();
 date_default_timezone_set('Asia/Tehran');
 require_once 'functions.php';
+if(!isset($_SESSION['logged_in'])){
+    header('Location: index.php');
+}
 //  *********************************************************************
 //  ************************** LOGIN SECTION ****************************
 if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
