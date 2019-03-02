@@ -19,7 +19,7 @@ if($session_flag && $cookie_flag){
    $cookie_info = check_cookie($_COOKIE['hash'],true);
    $cook_id = $cookie_info['id'];
    $user = get_user_info(null,$cook_id);
-   set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id']);
+   set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id'],$user['email']);
 }
 
 if(isset($_GET['logout']) && $_GET['logout']==1){

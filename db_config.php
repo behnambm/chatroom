@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors',1);
 $db_host = 'localhost';
 $db_user = 'admin';
 $db_pass = 'behnam1312';
@@ -67,7 +67,8 @@ function setup(){
                 chat_message TEXT,
                 timestamp VARCHAR(16),
                 is_sent VARCHAR(2) DEFAULT '0' ,
-                is_seen VARCHAR(2) DEFAULT '0'
+                is_seen VARCHAR(2) DEFAULT '0',
+                id_per_msg INT DEFAULT 0
             )";
         $con->exec($sql5);
         file_put_contents('db.conf','IS_CHAT_MESSAGE_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
