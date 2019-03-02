@@ -363,6 +363,17 @@ function fetch_group_chat_history($user_id){
             $user = get_user_info(null,$row['from_user_id']);
 
 
+            $current_id = $row['id_per_msg'];
+            $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = 0 AND id_per_msg = ? ");
+            $stmt->execute(array(($current_id+1)));
+            $data2 = $stmt->fetchAll();
+            $next_date = null;
+            foreach($data2 as $row2){
+                $next_date =  $row2['timestamp'];
+            }
+
+            $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
+
 
 
 
@@ -396,11 +407,11 @@ function fetch_group_chat_history($user_id){
             </li>';
             }
 
-            // if($sub > 0){
-            //     $tmp = strtotime($next_date);
-            //     $tmp = date('F j',$tmp);
-            //     $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-            // }
+            if($sub > 0){
+                $tmp = strtotime($next_date);
+                $tmp = date('F j',$tmp);
+                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            }
 
         }
 
