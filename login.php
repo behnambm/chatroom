@@ -1,7 +1,10 @@
 <?php 
+ini_set('display_errors',1);
+
 session_start();
 require_once 'db_config.php';
 setup();
+
 require_once 'functions.php';
 if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) && $_COOKIE['logged_in'] == 'yes' && check_cookie($_COOKIE['hash'])){
     redirect_to('index.php');        
@@ -107,7 +110,7 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
                     success:(responce)=>{
                         $('.loading').css('visibility','hidden');
                         if(responce == 'OK'){
-                            window.location.replace('index.php');
+                            window.location = 'index.php';
                         }else if(responce == 'ERR_USER_PASS'){
                             $('.err-log').css('visibility','visible');
                         }

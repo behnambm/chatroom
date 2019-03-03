@@ -1,10 +1,8 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Tehran');
+ini_set('display_errors',1);
 require_once 'functions.php';
-if(!isset($_SESSION['logged_in'])){
-    header('Location: index.php');
-}
 //  *********************************************************************
 //  ************************** LOGIN SECTION ****************************
 if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
@@ -19,7 +17,7 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
         $_SESSION['login_details_id'] = $log_det['login_details_id'];
         set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id'],$user['email']);
         
-        // echo $remember, gettype($remember);
+
         if($remember == 'true'){
             $now = time();
             $tmp = 60*60*24*30;

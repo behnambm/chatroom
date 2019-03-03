@@ -14,7 +14,7 @@ if(!isset($_SESSION['logged_in'])){
 }
 
 if($session_flag && $cookie_flag){
-   redirect_to('login.php');
+   echo '<script>window.location = "login.php";</script>';
 }elseif(isset($_COOKIE['logged_in'],$_COOKIE['hash']) && $_COOKIE['logged_in'] == 'yes'){
    $cookie_info = check_cookie($_COOKIE['hash'],true);
    $cook_id = $cookie_info['id'];
@@ -24,7 +24,8 @@ if($session_flag && $cookie_flag){
 
 if(isset($_GET['logout']) && $_GET['logout']==1){
    logout();
-   redirect_to('login.php');
+   echo '<script>window.location = "index.php";</script>';
+
 }
 
 ?>

@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 
 require_once 'db_config.php';
 // ini_set('display_errors',1);
