@@ -947,3 +947,10 @@ small.success{
     border-radius: 3px;
     padding: 0 5px;
 }
+
+.empty-history{
+    display: block;
+    text-align: center;
+    font: 12px isans;
+    color: #7d7a7a;
+}

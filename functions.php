@@ -232,66 +232,70 @@ function fetch_chat_history($from_user_id, $to_user_id){
     $stmt->execute(array($from_user_id , $to_user_id , $to_user_id , $from_user_id));
     $res = $stmt->fetchAll();
     $output = '<ul class="list-unstyled">';
+    $count = $stmt->rowCount();
+    if($count == 0){
+        $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
+    }else{
+        foreach($res as $row){
+            $time = $row['timestamp'];
+            $time = explode(' ', $time);
 
-    foreach($res as $row){
-        $time = $row['timestamp'];
-        $time = explode(' ', $time);
-
-        // DATE
-        $date = $time[0];
-        $date = explode('-',$date);
+            // DATE
+            $date = $time[0];
+            $date = explode('-',$date);
 
 
-        // TIME
-        $time = $time[1];
-        $time = explode(':',$time);
-        $hour = $time[0];
-        $min = $time[1];
+            // TIME
+            $time = $time[1];
+            $time = explode(':',$time);
+            $hour = $time[0];
+            $min = $time[1];
 
-        $current_id = $row['id_per_msg'];
-        $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND id_per_msg = ? ");
-        $stmt->execute(array($from_user_id, $to_user_id, ($current_id+1)));
-        $data2 = $stmt->fetchAll();
-        $next_date = null;
-        foreach($data2 as $row2){
-            $next_date =  $row2['timestamp'];
-        }
-
-        $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
-
-        if($row['from_user_id'] == $from_user_id){
-            $tick1 = '';
-            $tick2 = '';
-            if($row['is_sent'] == '1'){
-                $tick1 = 'fa fa-check';
-            }
-            if($row['is_seen'] == '1'){
-                $tick2 = 'fa fa-check';
+            $current_id = $row['id_per_msg'];
+            $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND id_per_msg = ? ");
+            $stmt->execute(array($from_user_id, $to_user_id, ($current_id+1)));
+            $data2 = $stmt->fetchAll();
+            $next_date = null;
+            foreach($data2 as $row2){
+                $next_date =  $row2['timestamp'];
             }
 
+            $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
+
+            if($row['from_user_id'] == $from_user_id){
+                $tick1 = '';
+                $tick2 = '';
+                if($row['is_sent'] == '1'){
+                    $tick1 = 'fa fa-check';
+                }
+                if($row['is_seen'] == '1'){
+                    $tick2 = 'fa fa-check';
+                }
+
+                $output .= '
+                <li class="message-you">
+                    <p>'.$row['chat_message'].'
+                        <div class="message-time">
+                            <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                        </div>
+                    </p>
+                </li>';
+            }else{
             $output .= '
-            <li class="message-you">
-                <p>'.$row['chat_message'].'
+            <li class="message-other">
+                <p>'. $row['chat_message'].'
                     <div class="message-time">
-                        <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                        <small><em>'.$hour.':'.$min.'</em></small>
                     </div>
                 </p>
             </li>';
-        }else{
-        $output .= '
-        <li class="message-other">
-            <p>'. $row['chat_message'].'
-                <div class="message-time">
-                    <small><em>'.$hour.':'.$min.'</em></small>
-                </div>
-            </p>
-        </li>';
-        }
+            }
 
-        if($sub > 0){
-            $tmp = strtotime($next_date);
-            $tmp = date('F j',$tmp);
-            $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            if($sub > 0){
+                $tmp = strtotime($next_date);
+                $tmp = date('F j',$tmp);
+                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            }
         }
     }
     $output .= '</ul>';
@@ -344,10 +348,14 @@ function fetch_group_chat_history($user_id){
     $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = '0' ORDER BY timestamp ASC;");
     $stmt->execute();
     $count = $stmt->rowCount();
-    if($count > 0){
-        $data = $stmt->fetchAll();
-        $output = '<ul style="list-style: none;">';
+    $output = '<ul style="list-style: none;">';
 
+    if($count == 0){
+        
+        $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
+
+    }else{
+        $data = $stmt->fetchAll();
         foreach($data as $row){
             $time = $row['timestamp'];
             $time = explode(' ', $time);
@@ -413,12 +421,10 @@ function fetch_group_chat_history($user_id){
                 $tmp = date('F j',$tmp);
                 $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
             }
-
         }
-
-        $output .= '</ul>';
-        return $output;
     }
+    $output .= '</ul>';
+    return $output;
 }
 
 
