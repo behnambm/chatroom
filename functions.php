@@ -81,7 +81,7 @@ function get_user_info($username,$id=null){
 function doLogin($user, $pass){
     global $con;
     $stmt = $con->prepare("SELECT * FROM users WHERE username=? AND password=?");
-    $stmt->execute(array(strtolower($user), encrypt_pass($pass)));
+    $stmt->execute(array(strtolower(trim($user)), encrypt_pass($pass)));
     $count = $stmt->rowCount();
     if($count > 0 ){
         return true;
@@ -137,7 +137,7 @@ function register_user($user, $pass, $email, $displayname){
         if(get_user_by_email($email)){
             $path = "files/images/user.png";
             $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?,?) ");
-            $stmt->execute(array(strtolower($user), encrypt_pass($pass), $displayname, strtolower($email) ,$path));
+            $stmt->execute(array(strtolower(trim($user)), encrypt_pass($pass), trim($displayname), strtolower(trim($email)) ,$path));
             $count = $stmt->rowCount();    
             if($count > 0 ){
                 $res = get_user_info($user);
@@ -166,12 +166,7 @@ function add_profile_path_to_db($username, $path){
     global $con;
     $stmt = $con->prepare("UPDATE users SET profile_pic = ? WHERE username = ?");
     $stmt->execute(array($path, $username));
-    $count = $stmt->rowCount();
-    if($count == 0){
-        return true;
-    }else{
-        return false;
-    }
+    return true;
     
 }
 function redirect_to($add){

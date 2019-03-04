@@ -1,5 +1,5 @@
 <?php
-// ini_set('display_errors',1);
+ini_set('display_errors',1);
 require_once '../functions.php'; 
 session_start(); 
 if (isset($_FILES['avatar'])) {
@@ -15,6 +15,7 @@ if (isset($_FILES['avatar'])) {
         unlink($path); 
     }
         if (move_uploaded_file($tmp, $path)) {
+
         add_profile_path_to_db($_SESSION['username'], 'profile_img/' . $_SESSION['username'] . '.' . $ext); 
         $_SESSION['profilepic'] = 'profile_img/' . $_SESSION['username'] . '.' . $ext; 
         echo 'OK'; 

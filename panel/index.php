@@ -295,6 +295,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             changeState = true;
             console.log(changeState);
         });
+        alert('<?php echo $_SESSION['profilepic'];?>');
         $('#profilepic-change').submit((e) => {
             e.preventDefault();
             if (changeState) {
@@ -310,7 +311,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                             if (e.lengthComputable) {
                                 let percentComplete = Math.round((e.loaded * 100) /
                                     e.total);
-                                $('.progress').css('display', 'block').delay(4000)
+                                $('.progress').css('display', 'block').delay(2000)
                                     .fadeOut('slow');
                                 $(".progress-bar").css('width', percentComplete +
                                     '%');
