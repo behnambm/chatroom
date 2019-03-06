@@ -1,8 +1,8 @@
 <?php
 ini_set('display_errors',1);
 $db_host = 'localhost';
-$db_user = 'admin';
-$db_pass = 'behnam1312';
+$db_user = 'root';
+$db_pass = '';
 $db_name = 'behnam_db';
 
 function setup(){

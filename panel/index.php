@@ -50,7 +50,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                     <li class="list-group-item"><a href="?logout=1">خروج</a></li>
                 </ul>
             </div>
-            <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9 col-sm-8">
+            <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9 col-sm-8 col-xs-12">
                 <ul class="list-group">
                     <li class="list-group-item active">ویرایش مشخصات فردی</li>
                     <li class="list-group-item">
@@ -118,8 +118,18 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 <ul class="list-group">
                     <li class="list-group-item active">حذف حساب کاربری</li>
                     <li class="list-group-item">
-                        adasd</li>
+                        <em id="delete-account-msg"><strong>توجه : </strong>باحذف حساب کاربری تمام اطلاعات شما از بین خواهد رفت.</em>
+                        <div class="form-group"> 
+                            <form action="">
+                                <input type="password" id="delete-account-inp" placeholder="رمز حساب کاربری" name="deleteaccount" class="form-control col-xl-4 col-lg-5 col-md-6 col-sm-8 col-xs-9" >                     
+                                <button id="delete-account-btn" class="btn btn-danger">حذف حساب</button>
+                            </form>
+                        </div>
+                        <div class="no-pass-enter">لطفا رمز را وارد کنید.</div>
+                        <div class="incorrect-pass">رمز وارد شده اشتباه است.</div>
+                    </li>
                 </ul>
+
             </div>
         </div>
 
@@ -134,6 +144,16 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
 
 
+<!-- modal for delete account -->
+<div class="modal-bg">
+    <div class="delete-confirm">
+        <div class="modal-head">
+            <em>آیا مطمئن هستید که میخواهید حساب خود را حذف کنید؟</em><hr>
+            <button class="btn btn-danger" id="deny-delete">لغو</button>
+            <button class="btn btn-success " id="accept-delete">تایید</button>
+        </div>
+    </div>
+</div>
 
 
 
@@ -295,7 +315,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             changeState = true;
             console.log(changeState);
         });
-        alert('<?php echo $_SESSION['profilepic'];?>');
         $('#profilepic-change').submit((e) => {
             e.preventDefault();
             if (changeState) {
@@ -398,7 +417,65 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 }
             });
         });
-    });
+        // click on حذف btn       delete account SECTION
+        $('#delete-account-btn').click((e)=>{
+            e.preventDefault();
+            let userData = $('#delete-account-inp').val();
+            if(userData == ''){
+                $('.no-pass-enter').css('display','block');
+                $('.incorrect-pass').css('display','none');
+
+            }else{
+                $('.no-pass-enter').css('display','none');
+                $('.incorrect-pass').css('display','none');
+                $.ajax({
+                    url:'delete_account.php',
+                    type:'POST',
+                    data:{
+                        password_for_del:userData
+                    },
+                    success:(responce)=>{
+                        if(responce == 'PASS_OK'){
+                            $('.modal-bg').css('visibility','visible');
+                        }else if(responce == 'PASS_INCORRECT'){
+                            $('.incorrect-pass').css('display','block');
+                        }
+                    }
+                });
+            }
+        });
+
+
+        // click on  تایید      delete account SECTION
+        $('#accept-delete').click((e)=>{
+            let userData = $('#delete-account-inp').val();
+
+            $.ajax({
+                url:'delete_account.php',
+                type:'POST',
+                data:{
+                    user_confirm:'YES',
+                    password_for_del:userData
+                },
+                success:(responce)=>{
+                    
+                }
+            });
+        });
+        // click on deny btn   delete account SECTION
+        $('#deny-delete').click((e)=>{
+            $('.modal-bg').hide();
+            $('#delete-account-inp').val('');
+        });
+        // $(document).click((e)=>{
+        //     let targetClass = $(e.target).prop('class');
+        //     if(targetClass != 'delete-confirm'){
+        //         alert(targetClass);
+        //         // $('.modal-bg').css('visibility','hidden');
+        //     }
+        // });
+
+    });// ready {}
     </script>
 </body>
 
