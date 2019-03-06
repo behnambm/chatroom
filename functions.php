@@ -410,7 +410,6 @@ function fetch_group_chat_history($user_id){
                 </p>
             </li>';
             }
-
             if($sub > 0){
                 $tmp = strtotime($next_date);
                 $tmp = date('F j',$tmp);
@@ -423,29 +422,18 @@ function fetch_group_chat_history($user_id){
 }
 
 
+function delete_account($username , $email, $id){
+    global $con;
+    $stmt = $con->prepare("DELETE FROM users WHERE username = ? AND email = ?");
+    $stmt->execute(array($username, $email));
 
+    $stmt = $con->prepare("DELETE FROM cookie_id WHERE id = ? ");
+    $stmt->execute(array($id));
 
+    $stmt = $con->prepare("DELETE FROM login_details WHERE user_id = ?");
+    $stmt->execute(array($id));
+    
 
+    return true;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
