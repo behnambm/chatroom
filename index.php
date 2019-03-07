@@ -91,13 +91,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
    </div>
    </div>
-   <?php
-ini_set('display_errors',1);
 
-$ss = '#file::';
-echo substr($ss,0,7);
-
-   ?>
    <script src="files/js/jquery-3.1.1.js"></script>
    <script src="files/js/jquery-ui.js"></script>
    <script type="text/javascript">

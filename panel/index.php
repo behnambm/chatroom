@@ -8,6 +8,13 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 logout();
 redirect_to('../login.php');
 }
+if(isset($_SESSION['privilage'], $_SESSION['logged_in'], $_GET['deluser'])){
+    if($_SESSION['logged_in'] == 'yes' && !empty($_GET['deluser'])){
+        if($_SESSION['privilage'] == 'owner' || $_SESSION['privilage'] == 'admin'){
+            delete_account();
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +36,7 @@ redirect_to('../login.php');
         <div class="header header-responsive">
             <button id="btn-show-menu"><i class="fa fa-bars"></i></button>
             <a href="?logout=1">خروج</a>
+            <a href="../index.php" id="go-back" style="color: #007bff">برگشت</a>
         </div>
         <div class="menu-holder">
             <ul class="list-group">
@@ -52,7 +60,7 @@ redirect_to('../login.php');
         </div>
         <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9 col-sm-8 col-xs-12">
             <ul class="list-group">
-                <li class="list-group-item active">ویرایش مشخصات فردی</li>
+                <li class="list-group-item active">ویرایش مشخصات فردی<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
                 <li class="list-group-item">
                     <fieldset>
                         <legend>جزئیات حساب</legend>
@@ -116,7 +124,7 @@ redirect_to('../login.php');
         </div>
         <div class="right-group delete-account col-xl-9 col-lg-9 col-md-9 col-sm-8">
             <ul class="list-group">
-                <li class="list-group-item active">حذف حساب کاربری</li>
+                <li class="list-group-item active">حذف حساب کاربری<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
                 <li class="list-group-item">
                     <em id="delete-account-msg"><strong>توجه : </strong>باحذف حساب کاربری تمام اطلاعات شما از بین خواهد رفت.</em>
                     <div class="form-group"> 

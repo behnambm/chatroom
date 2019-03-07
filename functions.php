@@ -177,6 +177,9 @@ function logout(){
     unset($_SESSION['logged_in'],$_SESSION['username']);
     setcookie('logged_in','',1);
     setcookie('hash','',1);
+    if(isset($_SESSION['privilage'])){
+        unset($_SESSION['privilage']);
+    }
     header('Location:login.php');
     return true;
 }
@@ -432,8 +435,17 @@ function delete_account($username , $email, $id){
 
     $stmt = $con->prepare("DELETE FROM login_details WHERE user_id = ?");
     $stmt->execute(array($id));
-    
-
     return true;
-
+}
+function check_admin($username){
+    global $con;
+    $stmt = $con->prepare("SELECT * FROM admin_tbl WHERE username = ?;");
+    $stmt->execute(array($username));
+    $count = $stmt->rowCount();
+    $res = $stmt->fetchAll();
+    if($count > 0){
+        return $res[0];
+    }else{
+        return false;
+    }   
 }

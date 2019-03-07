@@ -1006,3 +1006,11 @@ display: none;
 color: #e40707;
 display: none;
 }
+.go-back-lg{
+    color: #fff;
+    float: left;
+}
+
+.del-uesr-link{
+    padding: 5px 8px;
+}

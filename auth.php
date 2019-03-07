@@ -9,15 +9,12 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
     $username = $_POST['logusername'];
     $password = $_POST['logpassword'];
     $remember = $_POST['logremember'];
-
     if(doLogin($username, $password)){
         $user = get_user_info($_POST['logusername']);
         set_id_to_login_details($user['id']);
         $log_det = get_login_details($user['id']);
         $_SESSION['login_details_id'] = $log_det['login_details_id'];
         set_session($user['username'], $user['profile_pic'], $user['display_name'], get_real_ip(),$user['id'],$user['email']);
-        
-
         if($remember == 'true'){
             $now = time();
             $tmp = 60*60*24*30;
@@ -25,12 +22,14 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
             $cookie_info = get_cookie_info_by_user($user['username']);
             setcookie('hash',$cookie_info['cookie_hash'],$now+$tmp);
         }
+        if(check_admin($username)){
+            $data = check_admin($username);
+            $_SESSION['privilage'] = $data['privilage'];
+        }
         echo 'OK';
-        
     }else{
         echo 'ERR_USER_PASS';
     }
-
 //  *********************************************************************
 //  ************************* REGISTER SECTION **************************
 }else if(isset($_POST['regusername'],$_POST['regpassword'],$_POST['regdisplayname'],$_POST['regemail']) ){
@@ -65,9 +64,6 @@ if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
             set_session($_POST['regusername'], 'files/images/user.png', $_POST['regdisplayname'], get_real_ip(),$user['id'], $user['email']);
             echo 'OK';
         }
-
-        
-
     }else{
         echo $res;
     }
