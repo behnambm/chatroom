@@ -43,21 +43,21 @@ if($count > 0){
         $data = check_admin($row['username']);
         if($data['privilage'] == 'admin'){
           if($priv_flag == 'owner'){
-            $del_user = '<a href="javascript:;" class="badge badge-danger del-uesr-link">حذف کاربر</a>';
+            $del_user = '&nbsp;<a href="javascript:;" data-username="'.$row['username'].'" data-id="'.$row['id'].'" class="badge badge-danger del-uesr-link">حذف کاربر</a>';
           }
           $data = 'مدیر';
         }else if($data['privilage'] == 'owner'){
           $data = 'مدیر اصلی';
         }
-        $privilage = '<span class="badge badge-success">'.$data.'</span>';
+        $privilage = '&nbsp;<span class="badge badge-success">'.$data.'</span>';
       }else{
         if($priv_flag == 'admin' || $priv_flag == 'owner'){
-          $del_user = '<a href="javascript:;" class="badge badge-danger del-uesr-link">حذف کاربر</a>';        
+          $del_user = '&nbsp;<a href="javascript:;" data-username="'.$row['username'].'" data-id="'.$row['id'].'" class="badge badge-danger del-uesr-link">حذف کاربر</a>';        
         }
       }
       $output .= '  <tr>
       <th scope="row"><img src="'.$row['profile_pic'].'">'.$row['display_name'].'<small class="is-typing" style="display:'.fetch_is_type($row['id']).'">در حال نوشتن ...</small></th>
-      <td>'.$status.'&nbsp;'.$privilage.'&nbsp;'.$del_user.'</td>
+      <td>'.$status.$privilage.$del_user.'</td>
       <td><button type="button" class="chat-btn btn btn-primary btn-sm" data-tousername="'.$row['username'].'" data-touserid="'.$row['id'].'">شروع چت'.fetch_unseen_chat($row['id'],$_SESSION['user_id']).'</button></td>
     </tr>';
   }

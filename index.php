@@ -85,6 +85,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    </div>
    </div>
 
+<!-- modal for delete account -->
+<div class="modal-bg">
+<div class="delete-confirm">
+   <div class="modal-head">
+      <em>آیا مطمئن هستید که میخواهید این کاربر را حذف کنید ؟</em><hr>
+      <button class="btn btn-danger" id="deny-delete">لغو</button>
+      <button class="btn btn-success " id="accept-delete">تایید</button>
+   </div>
+</div>
+</div>
+
    <script src="files/js/jquery-3.1.1.js"></script>
    <script src="files/js/jquery-ui.js"></script>
    <script type="text/javascript">
@@ -304,7 +315,36 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          }, 500);
 
       });
-   });
+
+      // ajax for delete a uesr
+      $(document).on('click', '.del-uesr-link',(e)=>{
+         let userName = $(e.target).data('username');
+         let userId = $(e.target).data('id');
+         $.ajax({
+            url:'kick_user.php',
+            type:'POST',
+            data:{
+               username:userName,
+               id:userId
+            },
+            success:(responce)=>{
+               if(responce == 'OK'){
+                  $('.modal-bg').css('display','block');
+               }
+            }
+         });
+
+      });
+
+      // cancel user  delete
+      $('#deny-delete').click((e)=>{
+         $('.modal-bg').hide();
+      });
+
+      // confirm user delete 
+      
+
+   });   // ready {}
    </script>
 </body>
 
