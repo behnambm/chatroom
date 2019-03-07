@@ -8,7 +8,6 @@ $current_time = date('Y-m-d H:i:s');
 if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
     if($_POST['action'] == 'insert'){
 
-
         $stmt = $con->prepare("SELECT id_per_msg FROM chat_message WHERE from_user_id = ? AND to_user_id = 0 
             ORDER BY id_per_msg DESC LIMIT 1");
         $stmt->execute(array($_SESSION['user_id']));
@@ -18,9 +17,6 @@ if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
 
             $msg_id = (int)$row['id_per_msg']+1;
         }
-
-
-
         $stmt = $con->prepare("INSERT INTO chat_message(from_user_id, to_user_id, chat_message, 
             timestamp, is_sent, is_seen,id_per_msg)
             VALUES(?,?,?,?,?,?,?);");
@@ -44,7 +40,6 @@ if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
         }
     }else{
         echo '<script>window.location = "login.php"</script>';
-
     }
 }else{
     echo '<script>window.location = "login.php"</script>';

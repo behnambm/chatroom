@@ -26,7 +26,6 @@ function setup(){
         $con->exec('USE behnam_db;');
         file_put_contents('db.conf','USE_DATABASE::1;'.PHP_EOL,FILE_APPEND);
 
-
         // create users table
         $sql2 = "CREATE TABLE IF NOT EXISTS users (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +38,6 @@ function setup(){
         $con->exec($sql2);
         file_put_contents('db.conf','IS_USERS_TABLE_CREATED::1;'.PHP_EOL,FILE_APPEND);
 
-
         // create cookies table
         $sql3 = "CREATE TABLE IF NOT EXISTS cookie_id (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -47,7 +45,6 @@ function setup(){
             );";
         $con->exec($sql3);
         file_put_contents('db.conf','IS_COOKIE_TABLE_CREATED::1;'.PHP_EOL,FILE_APPEND);
-
 
         // create login_details TABLE
         $sql4 = "CREATE TABLE IF NOT EXISTS `login_details` (
@@ -82,10 +79,7 @@ function setup(){
         )";
         $con->exec($sql6);
         file_put_contents('db.conf','IS_ADMIN_TABLE_CREATED::1;'.PHP_EOL, FILE_APPEND);
-        
-
         // create root user 
-        
     }catch(PDOException $e){
     echo $sql . "<br>" . $e->getMessage();
     }

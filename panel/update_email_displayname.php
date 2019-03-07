@@ -11,7 +11,6 @@ if($user['display_name'] == $_POST['up_display_name']){
         $stmt->execute(array($_POST['up_email'], $_SESSION['user_id'], $_SESSION['username']));
         $_SESSION['email'] = $_POST['up_email'];
         echo 'OK_EMAIL';
-
     }
 }else{
     if($user['email'] == $_POST['up_email']){

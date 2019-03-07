@@ -80,15 +80,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                <button name="send_group_message" id="send-group-message" class="btn btn-info">ارسال</button>
          </div>
          <div class="form-group">
-
          </div>
-
-
-
       </div>
-
-
-
    </div>
    </div>
 
@@ -294,8 +287,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                });
          }
       });
-
-
       $('#start-group-chat').click((e) => {
          groupInterval = setInterval(() => {
                
@@ -313,8 +304,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          }, 500);
 
       });
-
-
    });
    </script>
 </body>

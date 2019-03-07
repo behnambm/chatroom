@@ -424,7 +424,6 @@ function fetch_group_chat_history($user_id){
     return $output;
 }
 
-
 function delete_account($username , $email, $id){
     global $con;
     $stmt = $con->prepare("DELETE FROM users WHERE username = ? AND email = ?");

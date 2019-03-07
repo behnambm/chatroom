@@ -71,16 +71,12 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
                     <div class="obj"></div>
                 </div>
             </form>
-
             <div class="clear"></div>
-            
             <div class="line">
                 <div class="inner-line"></div>
             </div>
             <a href="login.php" id="login">ورود به حساب کاربری</a>
         </div>
-
-
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -102,9 +98,6 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
             </div>
         </div>
     </div>
-
-
-
 </div>  
 <script src="files/js/jquery-3.1.1.js"></script>
 <script src="files/js/bootstrap.bundle.min.js"></script>
