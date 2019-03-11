@@ -424,7 +424,7 @@ function fetch_group_chat_history($user_id){
     return $output;
 }
 
-function delete_account($username, $email=null, $id){
+function delete_account($username, $email, $id){
     global $con;
     if($email == null){
         $stmt = $con->prepare("DELETE FROM users WHERE username = ?");
@@ -440,6 +440,7 @@ function delete_account($username, $email=null, $id){
     $stmt->execute(array($id));
     return true;
 }
+
 function check_admin($username){
     global $con;
     $stmt = $con->prepare("SELECT * FROM admin_tbl WHERE username = ?;");

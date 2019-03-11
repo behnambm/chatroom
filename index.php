@@ -25,7 +25,6 @@ if($session_flag && $cookie_flag){
 if(isset($_GET['logout']) && $_GET['logout']==1){
    logout();
    echo '<script>window.location = "index.php";</script>';
-
 }
 
 ?>
@@ -47,20 +46,28 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    <div class="container">
       <div class="header">
          <h1 class="site-name"><a href="index.php">چت روم</a></h1>
-         <div class="header-widget">
-               <span><?php echo $_SESSION['displayname'];?></span>
-               <div class="profile-pic">
-                  <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic"
+            <ul class="profile-ul">
+               <?php
+                  if(isset($_SESSION['privilage'])){
+                     if($_SESSION['privilage'] == 'admin' || $_SESSION['privilage'] == 'owner'){
+                        echo '<li><a href="administration.php"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
+                     }
+                  }
+               ?>
+               <li>
+                  <a href="panel/">
+                     <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic"
                      alt="<?php echo $_SESSION['displayname'];?>">
-                  <i class="fa fa-caret-left left"></i>
-               </div>
-               <ul class="profile-ul">
-                  <li><a href="panel/"><i class="fa fa-edit"></i>پروفایل</a></li>
-                  <li><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
-               </ul>
+                     <?php echo $_SESSION['displayname'];?>
+                  </a>
+               </li>
+               
+               
+               <li><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
+            </ul>
+            <div class="clear"></div>
          </div>
-      </div>
-      <div class="clear"></div>
+      
 
       <div class="group-chat-div">
          <button class="btn btn-warning btn-sm" id="start-group-chat">چت گروهی<span
@@ -94,6 +101,11 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       <button class="btn btn-success " id="accept-delete">تایید</button>
    </div>
 </div>
+</div>
+
+
+<div class="kick-alert">
+   
 </div>
 
    <script src="files/js/jquery-3.1.1.js"></script>
@@ -159,18 +171,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
 
 
-      });
-      //----------------------------------------------------------------------------------------------------
-      $('.profile-pic').click((e) => {
-         if ($('.header-widget i.fa-caret-left').hasClass('left')) {
-               $('.header-widget i.fa-caret-left').css('transform', 'rotate(-90deg)').addClass('down')
-                  .removeClass('left');
-               $('.header-widget ul').slideDown();
-         } else {
-               $('.header-widget i.fa-caret-left').css('transform', 'none').addClass('left')
-                  .removeClass('down');
-               $('.header-widget ul').slideUp();
-         }
       });
       //----------------------------------------------------------------------------------------------------
       // click event for << ارسال >> button on the chat box dialog
@@ -317,15 +317,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       });
 
       // ajax for delete a uesr
+      let userNameForKick = null;
+      let userIdForKick = null;
       $(document).on('click', '.del-uesr-link',(e)=>{
-         let userName = $(e.target).data('username');
-         let userId = $(e.target).data('id');
+         userNameForKick = $(e.target).data('username');
+         userIdForKick = $(e.target).data('id');
          $.ajax({
             url:'kick_user.php',
             type:'POST',
             data:{
-               username:userName,
-               id:userId
+               username:userNameForKick,
+               id:userIdForKick
             },
             success:(responce)=>{
                if(responce == 'OK'){
@@ -341,8 +343,26 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          $('.modal-bg').hide();
       });
 
+
       // confirm user delete 
-      
+      $('#accept-delete').click((e)=>{
+         if(userNameForKick != null && userIdForKick != null){
+            $.ajax({
+               url:'kick_user.php',
+               type:'POST',
+               data:{
+                  confirm_kick:true,
+                  username:userNameForKick,
+                  id:userIdForKick
+               },
+               success:(responce)=>{
+                  if(responce == 'DONE'){
+                     
+                  }
+               }
+            });
+         }
+      });
 
    });   // ready {}
    </script>

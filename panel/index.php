@@ -8,13 +8,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 logout();
 redirect_to('../login.php');
 }
-if(isset($_SESSION['privilage'], $_SESSION['logged_in'], $_GET['deluser'])){
-    if($_SESSION['logged_in'] == 'yes' && !empty($_GET['deluser'])){
-        if($_SESSION['privilage'] == 'owner' || $_SESSION['privilage'] == 'admin'){
-            delete_account();
-        }
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
