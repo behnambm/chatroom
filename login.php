@@ -103,7 +103,11 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
                 $.ajax({
                     url:'auth.php',
                     type:'POST',
-                    data:{logusername:username,logpassword:password,logremember:remember},
+                    data:{
+                        logusername:username,
+                        logpassword:password,
+                        logremember:remember
+                    },
                     beforeSend:()=>{
                         $('.loading').css('visibility','visible');
                     },

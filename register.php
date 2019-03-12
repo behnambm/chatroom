@@ -173,7 +173,7 @@ $(document).ready(()=>{
     }
     fixContainer();
     $(window).resize(fixContainer);
-    $('#register-form input').focus((e)=>{
+    $('#register-form input').focus((e)=>{   // this code makes inputs animated
         let id = $(e.target).attr('id');
         if(id == 'username-input'){
             $('#icon-holder-user').css('top','-25px');
@@ -205,7 +205,7 @@ $(document).ready(()=>{
             $('#displayname-div').removeClass('opacity-fill');        
         }
     });
-    $('#register-form').submit((e)=>{
+    $('#register-form').submit((e)=>{      // when user clicked on the submit btn this will sends all informations to auth.php
         e.preventDefault();
         let username = $('#username-input').val();
         let password = $('#password-input').val();
@@ -218,9 +218,9 @@ $(document).ready(()=>{
         $.ajax({
             url:'auth.php',
             type:'POST',
-            chace:false,
-            contentType:false,
-            processData:false,
+            chace:false,        // this is necessary for uploading files to SERVER
+            contentType:false,  // also this 
+            processData:false,  // also this 
             data:formDATA,
             beforeSend:()=>{
                 $('.err-user').css('visibility','hidden');

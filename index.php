@@ -116,7 +116,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       let gorupInterval = null;
       //----------------------------------------------------------------------------------------------------
       // this function is structure of single chat dialog
-      function make_chat_box(user_name, user_id) {
+      function make_chat_box(user_name, user_id) {      // this code will make dynamic chat box for each user 
          let boxContent = '<div class="chat-box" id="user-dialog-' + user_id + '" title="چت با : ' +
                user_name + '">';
          boxContent += '<div class="chat-history" id="chat-history-' + user_id + '" data-touserid="' +
@@ -157,7 +157,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   }
                });
 
-         }, 500);
+         }, 1000);
       });
       //----------------------------------------------------------------------------------------------------
       // click event for close chat dialog 
@@ -168,9 +168,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          } else {
                clearInterval(interval);
          }
-
-
-
       });
       //----------------------------------------------------------------------------------------------------
       // click event for << ارسال >> button on the chat box dialog
@@ -211,11 +208,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   }
                }
          });
-      }, 3000);
+      }, 4000);
       $(document).on('focus', '.txtarea-box', (e) => {
          let is_type = 'yes';
          let to_user_id = $(e.target).attr('id').split('-');
-
          $.ajax({
                url: 'update_is_type_status.php',
                type: 'POST',
@@ -223,16 +219,17 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   is_type: is_type,
                   to_user_id: to_user_id[2]
                },
-               success: () => {
-
+               success: (responce) => {
+                  if(responce != ''){
+                     console.log(responce);
+                  }
                }
          });
       });
 
-      $(document).on('blur', '.txtarea-box', (e) => {
+      $(document).on('blur', '.txtarea-box', (e) => { // this code is for changing status of 'Is Typeing'
          let is_type = 'no';
          let to_user_id = $(e.target).attr('id').split('-');
-
          $.ajax({
                url: 'update_is_type_status.php',
                type: 'POST',
@@ -241,14 +238,12 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   to_user_id: to_user_id[2]
                },
                success: () => {
-
                }
          });
       });
       //----------------------------------------------------------------------------------------------------
       // fetch user's list from database
       fetchUser();
-
       function fetchUser() {
          $.ajax({
                url: 'fetch_user.php',
@@ -275,32 +270,30 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          width: 350
       });
 
-      $('#start-group-chat').click((e) => {
+      $('#start-group-chat').click((e)=>{
          $('#group-chat-dialog').dialog('open');
-
       });
 
-      $('#send-group-message').click((e) => {
+      $('#send-group-message').click((e)=>{
          let chatMsg = $('#group-chat-message').val();
          let action = 'insert';
          $('#group-chat-message').val('');
          if (chatMsg != '') {
-               $.ajax({
-                  url: 'group_chat.php',
-                  type: 'POST',
-                  data: {
-                     group_chat_message: chatMsg,
-                     action: action
-                  },
-                  success: (responce) => {
-                     $('.group-chat-history').html(responce);
-                  }
-               });
+            $.ajax({
+               url: 'group_chat.php',
+               type: 'POST',
+               data: {
+                  group_chat_message: chatMsg,
+                  action: action
+               },
+               success: (responce) => {
+                  $('.group-chat-history').html(responce);
+               }
+            });
          }
       });
-      $('#start-group-chat').click((e) => {
-         groupInterval = setInterval(() => {
-               
+      $('#start-group-chat').click((e)=>{
+         groupInterval = setInterval(()=>{
                $.ajax({
                   url: 'group_chat.php',
                   type: 'POST',
@@ -308,11 +301,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                      action: 'fetch'
                   },
                   success: (responce) => {
-
                      $('.group-chat-history').html(responce);
                   }
                });
-         }, 500);
+         }, 1000);
 
       });
 
@@ -335,14 +327,12 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                }
             }
          });
-
       });
 
       // cancel user  delete
       $('#deny-delete').click((e)=>{
          $('.modal-bg').hide();
       });
-
 
       // confirm user delete 
       $('#accept-delete').click((e)=>{
@@ -356,8 +346,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   id:userIdForKick
                },
                success:(responce)=>{
-                  if(responce == 'DONE'){
-                     
+                  if(responce == 'DONE'){                     
                   }
                }
             });
@@ -367,5 +356,4 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    });   // ready {}
    </script>
 </body>
-
 </html>
