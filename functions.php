@@ -250,8 +250,9 @@ function fetch_chat_history($from_user_id, $to_user_id){
             $min = $time[1];
 
             $current_id = $row['id_per_msg'];
-            $stmt = $con->prepare("SELECT * FROM chat_message WHERE from_user_id = ? AND to_user_id = ? AND id_per_msg = ? ");
-            $stmt->execute(array($from_user_id, $to_user_id, ($current_id+1)));
+            // OR (from_user_id = ? AND to_user_id = ?)
+            $stmt = $con->prepare("SELECT * FROM chat_message WHERE (from_user_id = ? AND to_user_id = ? AND id_per_msg = ?) OR (from_user_id = ? AND to_user_id = ? AND id_per_msg = ?)");
+            $stmt->execute(array($from_user_id, $to_user_id, ($current_id+1), $to_user_id, $from_user_id, ($current_id+1)));
             $data2 = $stmt->fetchAll();
             $next_date = null;
             foreach($data2 as $row2){
@@ -341,27 +342,21 @@ function fetch_is_type($user_id){
 }
 
 function fetch_group_chat_history($user_id){
-    global $con;
-    // if want to check user is BANED or kicked from group you should check it here.  
+    global $con;  
     $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = '0' ORDER BY timestamp ASC;");
     $stmt->execute();
     $count = $stmt->rowCount();
     $output = '<ul style="list-style: none;">';
-
-    if($count == 0){
-        
+    if($count == 0)
         $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
-
-    }else{
+    else{
         $data = $stmt->fetchAll();
         foreach($data as $row){
             $time = $row['timestamp'];
             $time = explode(' ', $time);
-    
             // DATE
             $date = $time[0];
             $date = explode('-',$date);
-
             // TIME
             $time = $time[1];
             $time = explode(':',$time);
@@ -369,7 +364,7 @@ function fetch_group_chat_history($user_id){
             $min = $time[1];
             $user = get_user_info(null,$row['from_user_id']);
 
-
+            // codes for computing messages date 
             $current_id = $row['id_per_msg'];
             $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = 0 AND id_per_msg = ? ");
             $stmt->execute(array(($current_id+1)));
@@ -378,12 +373,7 @@ function fetch_group_chat_history($user_id){
             foreach($data2 as $row2){
                 $next_date =  $row2['timestamp'];
             }
-
             $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
-
-
-
-
             if($row['from_user_id'] == $_SESSION['user_id']){
                 $tick1 = '';
                 $tick2 = '';
@@ -441,7 +431,7 @@ function delete_account($username, $email, $id){
     return true;
 }
 
-function check_admin($username){
+function check_admin($username){  // check for admin privilage 
     global $con;
     $stmt = $con->prepare("SELECT * FROM admin_tbl WHERE username = ?;");
     $stmt->execute(array($username));
