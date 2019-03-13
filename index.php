@@ -50,7 +50,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                <?php
                   if(isset($_SESSION['privilage'])){
                      if($_SESSION['privilage'] == 'admin' || $_SESSION['privilage'] == 'owner'){
-                        echo '<li><a href="administration.php"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
+                        echo '<li style="padding: 13px 5px;"><a href="administration.php"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
                      }
                   }
                ?>
@@ -63,7 +63,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                </li>
                
                
-               <li><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
+               <li style="padding: 13px 5px;"><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
             </ul>
             <div class="clear"></div>
          </div>

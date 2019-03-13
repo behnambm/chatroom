@@ -3,6 +3,7 @@
 session_start();
 require_once 'functions.php';
 date_default_timezone_set('Asia/Tehran');
+// ini_set('display_errors',1);
 if(!isset($_SESSION['logged_in'])){
 echo '<script>window.location = "login.php"</script>';
 }
@@ -32,6 +33,7 @@ if($count > 0){
       $current_stimestamp = strtotime(date('Y-m-d H:i:s').'-10 second');
       $current_stimestamp = date('Y-m-d H:i:s',$current_stimestamp);
       $user_last_activity = fetch_user_last_activity($row['id']);
+
       if($user_last_activity > $current_stimestamp){
         $status = '<span class="badge badge-success">آنلاین</span>';
       }else{
