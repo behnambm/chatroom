@@ -27,18 +27,25 @@
 <body  style="padding: 10px 0 0 0;text-align:right;">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-12 ">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                 <ul class="list-group">
                     <li class="list-group-item active"><i class="fa fa-dashboard icon"></i>داشبورد</li>
                     <li class="list-group-item "><a href="javascript:;"><i class="fa fa-"></i>دسترسی</a></li>
                     <li class="list-group-item "><a href="?logout=1"><i class="fa fa-sign-out icon"></i>خروج</a></li>
                 </ul>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-8 col-sm-8 ccol-xs-12" id="admin-access-page">
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-12" id="admin-access-page">
                 <ul class="list-group">
-                    <li class="list-group-item active">fsdf</li>
-                    <li class="list-group-item">sdfs</li>
-                    <li class="list-group-item">sdf</li>
+                    <li class="list-group-item active">دسترسی کاربران</li>
+                    <li class="list-group-item">
+                        <em>افزایش سطح دسترسی کاربران</em> <br><br>
+                        <label for="username-id">نام کاربری : </label>
+                        <div class="group">
+                            <input type="text" name="username" id="username-id">
+                            <div class="search-res"></div>
+                        </div>
+                        
+                    </li>
                 </ul>
             </div>
         </div>
@@ -47,5 +54,22 @@
 <script src="files/js/jquery-3.1.1.js"></script>
 <script src="files/js/bootstrap.bundle.min.js"></script>
 <script src="files/dist/cropper.js"></script>
+<script>
+$(document).ready(()=>{
+    $('#username-id').keyup((e)=>{
+        let data = $('#username-id').val();
+        $.ajax({
+            url:'privilage_escalation.php',
+            type:'POST',
+            data:{
+                username:data
+            },
+            success:(responce)=>{
+                alert(responce);
+            }
+        });
+    });
+}); // ready {}
+</script>
 </body>
 </html>

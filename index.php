@@ -49,7 +49,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             <ul class="profile-ul">
                <?php
                   if(isset($_SESSION['privilage'])){
-                     if($_SESSION['privilage'] == 'admin' || $_SESSION['privilage'] == 'owner'){
+                     if($_SESSION['privilage'] == 'owner'){
                         echo '<li style="padding: 13px 5px;"><a href="administration.php"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
                      }
                   }

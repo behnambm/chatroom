@@ -1007,3 +1007,26 @@ display: none;
     margin: 0 0 0 5px;
 }
 
+
+@media(max-width: 575px){
+    #admin-access-page{
+        margin-top: 20px;
+    }
+}
+
+#admin-access-page .group{
+    position: relative;
+    width: 173px;
+}
+
+#admin-access-page .search-res{
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 2px 0 #232323;
+    top: 35px;
+    border-radius: 3px;
+    padding: 2px 6px;
+    display: none;
+}
+
