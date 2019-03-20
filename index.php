@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'functions.php';
+require 'functions.php';
 $cookie_flag = false;
 $session_flag = false;
 // check for logged_in and hash cookie
@@ -24,7 +24,7 @@ if($session_flag && $cookie_flag){
 
 if(isset($_GET['logout']) && $_GET['logout']==1){
    logout();
-   echo '<script>window.location = "index.php";</script>';
+   echo '<script>window.location = "login.php";</script>';
 }
 
 ?>
@@ -50,7 +50,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                <?php
                   if(isset($_SESSION['privilage'])){
                      if($_SESSION['privilage'] == 'owner'){
-                        echo '<li style="padding: 13px 5px;"><a href="administration.php"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
+                         echo '<li style="padding: 13px 5px;"><a href="administration/"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
                      }
                   }
                ?>
@@ -138,8 +138,23 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          make_chat_box(toUserName, toUserId);
          $("#user-dialog-" + toUserId).dialog({
                autoOpen: false,
-               width: 350
+               width: 350,
+               draggable: true
          });
+         if($(document).width() < 350 ){
+            $("#user-dialog-" + toUserId).dialog({
+                  autoOpen: false,
+                  width: $(document).width(),
+                  draggable: true
+            });
+         }else{
+            $("#user-dialog-" + toUserId).dialog({
+                  autoOpen: false,
+                  width: 350,
+                  draggable: true
+            });
+         }
+
          let to_user_id = $(e.target).data('touserid');
          let message = $('#chat-message-' + to_user_id).val();
          $('#user-dialog-' + toUserId).dialog('open');

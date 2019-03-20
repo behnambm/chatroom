@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once 'functions.php';
+    require_once '../functions.php';
     if(!isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != 'yse'){
         header("Location:../login.php");
     }
@@ -10,7 +10,6 @@
     if(isset($_GET['logout']) && $_GET['logout']==1){
         logout();
         echo '<script>window.location = "index.php";</script>';
-     
      }
 ?>
 <!DOCTYPE html>
@@ -19,9 +18,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="files/css/font-awesome.min.css">
-    <link rel="stylesheet" href="files/css/bootstrap-4.1.2.min.css">
-    <link rel="stylesheet" href="files/css/style.css">
+    <link rel="stylesheet" href="../files/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../files/css/bootstrap-4.1.2.min.css">
+    <link rel="stylesheet" href="../files/css/style.css">
     <title>پنل مدیریت</title>
 </head>
 <body  style="padding: 10px 0 0 0;text-align:right;">
@@ -51,9 +50,9 @@
         </div>
     </div>
 
-<script src="files/js/jquery-3.1.1.js"></script>
-<script src="files/js/bootstrap.bundle.min.js"></script>
-<script src="files/dist/cropper.js"></script>
+<script src="../files/js/jquery-3.1.1.js"></script>
+<script src="../files/js/bootstrap.bundle.min.js"></script>
+<script src="../files/dist/cropper.js"></script>
 <script>
 $(document).ready(()=>{
     $('#username-id').keyup((e)=>{

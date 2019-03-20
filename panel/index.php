@@ -121,7 +121,7 @@ redirect_to('../login.php');
                 <li class="list-group-item active">حذف حساب کاربری<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
                 <li class="list-group-item">
                     <em id="delete-account-msg"><strong>توجه : </strong>باحذف حساب کاربری تمام اطلاعات شما از بین خواهد رفت.</em>
-                    <div class="form-group"> 
+                    <div class="form-group"> <br>
                         <form action="">
                             <input type="password" id="delete-account-inp" placeholder="رمز حساب کاربری" name="deleteaccount" class="form-control col-xl-4 col-lg-5 col-md-6 col-sm-8 col-xs-9" >                     
                             <button id="delete-account-btn" class="btn btn-danger">حذف حساب</button>

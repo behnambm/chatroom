@@ -1,6 +1,5 @@
 <?php
 ini_set('display_errors',1);
-
 require_once 'db_config.php';
 // ini_set('display_errors',1);
 try{
@@ -174,14 +173,10 @@ function redirect_to($add){
 }
 
 function logout(){
-    unset($_SESSION['logged_in'],$_SESSION['username']);
+    session_destroy();
     setcookie('logged_in','',1);
     setcookie('hash','',1);
-    if(isset($_SESSION['privilage'])){
-        unset($_SESSION['privilage']);
-    }
-    header('Location:login.php');
-    return true;
+
 }
 
 function set_id_to_login_details($id){
@@ -261,6 +256,9 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
             $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
 
+            $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
+
+
             if($row['from_user_id'] == $from_user_id){
                 $tick1 = '';
                 $tick2 = '';
@@ -289,11 +287,22 @@ function fetch_chat_history($from_user_id, $to_user_id){
                 </p>
             </li>';
             }
-
-            if($sub > 0){
+            if($sub_year > 0 ){
                 $tmp = strtotime($next_date);
-                $tmp = date('F j',$tmp);
+                $tmp = date('F j , Y',$tmp);
                 $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            }else if($sub > 0){
+                $tmp = date('Y') - date('Y',strtotime($next_date));
+                if($tmp == 0 ){
+                    $tmp = strtotime($next_date);
+                    $tmp = date('F j , Y',$tmp);
+                    $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+                }else{
+                    $tmp = strtotime($next_date);
+                    $tmp = date('F j',$tmp);
+                    $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+                }
+
             }
         }
     }
@@ -373,7 +382,13 @@ function fetch_group_chat_history($user_id){
             foreach($data2 as $row2){
                 $next_date =  $row2['timestamp'];
             }
+
+
             $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
+
+            $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
+
+
             if($row['from_user_id'] == $_SESSION['user_id']){
                 $tick1 = '';
                 $tick2 = '';
@@ -403,10 +418,22 @@ function fetch_group_chat_history($user_id){
                 </p>
             </li>';
             }
-            if($sub > 0){
+            if($sub_year > 0 ){
                 $tmp = strtotime($next_date);
-                $tmp = date('F j',$tmp);
+                $tmp = date('F j , Y',$tmp);
                 $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+            }else if($sub > 0){
+                $tmp = date('Y') - date('Y',strtotime($next_date));
+                if($tmp > 0 ){
+                    $tmp = strtotime($next_date);
+                    $tmp = date('F j , Y',$tmp);
+                    $output .= '<li class="group-other"><small class="new-time"><strong><em>'.$tmp.'</em></strong></small><li>';
+                }else{
+                    $tmp = strtotime($next_date);
+                    $tmp = date('F j',$tmp);
+                    $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+                }
+
             }
         }
     }

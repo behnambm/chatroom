@@ -890,6 +890,7 @@ color: #fff;
 }
 .header-responsive{
     width: 100%;
+    padding: 5px;
 }
 .header-responsive button{
 width: 45px;

@@ -2,7 +2,7 @@
 session_start();
 require_once 'functions.php';
 
-if(isset($_SESSION['logged_in'])){
+if(isset($_SESSION['logged_in'], $_SESSION['privilage'])){
     if(isset($_POST['confirm_kick'], $_POST['username'] , $_POST['id']) && $_POST['confirm_kick'] == true){
         // this code will execute when admin/owner confirm USER_KICK
         if(delete_account($_POST['username'] , null, $_POST['id'])){
