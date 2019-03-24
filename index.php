@@ -139,7 +139,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          $("#user-dialog-" + toUserId).dialog({
                autoOpen: false,
                width: 350,
-               draggable: true
+               draggable: true,
+               resizable: true
          });
          if($(document).width() < 350 ){
             $("#user-dialog-" + toUserId).dialog({
@@ -151,7 +152,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             $("#user-dialog-" + toUserId).dialog({
                   autoOpen: false,
                   width: 350,
-                  draggable: true
+                  draggable: true,
+                  resizable: true
             });
          }
 
