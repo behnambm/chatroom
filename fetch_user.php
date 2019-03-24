@@ -30,7 +30,7 @@ if($count > 0){
   }
   foreach($res as $row){
       $status ='';
-      $current_stimestamp = strtotime(date('Y-m-d H:i:s').'-10 second');
+      $current_stimestamp = strtotime(date('Y-m-d H:i:s').'-4 second');
       $current_stimestamp = date('Y-m-d H:i:s',$current_stimestamp);
       $user_last_activity = fetch_user_last_activity($row['id']);
 
