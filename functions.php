@@ -229,6 +229,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
     if($count == 0){
         $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
     }else{
+        $first_date = 0;
         foreach($res as $row){
             $time = $row['timestamp'];
             $time = explode(' ', $time);
@@ -269,6 +270,23 @@ function fetch_chat_history($from_user_id, $to_user_id){
                     $tick2 = 'fa fa-check';
                 }
 
+                if($first_date == 0){  // this code is for date in top of chat history ==> to findout when chat is started 
+                    $tmp = strtotime($row['timestamp']);
+                    $msg_Y = date('Y',$tmp);
+                    $now_Y = date('Y');
+
+                    if($now_Y == $msg_Y){
+                        $tmp = date('F j',$tmp);
+                        $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+
+                    }else{
+                        $tmp = date('F j , Y',$tmp);
+                        $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+
+                    }
+                    $first_date = 1;
+                }
+
                 $output .= '
                 <li class="message-you">
                     <p>'.$row['chat_message'].'
@@ -292,16 +310,16 @@ function fetch_chat_history($from_user_id, $to_user_id){
                 $tmp = date('F j , Y',$tmp);
                 $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
             }else if($sub > 0){
-                $tmp = date('Y') - date('Y',strtotime($next_date));
-                if($tmp == 0 ){
-                    $tmp = strtotime($next_date);
-                    $tmp = date('F j , Y',$tmp);
-                    $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-                }else{
+                // $tmp = date('Y') - date('Y',strtotime($next_date));
+                // if($tmp == 0 ){
+                //     $tmp = strtotime($next_date);
+                //     $tmp = date('F j , Y',$tmp);
+                //     $output .= '<li class="group-other"><small class="new-time"><strong><em> 888'.$tmp.'</em></strong></small><li>';
+                // }else{
                     $tmp = strtotime($next_date);
                     $tmp = date('F j',$tmp);
                     $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-                }
+                // }
 
             }
         }
@@ -360,6 +378,7 @@ function fetch_group_chat_history($user_id){
         $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
     else{
         $data = $stmt->fetchAll();
+        $first_date = 0;
         foreach($data as $row){
             $time = $row['timestamp'];
             $time = explode(' ', $time);
@@ -399,6 +418,14 @@ function fetch_group_chat_history($user_id){
                     $tick2 = 'fa fa-check';
                 }
     
+
+                if($first_date == 0){ // this code is for date in top of chat history ==> to findout when chat is started 
+                    $tmp = strtotime($row['timestamp']);
+                    $tmp = date('F j , Y',$tmp);
+                    $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+                    $first_date = 1;
+                }
+
                 $output .= '
                 <li class="group-you">
                     <p>'.$row['chat_message'].'
