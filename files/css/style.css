@@ -623,6 +623,41 @@ margin-bottom: 10px;
 padding: 10px;
 text-align: right;
 }
+
+/*   custom scroll bar style   for inside of  chat history  private and group */ 
+.chat-history::-webkit-scrollbar, .group-chat-history::-webkit-scrollbar{
+    width: 10px;
+}
+.chat-history::-webkit-scrollbar-thumb, .group-chat-history::-webkit-scrollbar-thumb {
+    background: #2c2c2c;
+    border-radius: 5px;
+}
+.chat-history::-webkit-scrollbar-thumb:hover, .group-chat-history::-webkit-scrollbar-thumb:hover {
+    background: #464646;
+}
+.chat-history::-webkit-scrollbar-track, .group-chat-history::-webkit-scrollbar-track {
+    background: #dedede;
+}
+/*   custom scroll bar style   ^^^   */ 
+
+
+/*   custom scroll bar style   for dialog box */
+.ui-dialog .ui-dialog-content::-webkit-scrollbar {
+    width: 10px;
+}
+.ui-dialog .ui-dialog-content::-webkit-scrollbar-thumb {
+    background: #5c5c5c;
+    border-radius: 5px;
+}
+.ui-dialog .ui-dialog-content::-webkit-scrollbar-track {
+    background: #dedede;
+}
+
+#group-chat-dialog{
+    width: 100% !important;
+}
+/*   custom scroll bar style   ^^^   */ 
+
 .ui-draggable .ui-dialog-titlebar{
 font: 14px isans;
 text-align: right;
@@ -706,12 +741,14 @@ position: absolute;
 bottom: 0;
 right: 5px;
 }
+/* stable scroll   custom scroll   bottom scroll */
 .chat-history, .group-chat-history{
 overflow: auto;
 display: flex;
 flex-direction: column-reverse;
-border-radius: 3px;
+border-radius: 5px;
 }
+
 .is-typing{
 position: absolute;
 right: 50px;

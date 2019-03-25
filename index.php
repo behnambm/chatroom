@@ -86,8 +86,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          <div class="form-group">
                <button name="send_group_message" id="send-group-message" class="btn btn-info">ارسال</button>
          </div>
-         <div class="form-group">
-         </div>
+         <!-- <div class="form-group">
+         </div> -->
       </div>
    </div>
    </div>
@@ -139,8 +139,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          $("#user-dialog-" + toUserId).dialog({
                autoOpen: false,
                width: 350,
-               draggable: true,
-               resizable: true
+               draggable: true
          });
          if($(document).width() < 350 ){
             $("#user-dialog-" + toUserId).dialog({
@@ -152,8 +151,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             $("#user-dialog-" + toUserId).dialog({
                   autoOpen: false,
                   width: 350,
-                  draggable: true,
-                  resizable: true
+                  draggable: true
             });
          }
 
@@ -284,7 +282,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       //----------------------------------------------------------------------------------------------------
       $('#group-chat-dialog').dialog({
          autoOpen: false,
-         width: 350
+         width: 350,
+         draggable: true
       });
 
       $('#start-group-chat').click((e)=>{
