@@ -637,6 +637,7 @@ text-align: right;
 }
 .chat-history::-webkit-scrollbar-track, .group-chat-history::-webkit-scrollbar-track {
     background: #dedede;
+    border-radius: 5px;
 }
 /*   custom scroll bar style   ^^^   */ 
 
@@ -651,6 +652,7 @@ text-align: right;
 }
 .ui-dialog .ui-dialog-content::-webkit-scrollbar-track {
     background: #dedede;
+    border-radius: 5px;
 }
 
 #group-chat-dialog{
@@ -1091,5 +1093,14 @@ display: none;
     border-radius: 3px;
     padding: 2px 6px;
     display: none;
+}
+
+.small-profile-pic-for-ul{
+    display: none;
+}
+@media(max-width: 576px){
+    .small-profile-pic-for-ul{
+        display: inline-block;
+    }
 }
 

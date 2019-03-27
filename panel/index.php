@@ -54,7 +54,7 @@ redirect_to('../login.php');
         </div>
         <div class="right-group personal-detail col-xl-9 col-lg-9 col-md-9 col-sm-8 col-xs-12">
             <ul class="list-group">
-                <li class="list-group-item active">ویرایش مشخصات فردی<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
+                <li class="list-group-item active"><img class="small-profile-pic-for-ul" src="../<?php echo $_SESSION['profilepic'];?>" style="width: 32px;border-radius: 20px;">  ویرایش مشخصات فردی<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
                 <li class="list-group-item">
                     <fieldset>
                         <legend>جزئیات حساب</legend>
@@ -118,7 +118,7 @@ redirect_to('../login.php');
         </div>
         <div class="right-group delete-account col-xl-9 col-lg-9 col-md-9 col-sm-8">
             <ul class="list-group">
-                <li class="list-group-item active">حذف حساب کاربری<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
+                <li class="list-group-item active"><img class="small-profile-pic-for-ul" src="../<?php echo $_SESSION['profilepic'];?>" style="width: 32px;border-radius: 20px;">  حذف حساب کاربری<em><a href="../index.php" class="go-back-lg">برگشت   </a></em></li>
                 <li class="list-group-item">
                     <em id="delete-account-msg"><strong>توجه : </strong>باحذف حساب کاربری تمام اطلاعات شما از بین خواهد رفت.</em>
                     <div class="form-group"> <br>
@@ -274,6 +274,7 @@ $(document).ready(() => {
             $('#btn-show-menu').css('color', '#000');
             $('#btn-show-menu').css('background-color', '#fff');
             $('.menu-holder').slideUp('slow').removeClass('open');
+            
         } else {
             $('.menu-holder').slideDown('slow').addClass('open');
             $('#btn-show-menu').css('background-color', '#007bff');
@@ -283,10 +284,16 @@ $(document).ready(() => {
     $('#personal-li-link').click((e) => {
         $('.personal-detail').fadeIn(700);
         $('.delete-account').hide(10);
+        $('.menu-holder').slideUp('fast').removeClass('open');
+        $('#btn-show-menu').css('color', '#000');
+        $('#btn-show-menu').css('background-color', '#fff');
     });
     $('#delete-li-link').click((e) => {
         $('.personal-detail').hide(10);
         $('.delete-account').fadeIn(700);
+        $('.menu-holder').slideUp('fast').removeClass('open');
+        $('#btn-show-menu').css('color', '#000');
+        $('#btn-show-menu').css('background-color', '#fff');
     });
 
     checkWidth();
@@ -310,7 +317,7 @@ $(document).ready(() => {
             type: 'POST',
             success: () => {}
         });
-    }, 2000);
+    }, 3000);
 
 
     $('#input').change((e) => {
