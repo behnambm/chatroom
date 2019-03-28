@@ -132,15 +132,11 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       }
       //----------------------------------------------------------------------------------------------------
       // click event for << شروع چت >> button and this will open a dialog and send's ajax request for server to fetch chat history
-      $(document).on('click', '.chat-btn', (e) => {
+      $(document).on('click', '.chat-btn', (e) => { // user dialog setting 
          let toUserName = $(e.target).data('tousername');
          let toUserId = $(e.target).data('touserid');
          make_chat_box(toUserName, toUserId);
-         $("#user-dialog-" + toUserId).dialog({
-               autoOpen: false,
-               width: 350,
-               draggable: true
-         });
+
          if($(document).width() < 350 ){
             $("#user-dialog-" + toUserId).dialog({
                   autoOpen: false,
@@ -280,11 +276,49 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       }
 
       //----------------------------------------------------------------------------------------------------
-      $('#group-chat-dialog').dialog({
-         autoOpen: false,
-         width: 350,
-         draggable: true
-      });
+      if($(document).width() < 350 ){  //  group dialog setting 
+         $('#group-chat-dialog').dialog({
+               autoOpen: false,
+               width: $(document).width(),
+               draggable: true
+         });
+      }else{
+         $('#group-chat-dialog').dialog({
+               autoOpen: false,
+               width: 350,
+               draggable: true
+         });
+      }
+
+      $(window).resize(()=>{  // setting dialog box width on window resize
+         if($(document).width() < 350 ){  //  group dialog box
+            $('#group-chat-dialog').dialog({
+                  autoOpen: false,
+                  width: $(document).width(),
+                  draggable: true
+            });
+         }else{
+            $('#group-chat-dialog').dialog({
+                  autoOpen: false,
+                  width: 350,
+                  draggable: true
+            });
+         }
+
+         if($(document).width() < 350 ){  // user dialog box 
+            $('.chat-box').dialog({
+                  autoOpen: false,
+                  width: $(document).width(),
+                  draggable: true
+            });
+         }else{
+            $('.chat-box').dialog({
+                  autoOpen: false,
+                  width: 350,
+                  draggable: true
+            });
+         }
+      }); // end of resize 
 
       $('#start-group-chat').click((e)=>{
          $('#group-chat-dialog').dialog('open');
