@@ -50,20 +50,20 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                <?php
                   if(isset($_SESSION['privilage'])){
                      if($_SESSION['privilage'] == 'owner'){
-                         echo '<li style="padding: 13px 5px;"><a href="administration/"><i class="fa fa-dashboard"></i>مدیریت</a></li>';
+                         echo '<a href="administration/"><li style="padding: 13px 5px;"><i class="fa fa-dashboard"></i>مدیریت</li></a>';
                      }
                   }
                ?>
-               <li>
-                  <a href="panel/">
+               
+               <a href="panel/">
+                  <li>
                      <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic"
                      alt="<?php echo $_SESSION['displayname'];?>">
                      <?php echo $_SESSION['displayname'];?>
-                  </a>
-               </li>
-               
-               
-               <li style="padding: 13px 5px;"><a href="?logout=1"><i class="fa fa-sign-out"></i>خروج</a></li>
+                  </li>
+               </a>  
+
+               <a href="?logout=1"><li style="padding: 13px 5px;"><i class="fa fa-sign-out"></i>خروج</li></a>
             </ul>
             <div class="clear"></div>
          </div>
