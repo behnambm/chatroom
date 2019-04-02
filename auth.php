@@ -6,11 +6,11 @@ require_once 'functions.php';
 //  *********************************************************************
 //  ************************** LOGIN SECTION ****************************
 if(isset($_POST['logusername'],$_POST['logpassword'],$_POST['logremember'])){
-    $username = $_POST['logusername'];
+    $username = trim($_POST['logusername']);
     $password = $_POST['logpassword'];
     $remember = $_POST['logremember'];
     if(doLogin($username, $password)){
-        $user = get_user_info($_POST['logusername']);
+        $user = get_user_info($username);
         set_id_to_login_details($user['id']);
         $log_det = get_login_details($user['id']);
         $_SESSION['login_details_id'] = $log_det['login_details_id'];
