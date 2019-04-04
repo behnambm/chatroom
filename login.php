@@ -28,46 +28,49 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == 'yes'){
 </head>
 <body>
     <div class="container">
-        <div class="wrapper log-wrapper">
-            <form action="" method="post" id="login-form">
-                <span id="login-img"><i class="fa fa-user-circle"></i><h1>ورود</h1></span>
-                <div class="clear"></div>
-                <div class="input-div" id="user-div">
-                    <span id="icon-holder-user">
-                        <i class="fa fa-user"></i>
-                    </span>
-                    <input type="text" name="logusername" placeholder="نام کاربری " id="username-input">
-                </div><div class="clear"></div>
-                <div class="input-div" id="pass-div">
-                    <span id="icon-holder-pass">
-                        <i class="fa fa-lock"></i>
-                    </span>
-                    <input type="password" name="logpassword" placeholder="رمز عبور " id="password-input">
-                </div><div class="clear"></div>
-                <div class="remember">
-                    <input type="checkbox" name="rememberme" id="remember-me" value="rememberme">
-                    <label for="remember-me">مرا به خاطر بسپار</label>
-                </div><div class="clear"></div>
-                <button type="submit" id="sub-btn">ورود</button>
-                <div class="loading">
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                    <div class="obj"></div>
-                </div> 
-            </form><div class="clear"></div>
-            <div class="err-log">   
-                  
-                <i class="fa fa-exclamation-circle"></i>نام کاربری یا رمز عبور اشتباه است.</div>
-                
-            <div class="line login-line">
-                <div class="inner-line"></div>
+        <div class="row">
+            <div class="wrapper log-wrapper col-xs-push-1 col-xs-10 col-sm-push-3 col-sm-6 col-md-push-4 col-md-4 
+            col-lg-3">
+                <form action="" method="post" id="login-form">
+                    <span id="login-img"><i class="fa fa-user-circle"></i><h1>ورود</h1></span>
+                    <div class="clear"></div>
+                    <div class="input-div" id="user-div">
+                        <span id="icon-holder-user">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" name="logusername" placeholder="نام کاربری " id="username-input">
+                    </div><div class="clear"></div>
+                    <div class="input-div" id="pass-div">
+                        <span id="icon-holder-pass">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" name="logpassword" placeholder="رمز عبور " id="password-input">
+                    </div><div class="clear"></div>
+                    <div class="remember">
+                        <input type="checkbox" name="rememberme" id="remember-me" value="rememberme">
+                        <label for="remember-me">مرا به خاطر بسپار</label>
+                    </div><div class="clear"></div>
+                    <button type="submit" id="sub-btn">ورود</button>
+                    <div class="loading">
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                        <div class="obj"></div>
+                    </div> 
+                </form><div class="clear"></div>
+                <div class="err-log">   
+                    
+                    <i class="fa fa-exclamation-circle"></i>نام کاربری یا رمز عبور اشتباه است.</div>
+                    
+                <div class="line login-line">
+                    <div class="inner-line"></div>
+                </div>
+                <a href="register.php" id="register">ثبت نام</a>
             </div>
-            <a href="register.php" id="register">ثبت نام</a>
         </div>
     </div>
     <script src="files/js/bootstrap.min.js"></script>

@@ -79,17 +79,24 @@ url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
 
 .wrapper{
 height: 500px;
-width: 25%;
 display: block;
 border-radius: 6px;
 margin: 20px auto;
 background:-webkit-linear-gradient(top,#7579ff,#b224ef);
 background: linear-gradient(top,#7579ff,#b224ef);
 }
-@media(max-width:768px){
-.wrapper{
-    width: 80% !important;
+@media (min-width: 992px){
+    .wrapper{
+        left: 36%;
+    }
 }
+@media (min-width: 1200px){
+    .wrapper {
+        left: 38%;
+    }
+}
+@media(max-width:768px){
+
 #register-img h1{
     font-size: 26px !important;
 }
@@ -360,6 +367,17 @@ margin: 0 5px 0 10px;
 color: #1b1b1b;
 font-size: 22px;
 }
+@media(max-width: 363px){
+    .site-name{
+        height: auto;
+    }
+    .site-name a {
+        font-size: 16px;
+    }
+    .profile-ul a{
+        font-size: 12px !important;
+    }
+}
 .profile-ul {
     list-style: none;
     float: left;
@@ -370,10 +388,10 @@ font-size: 22px;
     padding: 10px 5px;
     height: 53px;
 }
-.profile-ul li:hover{
+.profile-ul a:hover li{
     background-color: #333;
 }
-.profile-ul li:hover a {
+.profile-ul a:hover {
     color: #fff;
 }
 .profile-ul i{
@@ -426,10 +444,12 @@ margin-top: 0;
 box-shadow: 0 0 1px 0 #000000;
 overflow: hidden;
 }
-@media(max-width:440px){
-.user-table{
-    width: 80%;
+@media(max-width: 576px){
+    .user-table{
+        width: 95%;
+    }
 }
+
 .group-chat-div{
     width: 80% !important;
 }
@@ -496,20 +516,9 @@ position: relative;
     width: 35%;
 }
 }
-@media(max-width:1000px){
-.log-wrapper{
-    width: 30%;
-}
-}
-@media(max-width:850px){
-.wrapper{
-    width: 40%;
-}
-}
-@media(max-width:768px){
-.wrapper{
-    width: 50% !important;
-}
+
+
+
 #register-img h1 {
     font-size: 18px !important;
 }
