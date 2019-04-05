@@ -81,9 +81,11 @@ url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
 height: 500px;
 display: block;
 border-radius: 6px;
-margin: 20px auto;
 background:-webkit-linear-gradient(top,#7579ff,#b224ef);
 background: linear-gradient(top,#7579ff,#b224ef);
+}
+.log-wrapper{
+    margin-top: 10px;
 }
 @media (min-width: 992px){
     .wrapper{
@@ -101,6 +103,52 @@ background: linear-gradient(top,#7579ff,#b224ef);
     font-size: 26px !important;
 }
 }
+
+
+
+/*   Custom css for register page  beacuse cannot load bootstrap JS file in file */
+.register-page{
+    direction: ltr;
+}
+.register-page form{
+    direction: rtl;
+}
+.register-page .col-xs-push-1 {
+    margin-left: 25%;
+}
+.register-page .col-xs-10 {
+    width: 83.33333333%;
+}
+
+@media (min-width: 768px){
+    .register-page .col-sm-6 {
+        width: 50%;
+    }
+    .register-page .col-xs-push-1 {
+        margin-left: 34%;
+    }
+}
+
+@media (min-width: 992px){
+    .register-page .col-md-4 {
+        width: 33.33333333%;
+    }
+    .register-page .col-md-push-4 {
+        margin-left: 0;
+    }
+}
+@media(max-width: 576px){
+    .register-page .col-xs-push-1{
+        margin-left: 8%;
+    }
+}
+@media(min-width: 1200px){
+    .register-page .col-lg-3{
+        width: 25%;
+    }
+}
+/*   Custom css for register page beacuse cannot load bootstrap JS file in file */
+
 #login-img, #register-img{
 color: #fff;
 font-size: 70px;
@@ -453,7 +501,7 @@ overflow: hidden;
 .group-chat-div{
     width: 80% !important;
 }
-}
+
 @media(max-width:370px){
 .user-table{
     width: 90%;
@@ -506,16 +554,7 @@ padding: 5px;
 padding: 10px;
 position: relative;
 }
-@media(max-width:1030px){
-.reg-wrapper{
-    width: 30%;
-}
-}
-@media(max-width:1100px){
-.reg-wrapper{
-    width: 35%;
-}
-}
+
 
 
 
@@ -528,23 +567,10 @@ position: relative;
 #edit-profile{
     display: none;
 }
-}
-@media(max-width:620px){
-.reg-wrapper{
-    width: 60% !important;
-}
-}
-@media(max-width:460px){
-.wrapper{
-    width: 85% !important;
-    margin-top: 10px;
-}
-}
-@media(max-width:280px){
-.wrapper{
-    width: 95% !important;
-}
-}
+
+
+
+
 .loading{
 align-items: center;
 display: flex;
