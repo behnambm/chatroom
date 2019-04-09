@@ -2,8 +2,6 @@
 ini_set('display_errors',1);
 
 session_start();
-require_once 'db_config.php';
-setup();
 
 require_once 'functions.php';
 if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) && $_COOKIE['logged_in'] == 'yes' && check_cookie($_COOKIE['hash'])){

@@ -1,7 +1,6 @@
 <?php
 ini_set('display_errors',1);
-require_once 'db_config.php';
-// ini_set('display_errors',1);
+require_once 'setup.php';
 try{
     $con = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8",$db_user,$db_pass);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

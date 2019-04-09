@@ -7,7 +7,7 @@ $db_name = 'behnam_db';
 
 function setup(){
     $db_file_content = file_get_contents('db.conf');
-    if($db_file_content == "DATABASE_CONNECT::1;CREATE_DB::1;USE_DATABASE::1;USERS_TBL::1;COOKIE_TBL::1;LOGIN_DETAIL_TBL::1;CHAT_MSG_TBL::1;ADMIN_TBL::1;INSERT_USER::1;INSERT_HASH::1;INSERT_PRIVILAGE::1;"){
+    if($db_file_content == "DATABASE_CONNECT::1;CREATE_DB::1;USE_DATABASE::1;USERS_TBL::1;COOKIE_TBL::1;LOGIN_DETAIL_TBL::1;CHAT_MSG_TBL::1;ADMIN_TBL::1;INSERT_USER::1;INSERT_HASH::1;INSERT_PRIVILAGE::1;INSERT_MEMBER_1::1;INSERT_MEMBER_2::1;"){
         return true;
     }
     global $db_host,$db_name,$db_pass,$db_user;
@@ -95,7 +95,27 @@ function setup(){
         $con->exec($sql9);
         file_put_contents('db.conf', 'INSERT_PRIVILAGE::1;', FILE_APPEND);
 
+        // create tmp user  1
+        $sql10 = "INSERT INTO users (id, username, password, display_name, email, profile_pic) 
+            VALUES (2, 'user1', '7555576cf46ba3c36dbabf0c38ede6c2', 'کاربر آزمایشی ۱', 'user1@gmail.com', 'files/images/user.png');
+            INSERT INTO cookie_id (id, cookie_hash) VALUES (2, '4e8eec75537523cb9e54efe1aa4aa585aaa0378f');";
+        $con->exec($sql10);
+        file_put_contents('db.conf', 'INSERT_MEMBER_1::1;', FILE_APPEND);
+
+        // create tmp user  2
+        $sql10 = "INSERT INTO users (id, username, password, display_name, email, profile_pic) 
+            VALUES (3, 'user2', '7555576cf46ba3c36dbabf0c38ede6c2', 'کاربر آزمایشی 2', 'user2@gmail.com', 'files/images/user.png');
+            INSERT INTO cookie_id (id, cookie_hash) VALUES (3, 'e574f2d7cb7c52a70242348120ea9ebb44a39f72');";
+        $con->exec($sql10);
+        file_put_contents('db.conf', 'INSERT_MEMBER_2::1;', FILE_APPEND);
+
     }catch(PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
+}
+
+if(isset($_GET['setup']) && $_GET['setup'] == 1){
+    setup();
+    echo '<script>window.location = "login.php";</script>';
+
 }

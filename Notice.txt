@@ -1,5 +1,17 @@
-If you use linux os you must change 'profile_img' dir mod to 777 ==> sudo chmod 777 profile_img
-and  ===> sudo chmod 766 db.conf
+You have to extract this project on you localhost 
 
-sudo chmod 777 db.conf
+
+==================================================
+
+
+If you start this project for first time you should go to this address
+
+  localhost/chatroom/setup.php?setup=1
+
+
+==================================================
+
+If you use linux OS you must enter these commands : 
+==> sudo chmod 777 profile_img
+==> sudo chmod 777 db.conf
 
