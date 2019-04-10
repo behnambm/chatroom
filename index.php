@@ -36,6 +36,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <title>Chat Room</title>
+   <link rel="icon" href="files/images/tab-icon.png">
    <link rel="stylesheet" href="files/css/font-awesome.min.css">
    <link rel="stylesheet" href="files/css/bootstrap-4.1.2.min.css">
    <link rel="stylesheet" href="files/css/jquery-ui.css">

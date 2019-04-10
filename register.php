@@ -15,6 +15,7 @@ if(isset($_COOKIE['logged_in'],$_COOKIE['hash']) &&  $_COOKIE['logged_in'] = 'ye
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registration</title>
+    <link rel="icon" href="files/images/tab-icon.png">
     <link rel="stylesheet" href="files/css/font-awesome.min.css">
   <link rel="stylesheet" href="files/css/bootstrap-4.1.2.min.css">
     <link rel="stylesheet" href="files/dist/cropper.css">
