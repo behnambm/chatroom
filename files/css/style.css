@@ -957,6 +957,7 @@ min-width: 30%;
 padding-bottom: 17px;
 margin-bottom: 0;
 margin-top: 15px;
+word-break: break-all;
 }
 .group-other .group-user-name{
 left: 5px;
