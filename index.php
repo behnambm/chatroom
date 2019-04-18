@@ -55,20 +55,20 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                      }
                   }
                ?>
-               
+
                <a href="panel/">
                   <li>
                      <img src="<?php echo $_SESSION['profilepic'];?>" id="profile-pic"
                      alt="<?php echo $_SESSION['displayname'];?>">
                      <?php echo $_SESSION['displayname'];?>
                   </li>
-               </a>  
+               </a>
 
                <a href="?logout=1"><li style="padding: 13px 5px;"><i class="fa fa-sign-out"></i>خروج</li></a>
             </ul>
             <div class="clear"></div>
          </div>
-      
+
 
       <div class="group-chat-div">
          <button class="btn btn-warning btn-sm" id="start-group-chat">چت گروهی<span
@@ -87,37 +87,66 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          <div class="form-group">
                <button name="send_group_message" id="send-group-message" class="btn btn-info">ارسال</button>
          </div>
-         <!-- <div class="form-group">
-         </div> -->
       </div>
    </div>
    </div>
 
 <!-- modal for delete account -->
 <div class="modal-bg">
-<div class="delete-confirm">
-   <div class="modal-head">
-      <em>آیا مطمئن هستید که میخواهید این کاربر را حذف کنید ؟</em><hr>
-      <button class="btn btn-danger" id="deny-delete">لغو</button>
-      <button class="btn btn-success " id="accept-delete">تایید</button>
-   </div>
-</div>
+   <ul class="list-group">
+      <li class="list-group-item">آیا مطمئن هستید که میخواهید این کاربر را حذف کنید ؟</li>
+      <li class="list-group-item accept"><a href="javascript:;" id="accept-delete">تایید</a></li>
+      <li class="list-group-item"><a href="javascript:;" id="deny-delete">لغو</a></li>
+   </ul>
 </div>
 
 
 <div class="kick-alert">
-   
 </div>
 
    <script src="files/js/jquery-3.1.1.js"></script>
    <script src="files/js/jquery-ui.js"></script>
    <script type="text/javascript">
+
+   // PUSH Notification Initialize
+
+   Notification.requestPermission(function (status) {
+           navigator.serviceWorker.register('files/js/Notification-Initialize.js');
+   });
+
+
+
+
+
+   //PUSH Notification Function
+
+   function displayNotification(username, count) {
+        if (Notification.permission == 'granted') {
+                navigator.serviceWorker.getRegistration().then(function (reg) {
+                        var icon_check = '';
+                        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                                icon_check = 'files/images/tab-icon.png';
+                        }
+                        var options = {
+                                icon: icon_check,
+                                vibrate: [100, 50, 100], // vibrate - pause - vibrate
+                        };
+                        reg.showNotification('شما '+count+' پیام جدید از  '+username + ' دارید.', options);
+                        console.log(options.data);
+                });
+        }
+}
+
+
+
+   // PUSH Notification Initialize
+
    $(document).ready(() => {
       let interval = null;
       let gorupInterval = null;
       //----------------------------------------------------------------------------------------------------
       // this function is structure of single chat dialog
-      function make_chat_box(user_name, user_id) {      // this code will make dynamic chat box for each user 
+      function make_chat_box(user_name, user_id) {      // this code will make dynamic chat box for each user
          let boxContent = '<div class="chat-box" id="user-dialog-' + user_id + '" title="چت با : ' +
                user_name + '">';
          boxContent += '<div class="chat-history" id="chat-history-' + user_id + '" data-touserid="' +
@@ -133,7 +162,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       }
       //----------------------------------------------------------------------------------------------------
       // click event for << شروع چت >> button and this will open a dialog and send's ajax request for server to fetch chat history
-      $(document).on('click', '.chat-btn', (e) => { // user dialog setting 
+      $(document).on('click', '.chat-btn', (e) => { // user dialog setting
          let toUserName = $(e.target).data('tousername');
          let toUserId = $(e.target).data('touserid');
          make_chat_box(toUserName, toUserId);
@@ -172,7 +201,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          }, 1000);
       });
       //----------------------------------------------------------------------------------------------------
-      // click event for close chat dialog 
+      // click event for close chat dialog
       $(document).on('click', '.ui-dialog-titlebar-close', (e) => {
          let tmp = $(e.target).parents('.ui-dialog').attr('aria-describedby');
          if (tmp == 'group-chat-dialog') {
@@ -213,7 +242,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   action: 'msg_count'
                },
                success: (responce) => {
-                  if (responce != 0) {
+                  if (responce != 0 ) {
+                           console.log(responce);
                      $('#group-msg-count').html(responce).fadeIn('fast');
                   } else {
                      $('#group-msg-count').css('display', 'none');
@@ -255,19 +285,39 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       });
       //----------------------------------------------------------------------------------------------------
       // fetch user's list from database
+      var notified = false;
+      var count_tmp = {};
+      var msgObject = {};
       fetchUser();
-      function fetchUser() {
-         $.ajax({
-               url: 'fetch_user.php',
-               type: 'POST',
-               data: '',
-               success: (data) => {
-                  $('.user-table').html(data);
-               }
-         });
-      }
+        function fetchUser() {
+                $.ajax({
+                        url: 'fetch_user.php',
+                        type: 'POST',
+                        data: '',
+                        success: (data) => {
+                                $('.user-table').html(data);
+                                if($('.unseen-chat').length){ // for checking this element is exists or not
+                                        $('.unseen-chat').each((key,value)=>{ // a for loop for each element with this class
+                                                var username = $(value).parents('.chat-btn').data('tousername');
+                                                var count = $(value).data('msgcount');
+                                                if(count_tmp[username] == undefined){
+                                                        count_tmp[username] = 0;
+                                                }else{
+                                                        count_tmp[username] = msgObject[username];
+                                                }
+                                                msgObject[username] = count;
+                                                if(count_tmp[username] < msgObject[username]){
+                                                        if(document.visibilityState == 'hidden'){
+                                                                displayNotification(username, count-count_tmp[username]);
+                                                        }
+                                                }
+                                        });
+                                }
+                        }
+                });
+        }
       //----------------------------------------------------------------------------------------------------
-      // update current user activity 
+      // update current user activity
       function updateActivity() {
          $.ajax({
                url: 'update_last_activity.php',
@@ -277,7 +327,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
       }
 
       //----------------------------------------------------------------------------------------------------
-      if($(document).width() < 350 ){  //  group dialog setting 
+      if($(document).width() < 350 ){  //  group dialog setting
          $('#group-chat-dialog').dialog({
                autoOpen: false,
                width: $(document).width(),
@@ -306,7 +356,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
             });
          }
 
-         if($(document).width() < 350 ){  // user dialog box 
+         if($(document).width() < 350 ){  // user dialog box
             $('.chat-box').dialog({
                   autoOpen: false,
                   width: $(document).width(),
@@ -319,7 +369,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   draggable: true
             });
          }
-      }); // end of resize 
+      }); // end of resize
 
       $('#start-group-chat').click((e)=>{
          $('#group-chat-dialog').dialog('open');
@@ -385,7 +435,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
          $('.modal-bg').hide();
       });
 
-      // confirm user delete 
+      // confirm user delete
       $('#accept-delete').click((e)=>{
          if(userNameForKick != null && userIdForKick != null){
             $.ajax({
@@ -397,7 +447,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                   id:userIdForKick
                },
                success:(responce)=>{
-                  if(responce == 'DONE'){                     
+                  if(responce == 'DONE'){
                   }
                }
             });

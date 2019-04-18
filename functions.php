@@ -29,7 +29,7 @@ function check_cookie($hash,$data=false){
     if($data==true){
         return $res[0];
     }
-    if($count > 0 ){    
+    if($count > 0 ){
         return true;
     }else{
         return false;
@@ -136,7 +136,7 @@ function register_user($user, $pass, $email, $displayname){
             $path = "files/images/user.png";
             $stmt = $con->prepare("INSERT INTO users VALUES(null,?,?,?,?,?) ");
             $stmt->execute(array(strtolower(trim($user)), encrypt_pass($pass), trim($displayname), strtolower(trim($email)) ,$path));
-            $count = $stmt->rowCount();    
+            $count = $stmt->rowCount();
             if($count > 0 ){
                 $res = get_user_info($user);
                 $id = $res['id'];
@@ -165,7 +165,7 @@ function add_profile_path_to_db($username, $path){
     $stmt = $con->prepare("UPDATE users SET profile_pic = ? WHERE username = ?");
     $stmt->execute(array($path, $username));
     return true;
-    
+
 }
 function redirect_to($add){
     header("Location:{$add}");
@@ -193,14 +193,14 @@ function get_login_details($user_id){
     global $con;
     $stmt = $con->prepare("SELECT * FROM login_details WHERE user_id = ? ORDER BY login_details_id DESC LIMIT 1");
     $stmt->execute(array($user_id));
-    $count = $stmt->rowCount();    
+    $count = $stmt->rowCount();
     if($count > 0){
         $res = $stmt->fetchAll();
         return $res[0];
     }else{
         return false;
     }
-}   
+}
 
 
 function fetch_user_last_activity($user_id){
@@ -217,9 +217,9 @@ function fetch_user_last_activity($user_id){
 
 function fetch_chat_history($from_user_id, $to_user_id){
     global $con;
-    $stmt = $con->prepare("SELECT * FROM chat_message WHERE 
+    $stmt = $con->prepare("SELECT * FROM chat_message WHERE
     (from_user_id = ? AND to_user_id = ?)
-    OR (from_user_id = ? AND to_user_id = ?) 
+    OR (from_user_id = ? AND to_user_id = ?)
     ORDER BY timestamp ASC");
     $stmt->execute(array($from_user_id , $to_user_id , $to_user_id , $from_user_id));
     $res = $stmt->fetchAll();
@@ -269,7 +269,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                     $tick2 = 'fa fa-check';
                 }
 
-                if($first_date == 0){  // this code is for date in top of chat history ==> to findout when chat is started 
+                if($first_date == 0){  // this code is for date in top of chat history ==> to findout when chat is started
                     $tmp = strtotime($row['timestamp']);
                     $msg_Y = date('Y',$tmp);
                     $now_Y = date('Y');
@@ -337,7 +337,7 @@ function fetch_unseen_chat($from_user_id , $to_user_id){
         if($count > 99){
             $count = '99+';
         }
-        $output .= '<small class="unseen-chat" style="    position: absolute;
+        $output .= '<small class="unseen-chat" data-msgcount='.$count.' style="    position: absolute;
         background-color: red;
         padding: 3px 5px 0px 4px;
         border-radius: 10px;
@@ -345,7 +345,7 @@ function fetch_unseen_chat($from_user_id , $to_user_id){
         left: -8px;">'.$count.'</small>';
         return $output;
     }
-    
+
 }
 
 function fetch_is_type($user_id){
@@ -368,7 +368,7 @@ function fetch_is_type($user_id){
 }
 
 function fetch_group_chat_history($user_id){
-    global $con;  
+    global $con;
     $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = '0' ORDER BY timestamp ASC;");
     $stmt->execute();
     $count = $stmt->rowCount();
@@ -391,7 +391,7 @@ function fetch_group_chat_history($user_id){
             $min = $time[1];
             $user = get_user_info(null,$row['from_user_id']);
 
-            // codes for computing messages date 
+            // codes for computing messages date
             $current_id = $row['id_per_msg'];
             $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = 0 AND id_per_msg = ? ");
             $stmt->execute(array(($current_id+1)));
@@ -416,9 +416,9 @@ function fetch_group_chat_history($user_id){
                 if($row['is_seen'] == '1'){
                     $tick2 = 'fa fa-check';
                 }
-    
 
-                if($first_date == 0){ // this code is for date in top of chat history ==> to findout when chat is started 
+
+                if($first_date == 0){ // this code is for date in top of chat history ==> to findout when chat is started
                     $tmp = strtotime($row['timestamp']);
                     $tmp = date('F j , Y',$tmp);
                     $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
@@ -474,7 +474,7 @@ function delete_account($username, $email, $id){
         $stmt->execute(array($username));
     }else{
         $stmt = $con->prepare("DELETE FROM users WHERE username = ? AND email = ?");
-        $stmt->execute(array($username, $email));    
+        $stmt->execute(array($username, $email));
     }
     $stmt = $con->prepare("DELETE FROM cookie_id WHERE id = ? ");
     $stmt->execute(array($id));
@@ -484,7 +484,7 @@ function delete_account($username, $email, $id){
     return true;
 }
 
-function check_admin($username){  // check for admin privilage 
+function check_admin($username){  // check for admin privilage
     global $con;
     $stmt = $con->prepare("SELECT * FROM admin_tbl WHERE username = ?;");
     $stmt->execute(array($username));
@@ -494,5 +494,5 @@ function check_admin($username){  // check for admin privilage
         return $res[0];
     }else{
         return false;
-    }   
+    }
 }
