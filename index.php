@@ -410,6 +410,32 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         });
                 }
         });
+        //----------------------------------------------------------------------------------------------------
+        // Event for pressing    Ctrl+Enter    in  textarea
+        $('#group-chat-message').focus((e)=>{
+                $(document).on('keydown',(e)=>{
+                        if(e.ctrlKey && e.which == 13 ){
+                                let chatMsg = $('#group-chat-message').val();
+                                let action = 'insert';
+                                $('#group-chat-message').val('');
+                                if (chatMsg != '') {
+                                        $.ajax({
+                                                url: 'group_chat.php',
+                                                type: 'POST',
+                                                data: {
+                                                        group_chat_message: chatMsg,
+                                                        action: action
+                                                },
+                                                success: (responce) => {
+                                                        $('.group-chat-history').html(responce);
+                                                }
+                                        });
+                                }
+                        }
+                });
+        });
+
+        //----------------------------------------------------------------------------------------------------
         $('#start-group-chat').click((e)=>{
                 groupInterval = setInterval(()=>{
                         $.ajax({
