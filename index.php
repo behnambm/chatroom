@@ -46,7 +46,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 <body>
         <div class="container">
                 <div class="header">
-                        <h1 class="site-name"><a href="index.php">چت روم</a></h1>
+                        <img src="files/images/chat.png" alt="چت روم" id="site-header-img">
                         <ul class="profile-ul">
                                 <?php
                                 if(isset($_SESSION['privilage'])){
