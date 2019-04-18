@@ -149,13 +149,12 @@ redirect_to('../login.php');
 
 <!-- modal for delete account -->
 <div class="modal-bg">
-<div class="delete-confirm">
-    <div class="modal-head">
-        <em>آیا مطمئن هستید که میخواهید حساب خود را حذف کنید؟</em><hr>
-        <button class="btn btn-danger" id="deny-delete">لغو</button>
-        <button class="btn btn-success " id="accept-delete">تایید</button>
-    </div>
-</div>
+   <ul class="list-group">
+        <li class="list-group-item">آیا مطمئن هستید که میخواهید حساب خود را حذف کنید؟</li>
+        <li class="list-group-item accept"><a href="javascript:;" id="accept-delete">تایید</a></li>
+        <li class="list-group-item"><a href="javascript:;" id="deny-delete">لغو</a></li>
+
+   </ul>
 </div>
 
 

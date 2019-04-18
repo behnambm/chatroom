@@ -1054,33 +1054,48 @@ margin: 10px 0;
 #delete-account-inp::placeholder{ 
 font-size: 14px;
 }
+@media(max-width: 576px){
+    .modal-bg{
+        background-color: rgba(0,0,0,0.2) !important;
+    }
+}
 .modal-bg{
 position: fixed;
 width: 100%;
 height: 100%;
 z-index: 9;
 top: 0;
-background-color: rgba(0,0,0,0.8);
+background-color: transparent;
 display: none;
+text-align: right;
+}
+.modal-bg ul {
+width: 380px;
+margin: 140px auto;
+}
+.modal-bg ul li {
+    padding: 0;
+}
+.modal-bg ul li.list-group-item:first-child{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: .75rem 1.25rem;
 }
 
-.delete-confirm{
-width: 300px;
-background-color: #fff;
-height: auto;
-margin: 60px auto;
-border-radius: 3px;
-padding: 5px;
+.modal-bg ul li.list-group-item:last-child{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
 }
-.modal-head{
-    text-align: right;
+.modal-bg ul li.list-group-item a {
+    padding: .75rem 1.25rem;
+    display: block;
+    text-align: center;
 }
-.modal-head em {
-font-size: 13px;
-color: #1b1b1b;
-margin-bottom: 10px;
-display: block;
+.modal-bg a#accept-delete{
+    color: #000;
 }
+
 .delete-confirm button {
 padding: 5px 14px;
 font-size: 14px;
