@@ -1,1 +1,2 @@
-https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#managing_notifications_at_the_server
+http://bit.ly/2DmpaDx  ==> For PUSH notification installation
+https://studio.tailorbrands.com   ==> For logo
