@@ -232,6 +232,33 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         }
                 });
                 //----------------------------------------------------------------------------------------------------
+                // Event for pressing    Ctrl+Enter    in  textarea
+                $(document).on('click','.chat-btn',(e)=>{
+                        var userId = $(e.target).data('touserid');
+                        $('#chat-message-'+userId).focus(()=>{
+                                $(document).on('keydown',(e)=>{
+                                        if(e.ctrlKey && e.which == 13){
+                                                var msg = $('#chat-message-'+userId).val();
+                                                $('#chat-message-'+userId).val('');
+                                                if (msg != '') {
+                                                        $.ajax({
+                                                                url: 'insert_chat.php',
+                                                                type: 'POST',
+                                                                data: {
+                                                                        to_user_id: userId,
+                                                                        chat_message: msg
+                                                                },
+                                                                success: (responce) => {
+                                                                        $('#chat-history-' + userId).html(responce);
+                                                                }
+                                                        });
+                                                }
+                                        }
+                                });
+                        });
+                });
+
+                //----------------------------------------------------------------------------------------------------
                 // function for fetching msg count for group
                 function getGroupMsgCount(){
                         $.ajax({
