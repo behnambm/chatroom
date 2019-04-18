@@ -25,7 +25,7 @@ font-weight: normal;
 font-display: auto;
 font-style: normal;
 src: url("fontawesome-webfont.woff2") format("woff2");
-} 
+}
 @font-face {
 font-family: isans;
 font-style: normal;
@@ -158,7 +158,7 @@ display: block;
 margin-top: 15px;
 }
 #register-img{
-font-size: 60px;    
+font-size: 60px;
 }
 #login-img i{
 margin: 0 37%;
@@ -614,7 +614,7 @@ animation-delay: 0.7s;
 }
 @keyframes load{
 0%{
-    height: 0; 
+    height: 0;
 }
 50%{
     height: 35px;
@@ -659,7 +659,7 @@ padding: 10px;
 text-align: right;
 }
 
-/*   custom scroll bar style   for inside of  chat history  private and group */ 
+/*   custom scroll bar style   for inside of  chat history  private and group */
 .chat-history::-webkit-scrollbar, .group-chat-history::-webkit-scrollbar{
     width: 10px;
 }
@@ -674,7 +674,7 @@ text-align: right;
     background: #dedede;
     border-radius: 5px;
 }
-/*   custom scroll bar style   ^^^   */ 
+/*   custom scroll bar style   ^^^   */
 
 
 /*   custom scroll bar style   for dialog box */
@@ -693,7 +693,7 @@ text-align: right;
 #group-chat-dialog{
     width: 100% !important;
 }
-/*   custom scroll bar style   ^^^   */ 
+/*   custom scroll bar style   ^^^   */
 
 .ui-draggable .ui-dialog-titlebar{
 font: 14px isans;
@@ -1051,7 +1051,7 @@ padding: 8px;
 font-size: 12px;
 margin: 10px 0;
 }
-#delete-account-inp::placeholder{ 
+#delete-account-inp::placeholder{
 font-size: 14px;
 }
 @media(max-width: 576px){
@@ -1065,7 +1065,7 @@ width: 100%;
 height: 100%;
 z-index: 9;
 top: 0;
-background-color: transparent;
+background-color: rgba(0,0,0,0.4);
 display: none;
 text-align: right;
 }
@@ -1153,4 +1153,3 @@ display: none;
         display: inline-block;
     }
 }
-

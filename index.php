@@ -200,7 +200,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
                         }, 1000);
                 });
-                
+
                 //----------------------------------------------------------------------------------------------------
                 // click event for close chat dialog
                 $(document).on('click', '.ui-dialog-titlebar-close', (e) => {
