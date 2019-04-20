@@ -111,7 +111,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         // PUSH Notification Initialize
 
         Notification.requestPermission(function (status) {
-                navigator.serviceWorker.register('files/js/Notification-Initialize.js');
+                navigator.serviceWorker.register('files/js/sw.js');
         });
 
 
