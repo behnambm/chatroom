@@ -287,7 +287,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         }
 
                                         $output .= '
-                                        <li class="message-you">
+                                        <li class="message-you" data-msgId='.base64_encode($row['id']).'>
                                         <p>'.$row['chat_message'].'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
@@ -296,7 +296,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         </li>';
                                 }else{
                                         $output .= '
-                                        <li class="message-other">
+                                        <li class="message-other" data-msgId='.base64_encode($row['id']).'>
                                         <p>'. $row['chat_message'].'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>
@@ -426,7 +426,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         }
 
                                         $output .= '
-                                        <li class="group-you">
+                                        <li class="group-you" data-msgId='.base64_encode($row['id']).'>
                                         <p>'.$row['chat_message'].'
                                         <span class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
@@ -435,7 +435,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         </li>';
                                 }else{
                                         $output .= '
-                                        <li class="group-other">
+                                        <li class="group-other" data-msgId='.base64_encode($row['id']).'>
                                         <img src="'.$user['profile_pic'].'" id="history-img" >
                                         <p class="history-text"><span class="group-user-name">'.$user['username'].'</span> <span>'. $row['chat_message'].'</span>
                                         <span class="message-time">
