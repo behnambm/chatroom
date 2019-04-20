@@ -229,6 +229,8 @@ function fetch_chat_history($from_user_id, $to_user_id){
                         $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
                 }else{
                         $first_date = 0;
+                        // this is for a case that all nessages are deleted .
+                        $del_count = 0;
                         foreach($res as $row){
                                 $time = $row['timestamp'];
                                 $time = explode(' ', $time);
@@ -257,6 +259,15 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 $sub = date('nd',strtotime($next_date)) - date('nd',strtotime($row['timestamp']));
 
                                 $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
+
+
+                                // this is for deleting messages
+                                $message = $row['chat_message'];
+                                if($message == '$$'){
+                                        $del_count++;
+                                        continue;
+                                }
+
 
 
                                 if($row['from_user_id'] == $from_user_id){
@@ -288,16 +299,17 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
                                         $output .= '
                                         <li class="message-you" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'.$row['chat_message'].'
+                                        <p>'.$message.'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                                        <small class="li-more-option">...</small>
                                         </div>
                                         </p>
                                         </li>';
                                 }else{
                                         $output .= '
                                         <li class="message-other" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'. $row['chat_message'].'
+                                        <p>'. $message .'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>
                                         </div>
@@ -309,21 +321,17 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         $tmp = date('F j , Y',$tmp);
                                         $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
                                 }else if($sub > 0){
-                                        // $tmp = date('Y') - date('Y',strtotime($next_date));
-                                        // if($tmp == 0 ){
-                                        //     $tmp = strtotime($next_date);
-                                        //     $tmp = date('F j , Y',$tmp);
-                                        //     $output .= '<li class="group-other"><small class="new-time"><strong><em> 888'.$tmp.'</em></strong></small><li>';
-                                        // }else{
                                         $tmp = strtotime($next_date);
                                         $tmp = date('F j',$tmp);
                                         $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-                                        // }
 
                                 }
                         }
                 }
                 $output .= '</ul>';
+                if($count == $del_count){
+                        $output = '‌<ul class="list-unstyled"><li class="empty-history"><em>پیامی وجود ندارد.</em></li></ul>';
+                }
                 return $output;
         }
 
@@ -430,6 +438,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <p>'.$row['chat_message'].'
                                         <span class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                                        <small class="li-more-option">...</small>
                                         </span>
                                         </p>
                                         </li>';

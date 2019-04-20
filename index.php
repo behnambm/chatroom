@@ -92,14 +92,20 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         </div>
 
         <!-- modal for delete account -->
-        <div class="modal-bg">
+        <div class="modal-bg" id="modal-1">
                 <ul class="list-group">
                         <li class="list-group-item">آیا مطمئن هستید که میخواهید این کاربر را حذف کنید ؟</li>
                         <li class="list-group-item accept"><a href="javascript:;" id="accept-delete">تایید</a></li>
                         <li class="list-group-item"><a href="javascript:;" id="deny-delete">لغو</a></li>
                 </ul>
         </div>
-
+        <div class="modal-bg" id="modal-2">
+                <ul class="list-group">
+                        <li class="list-group-item"><a href="javascript:;" class="edit-msg">ویرایش</a></li>
+                        <li class="list-group-item"><a href="javascript:;" class="delete-msg">حذف</a></li>
+                        <li class="list-group-item"><a href="javascript:;" id="deny-options">لغو</a></li>
+                </ul>
+        </div>
 
         <div class="kick-alert">
         </div>
@@ -132,7 +138,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                         vibrate: [100, 50, 100], // vibrate - pause - vibrate
                                 };
                                 reg.showNotification('شما '+count+' پیام جدید از  '+username + ' دارید.', options);
-                                console.log(options.data);
+
                         });
                 }
         }
@@ -186,7 +192,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         $('#user-dialog-' + toUserId).dialog('open');
 
                         interval = setInterval(() => {
-                                console.log('user Interval');
+                                // console.log('user Interval');
                                 $.ajax({
                                         url: 'fetch_chat_history.php',
                                         type: 'POST',
@@ -218,40 +224,71 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         let message = $('#chat-message-' + to_user_id).val();
                         $('#chat-message-' + to_user_id).val('');
                         if (message != '') {
-                                $.ajax({
-                                        url: 'insert_chat.php',
-                                        type: 'POST',
-                                        data: {
-                                                to_user_id: to_user_id,
-                                                chat_message: message
-                                        },
-                                        success: (responce) => {
-                                                $('#chat-history-' + to_user_id).html(responce);
-                                        }
-                                });
+                                if($('#chat-message-'+to_user_id).hasClass('editing')){
+                                        $.ajax({
+                                                url: 'msg_options.php',
+                                                type: 'POST',
+                                                data:{
+                                                        msg_id:msgId,
+                                                        action:'edit-write',
+                                                        message:message,
+                                                },
+                                                success: (responce) => {
+                                                        // console.log(responce);
+                                                }
+                                        });
+                                }else{
+                                        $.ajax({
+                                                url: 'insert_chat.php',
+                                                type: 'POST',
+                                                data: {
+                                                        to_user_id: to_user_id,
+                                                        chat_message: message
+                                                },
+                                                success: (responce) => {
+                                                        $('#chat-history-' + to_user_id).html(responce);
+                                                }
+                                        });
+                                }
                         }
                 });
                 //----------------------------------------------------------------------------------------------------
                 // Event for pressing    Ctrl+Enter    in  textarea
                 $(document).on('click','.chat-btn',(e)=>{
                         var userId = $(e.target).data('touserid');
+                        $('#chat-message-'+userId).blur();
                         $('#chat-message-'+userId).focus(()=>{
                                 $(document).on('keydown',(e)=>{
                                         if(e.ctrlKey && e.which == 13){
                                                 var msg = $('#chat-message-'+userId).val();
                                                 $('#chat-message-'+userId).val('');
                                                 if (msg != '') {
-                                                        $.ajax({
-                                                                url: 'insert_chat.php',
-                                                                type: 'POST',
-                                                                data: {
-                                                                        to_user_id: userId,
-                                                                        chat_message: msg
-                                                                },
-                                                                success: (responce) => {
-                                                                        $('#chat-history-' + userId).html(responce);
-                                                                }
-                                                        });
+                                                        if($('#chat-message-'+userId).hasClass('editing')){
+                                                                $.ajax({
+                                                                        url: 'msg_options.php',
+                                                                        type: 'POST',
+                                                                        data:{
+                                                                                msg_id:msgId,
+                                                                                action:'edit-write',
+                                                                                message:msg,
+                                                                        },
+                                                                        success: (responce) => {
+                                                                                // console.log(responce);
+                                                                        }
+                                                                });
+                                                        }else{
+                                                                $.ajax({
+                                                                        url: 'insert_chat.php',
+                                                                        type: 'POST',
+                                                                        data: {
+                                                                                to_user_id: userId,
+                                                                                chat_message: msg
+                                                                        },
+                                                                        success: (responce) => {
+                                                                                $('#chat-history-' + userId).html(responce);
+                                                                        }
+                                                                });
+                                                        }
                                                 }
                                         }
                                 });
@@ -307,7 +344,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 },
                                 success: (responce) => {
                                         if(responce != ''){
-                                                console.log(responce);
+                                                // console.log(responce);
                                         }
                                 }
                         });
@@ -494,7 +531,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         },
                         success:(responce)=>{
                                 if(responce == 'OK'){
-                                        $('.modal-bg').css('display','block');
+                                        $('#modal-1').css('display','block');
                                 }
                         }
                 });
@@ -502,7 +539,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
 
         // cancel user  delete
         $('#deny-delete').click((e)=>{
-                $('.modal-bg').hide();
+                $('#modal-1').hide();
         });
 
         // confirm user delete
@@ -522,6 +559,49 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 }
                         });
                 }
+        });
+        //----------------------------------------------------------------------
+        // Event for when user click's on a li in chat-history
+        var msgId = null;
+        var toUserIdEdit = null;
+        var editAllResult = null;
+        $(document).on('click','.li-more-option',(e)=>{
+                msgId = $(e.target).parents('li').data('msgid');
+                toUserIdEdit = $(e.target).parents('.chat-history').data('touserid');
+                $('#modal-2').show();
+
+        });
+        $('#deny-options').click(()=>{
+                $('#modal-2').hide();
+        });
+        $('.modal-bg .edit-msg').click(()=>{
+                $.ajax({
+                        url:'msg_options.php',
+                        type:'POST',
+                        data:{
+                                msg_id:msgId,
+                                action:'edit'
+                        },
+                        success:(data)=>{
+                                var res = JSON.parse(data);
+                                editAllResult = res;
+                                $('#modal-2').hide();
+                                $('#chat-message-'+toUserIdEdit).text(res['chat_message']).val(res['chat_message']).addClass('editing').focus();
+                        }
+                });
+        });
+        $('.modal-bg .delete-msg').click(()=>{
+                $.ajax({
+                        url:'msg_options.php',
+                        type:'POST',
+                        data:{
+                                msg_id:msgId,
+                                action:'delete'
+                        },
+                        success:(data)=>{
+                                $('#modal-2').hide();
+                        }
+                });
         });
 
 });   // ready {}
