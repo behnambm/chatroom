@@ -102,7 +102,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         <div class="modal-bg" id="modal-2">
                 <ul class="list-group">
                         <li class="list-group-item"><a href="javascript:;" class="edit-msg">ویرایش</a></li>
-                        <li class="list-group-item"><a href="javascript:;" class="delete-msg">حذف</a></li>
                         <li class="list-group-item"><a href="javascript:;" id="deny-options">لغو</a></li>
                 </ul>
         </div>
@@ -587,19 +586,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 editAllResult = res;
                                 $('#modal-2').hide();
                                 $('#chat-message-'+toUserIdEdit).text(res['chat_message']).val(res['chat_message']).addClass('editing').focus();
-                        }
-                });
-        });
-        $('.modal-bg .delete-msg').click(()=>{
-                $.ajax({
-                        url:'msg_options.php',
-                        type:'POST',
-                        data:{
-                                msg_id:msgId,
-                                action:'delete'
-                        },
-                        success:(data)=>{
-                                $('#modal-2').hide();
                         }
                 });
         });

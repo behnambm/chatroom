@@ -261,15 +261,6 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
 
 
-                                // this is for deleting messages
-                                $message = $row['chat_message'];
-                                if($message == '$$'){
-                                        $del_count++;
-                                        continue;
-                                }
-
-
-
                                 if($row['from_user_id'] == $from_user_id){
                                         $tick1 = '';
                                         $tick2 = '';
@@ -299,7 +290,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
                                         $output .= '
                                         <li class="message-you" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'.$message.'
+                                        <p>'.$row['chat_message'].'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
                                         <small class="li-more-option">...</small>
@@ -309,7 +300,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 }else{
                                         $output .= '
                                         <li class="message-other" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'. $message .'
+                                        <p>'. $row['chat_message'] .'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>
                                         </div>
@@ -329,9 +320,6 @@ function fetch_chat_history($from_user_id, $to_user_id){
                         }
                 }
                 $output .= '</ul>';
-                if($count == $del_count){
-                        $output = '‌<ul class="list-unstyled"><li class="empty-history"><em>پیامی وجود ندارد.</em></li></ul>';
-                }
                 return $output;
         }
 
