@@ -116,11 +116,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         // PUSH Notification Initialize
 
         Notification.requestPermission(function (status) {
-                navigator.serviceWorker.register('files/js/sw.js');
+                navigator.serviceWorker.register('sw.js');
         });
-
-
-
 
 
         //PUSH Notification Function
@@ -137,12 +134,9 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                         vibrate: [100, 50, 100], // vibrate - pause - vibrate
                                 };
                                 reg.showNotification('شما '+count+' پیام جدید از  '+username + ' دارید.', options);
-
                         });
                 }
         }
-
-
 
         // PUSH Notification Initialize
 

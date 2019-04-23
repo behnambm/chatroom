@@ -412,7 +412,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 }
 
 
-                                
+
                                 if($row['from_user_id'] == $_SESSION['user_id']){
                                         $tick1 = '';
                                         $tick2 = '';
@@ -420,7 +420,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                                 $tick1 = 'fa fa-check';
                                         }
                                         if($row['is_seen'] == '1'){
-                                                $tick2 = 'fa fa-check';
+                                                $tick2 = '<i class="fa fa-check" style="margin-right: -5px;"></i>';
                                         }
 
 
@@ -430,7 +430,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <li class="group-you" data-msgId='.base64_encode($row['id']).'>
                                         <p>'.$row['chat_message'].'
                                         <span class="message-time">
-                                        <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
+                                        <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i>'.$tick2.'</small>
                                         <small class="li-more-option">...</small>
                                         </span>
                                         </p>
