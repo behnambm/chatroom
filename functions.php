@@ -404,7 +404,15 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
                                 $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
 
+                                if($first_date == 0){ // this code is for date in top of chat history ==> to findout when chat is started
+                                        $tmp = strtotime($row['timestamp']);
+                                        $tmp = date('F j , Y',$tmp);
+                                        $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+                                        $first_date = 1;
+                                }
 
+
+                                
                                 if($row['from_user_id'] == $_SESSION['user_id']){
                                         $tick1 = '';
                                         $tick2 = '';
@@ -416,12 +424,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         }
 
 
-                                        if($first_date == 0){ // this code is for date in top of chat history ==> to findout when chat is started
-                                                $tmp = strtotime($row['timestamp']);
-                                                $tmp = date('F j , Y',$tmp);
-                                                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-                                                $first_date = 1;
-                                        }
+
 
                                         $output .= '
                                         <li class="group-you" data-msgId='.base64_encode($row['id']).'>
