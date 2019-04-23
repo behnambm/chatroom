@@ -229,8 +229,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                         $output .= '‌<li class="empty-history"><em>پیامی وجود ندارد.</em></li>';
                 }else{
                         $first_date = 0;
-                        // this is for a case that all nessages are deleted .
-                        $del_count = 0;
+
                         foreach($res as $row){
                                 $time = $row['timestamp'];
                                 $time = explode(' ', $time);
@@ -261,6 +260,24 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 $sub_year = date('Y',strtotime($next_date)) - date('Y',strtotime($row['timestamp']));
 
 
+                                if($first_date == 0){  // this code is for date in top of chat history ==> to findout when chat is started
+                                        $tmp = strtotime($row['timestamp']);
+                                        $msg_Y = date('Y',$tmp);
+                                        $now_Y = date('Y');
+
+                                        if($now_Y == $msg_Y){
+                                                $tmp = date('F j',$tmp);
+                                                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+
+                                        }else{
+                                                $tmp = date('F j , Y',$tmp);
+                                                $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
+
+                                        }
+                                        $first_date = 1;
+                                }
+
+
                                 if($row['from_user_id'] == $from_user_id){
                                         $tick1 = '';
                                         $tick2 = '';
@@ -271,22 +288,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                                 $tick2 = 'fa fa-check';
                                         }
 
-                                        if($first_date == 0){  // this code is for date in top of chat history ==> to findout when chat is started
-                                                $tmp = strtotime($row['timestamp']);
-                                                $msg_Y = date('Y',$tmp);
-                                                $now_Y = date('Y');
 
-                                                if($now_Y == $msg_Y){
-                                                        $tmp = date('F j',$tmp);
-                                                        $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-
-                                                }else{
-                                                        $tmp = date('F j , Y',$tmp);
-                                                        $output .= '<li class="group-other"><small class="new-time"><strong><em> '.$tmp.'</em></strong></small><li>';
-
-                                                }
-                                                $first_date = 1;
-                                        }
 
                                         $output .= '
                                         <li class="message-you" data-msgId='.base64_encode($row['id']).'>
