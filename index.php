@@ -106,6 +106,20 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 </ul>
         </div>
 
+
+        <div class="modal-bg" id="modal-3">
+                <ul class="list-group">
+                        <li class="list-group-item">
+                                <img src="" alt="">
+                                <div class="form-group">نام :
+                                        <span class="user-name"></span>
+                                        <em class="last-activity"></em>
+                                </div>
+                        </li>
+                        <li class="list-group-item"><a href="javascript:;" id="close">بستن</a></li>
+                </ul>
+        </div>
+
         <div class="kick-alert">
         </div>
 
@@ -156,6 +170,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         boxContent += '</div><div class="form-group" align="right">';
                         boxContent += '<button id="' + user_id +
                         '" name="send-chat" class="btn btn-info send-chat">ارسال</button>';
+                        boxContent += '<button class="user-profile-btn btn btn-primary" id="user-profile-'+user_id+'">پروفایل کاربر</button>';
                         boxContent += '</div></div>';
                         $('#chat-box-container').html(boxContent);
                 }
@@ -230,6 +245,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                                         // console.log(responce);
                                                 }
                                         });
+                                        $('#chat-message-'+userId).removeClass('editing');
+
                                 }else{
                                         $.ajax({
                                                 url: 'insert_chat.php',
@@ -247,8 +264,9 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 });
                 //----------------------------------------------------------------------------------------------------
                 // Event for pressing    Ctrl+Enter    in  textarea
+                var userId = null;
                 $(document).on('click','.chat-btn',(e)=>{
-                        var userId = $(e.target).data('touserid');
+                        userId = $(e.target).data('touserid');
                         $('#chat-message-'+userId).blur();
                         $('#chat-message-'+userId).focus(()=>{
                                 $(document).on('keydown',(e)=>{
@@ -269,6 +287,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                                                                 // console.log(responce);
                                                                         }
                                                                 });
+                                                                $('#chat-message-'+userId).removeClass('editing');
                                                         }else{
                                                                 $.ajax({
                                                                         url: 'insert_chat.php',
@@ -325,6 +344,9 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         updateActivity();
                         getGroupMsgCount();
                 }, 4000);
+
+                //--------------------------------------------------------------
+                // inserting IS_TYPING status in DB
                 $(document).on('focus', '.txtarea-box', (e) => {
                         let is_type = 'yes';
                         let to_user_id = $(e.target).attr('id').split('-');
@@ -584,6 +606,29 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 });
         });
 
+        //----------------------------------------------------------------------
+        // show profile in a modal when user click's on پروفایل کاربر button
+        $(document).on('click','.user-profile-btn',(e)=>{
+                console.log(  $('#acitivity-status-'+userId).data('activity')  );
+                $.ajax({
+                        url:'get_user_profile.php',
+                        type:'POST',
+                        data:{
+                                user_id:$(e.target).attr('id').split('-')[2]
+                        },
+                        success:(responce)=>{
+                                responce = JSON.parse(responce);
+                                console.log(responce);
+                                $('#modal-3 li img').attr('src',responce['profile_pic']).attr('alt',responce['display_name']);
+                                $('#modal-3 .user-name').html(responce['display_name']);
+                        }
+                });
+                $('#modal-3').show();
+
+        });
+        $('#close').click(()=>{
+                $('#modal-3').hide();
+        });
 });   // ready {}
 </script>
 </body>

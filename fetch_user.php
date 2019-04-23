@@ -35,9 +35,9 @@ if($count > 0){
                 $user_last_activity = fetch_user_last_activity($row['id']);
 
                 if($user_last_activity > $current_stimestamp){
-                        $status = '<span class="badge badge-success">آنلاین</span>';
+                        $status = '<span class="badge badge-success" data-activity="online" id="acitivity-status-'.$row['id'].'">آنلاین</span>';
                 }else{
-                        $status = '<span class="badge badge-danger">آفلاین</span>';
+                        $status = '<span class="badge badge-danger" data-activity="offline" id="acitivity-status-'.$row['id'].'">آفلاین</span>';
                 }
                 $privilage = null;
                 $del_user = null;
