@@ -102,6 +102,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         <div class="modal-bg" id="modal-2">
                 <ul class="list-group">
                         <li class="list-group-item"><a href="javascript:;" class="edit-msg">ویرایش</a></li>
+                        <li class="list-group-item"><a href="javascript:;" class="copy-msg">کپی</a></li>
                         <li class="list-group-item"><a href="javascript:;" id="deny-options">لغو</a></li>
                 </ul>
         </div>
@@ -120,7 +121,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 </ul>
         </div>
 
-        <div class="kick-alert">
+        <div id="copy-alert">
+                متن کپی شد !
         </div>
 
         <script src="files/js/jquery-3.1.1.js"></script>
@@ -584,6 +586,18 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 msgId = $(e.target).parents('li').data('msgid');
                 toUserIdEdit = $(e.target).parents('.chat-history').data('touserid');
                 $('#modal-2').show();
+                $('.modal-bg .copy-msg').click(()=>{
+                        var txt = $(e.target).parents('.message-time').siblings('.msg-txt').html();
+                        navigator.clipboard.writeText(txt);
+                        var wid = $('#copy-alert').width();
+                        console.log(wid);
+                        var allWid = $(window).width();
+                        var wid = (allWid/2) - ((wid/2)+20);
+                        $('#modal-2').hide();
+
+                        $('#copy-alert').css('left',wid).show().delay(1000).fadeOut('slow');
+
+                });
 
         });
         $('#deny-options').click(()=>{

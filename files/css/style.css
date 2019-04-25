@@ -1147,3 +1147,13 @@ display: none;
         display: inline-block;
     }
 }
+#copy-alert{
+        position: fixed;
+        top: 30px;
+        display: none;
+        background-color: #03A9F4;
+        color: #fff;
+        padding: 10px 20px;
+        z-index: 1000;
+        border-radius: 50px;
+}

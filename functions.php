@@ -292,12 +292,12 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
                                         $output .= '
                                         <li class="message-you" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'.$row['chat_message'].'
+                                        <p class="msg-txt">'.$row['chat_message'].'</p>
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
                                         <small class="li-more-option">...</small>
                                         </div>
-                                        </p>
+
                                         </li>';
                                 }else{
                                         $output .= '
