@@ -694,7 +694,7 @@ font: 14px isans !important;
 }
 textarea.form-control{
 font: 14px isans;
-direction: ltr;
+direction: rtl;
 text-align: right;
 }
 textarea.form-control:focus{

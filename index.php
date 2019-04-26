@@ -223,7 +223,11 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         let tmp = $(e.target).parents('.ui-dialog').attr('aria-describedby');
                         if (tmp == 'group-chat-dialog') {
                                 clearInterval(groupInterval);
+                                $('#group-chat-message').val('').removeClass('editing');
                         } else {
+                                if( $('#chat-message-'+userId).hasClass('editing') ) {
+                                        $('#chat-message-'+userId).val('').text('').removeClass('editing');
+                                }
                                 clearInterval(interval);
                         }
                 });
@@ -472,51 +476,84 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         $('#start-group-chat').click((e)=>{
                 $('#group-chat-dialog').dialog('open');
         });
-
+        //----------------------------------------------------------------------
+        // sending textarea value to server when user  click's on this button
         $('#send-group-message').click((e)=>{
                 let chatMsg = $('#group-chat-message').val();
                 let action = 'insert';
                 $('#group-chat-message').val('');
                 if (chatMsg != '') {
-                        $.ajax({
-                                url: 'group_chat.php',
-                                type: 'POST',
-                                data: {
-                                        group_chat_message: chatMsg,
-                                        action: action
-                                },
-                                success: (responce) => {
-                                        $('.group-chat-history').html(responce);
-                                }
-                        });
+                        if($('#group-chat-message').hasClass('editing')){
+                                $.ajax({
+                                        url: 'msg_options.php',
+                                        type: 'POST',
+                                        data:{
+                                                msg_id:msgId,
+                                                action:'edit-write',
+                                                message:chatMsg,
+                                        },
+                                        success: (responce) => {
+                                                // console.log(responce);
+                                        }
+                                });
+                                $('#group-chat-message').removeClass('editing');
+                        }else{
+                                $.ajax({
+                                        url: 'group_chat.php',
+                                        type: 'POST',
+                                        data: {
+                                                group_chat_message: chatMsg,
+                                                action: action
+                                        },
+                                        success: (responce) => {
+                                                $('.group-chat-history').html(responce);
+                                        }
+                                });
+                        }
                 }
         });
-        //----------------------------------------------------------------------------------------------------
-        // Event for pressing    Ctrl+Enter    in  textarea
+        //----------------------------------------------------------------------
+        // Event for pressing    Ctrl+Enter    in  group textarea
         $('#group-chat-message').focus((e)=>{
                 $(document).on('keydown',(e)=>{
                         if(e.ctrlKey && e.which == 13 ){
                                 let chatMsg = $('#group-chat-message').val();
                                 let action = 'insert';
                                 $('#group-chat-message').val('');
-                                if (chatMsg != '') {
-                                        $.ajax({
-                                                url: 'group_chat.php',
-                                                type: 'POST',
-                                                data: {
-                                                        group_chat_message: chatMsg,
-                                                        action: action
-                                                },
-                                                success: (responce) => {
-                                                        $('.group-chat-history').html(responce);
-                                                }
-                                        });
+                                if(chatMsg != ''){
+                                        if($('#group-chat-message').hasClass('editing')){
+                                                $.ajax({
+                                                        url: 'msg_options.php',
+                                                        type: 'POST',
+                                                        data:{
+                                                                msg_id:msgId,
+                                                                action:'edit-write',
+                                                                message:chatMsg,
+                                                        },
+                                                        success: (responce) => {
+                                                                // console.log(responce);
+                                                        }
+                                                });
+                                                $('#group-chat-message').removeClass('editing');
+                                        }else{
+                                                $.ajax({
+                                                        url: 'group_chat.php',
+                                                        type: 'POST',
+                                                        data: {
+                                                                group_chat_message: chatMsg,
+                                                                action: action
+                                                        },
+                                                        success: (responce) => {
+                                                                $('.group-chat-history').html(responce);
+                                                        }
+                                                });
+                                        }
                                 }
                         }
                 });
         });
 
-        //----------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------
         $('#start-group-chat').click((e)=>{
                 groupInterval = setInterval(()=>{
                         $.ajax({
@@ -532,7 +569,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 }, 1000);
 
         });
-
+        //----------------------------------------------------------------------
         // ajax for delete a uesr
         let userNameForKick = null;
         let userIdForKick = null;
@@ -604,6 +641,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 $('#modal-2').hide();
         });
         $('.modal-bg .edit-msg').click(()=>{
+                console.log('user id =>> '+userId);
+                if(userId == 0){
+                        console.log(msgId);
+                }
                 $.ajax({
                         url:'msg_options.php',
                         type:'POST',
@@ -615,11 +656,18 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 var res = JSON.parse(data);
                                 editAllResult = res;
                                 $('#modal-2').hide();
+                                if(res['to_user_id'] == '0'){
+                                        $('#group-chat-message').val(res['chat_message']).addClass('editing').focus();
+                                }
                                 $('#chat-message-'+toUserIdEdit).text(res['chat_message']).val(res['chat_message']).addClass('editing').focus();
                         }
                 });
         });
-
+        //----------------------------------------------------------------------
+        // setting userId with 0 when user click on group chatMsg
+        $('#start-group-chat').click(()=>{
+                userId = 0;
+        });
         //----------------------------------------------------------------------
         // show profile in a modal when user click's on پروفایل کاربر button
         $(document).on('click','.user-profile-btn',(e)=>{
