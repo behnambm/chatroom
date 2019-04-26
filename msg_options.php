@@ -22,6 +22,6 @@ if($_SESSION['logged_in'] == 'yes'){
         }else if($_POST['action'] == 'edit-write'){
                 $id = base64_decode($_POST['msg_id']);
                 $stmt = $con->prepare("UPDATE chat_message SET chat_message = ? WHERE id = ?");
-                $stmt->execute(array($_POST['message'],$id));
+                $stmt->execute(array(trim($_POST['message']),$id));
         }
 }

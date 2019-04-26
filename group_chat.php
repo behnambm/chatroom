@@ -17,7 +17,7 @@ if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
                         $stmt = $con->prepare("INSERT INTO chat_message(from_user_id, to_user_id, chat_message,
                                 timestamp, is_sent, is_seen,id_per_msg)
                                 VALUES(?,?,?,?,?,?,?);");
-                                $stmt->execute(array($_SESSION['user_id'], '0', $_POST['group_chat_message'],$current_time , '1', '0',$msg_id));
+                                $stmt->execute(array($_SESSION['user_id'], '0', trim($_POST['group_chat_message']),$current_time , '1', '0',$msg_id));
                                 echo fetch_group_chat_history($_SESSION['user_id']);
                         }elseif($_POST['action']=='fetch'){
                                 $stmt = $con->prepare("UPDATE chat_message SET is_seen = '1' WHERE from_user_id != ? AND to_user_id = '0'");
