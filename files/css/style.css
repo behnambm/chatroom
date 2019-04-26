@@ -751,7 +751,7 @@ color: #000;
 font: 12px isans;
 width: 85%;
 float: right;
-margin-top: 12px;
+margin-top: 3px;
 position: relative;
 }
 .list-unstyled li.message-other{
@@ -762,7 +762,7 @@ color: #000;
 font: 12px isans;
 width: 85%;
 float: left;
-margin-top: 12px;
+margin-top: 3px;
 position: relative;
 }
 .message-time{
@@ -898,14 +898,18 @@ float: right;
 font: 14px isans;
 }
 
-.group-other{
+.history-time , .group-other{
 color: #000;
 font: 12px isans;
 width: 95%;
 float: left;
-margin-top: 12px;
+margin: 6px 0 3px 0px;
 position: relative;
 }
+.group-other{
+    margin: 4px 0 0 0;
+}
+
 .group-other img , .group-you img{
 width: 30px;
 border-radius: 20px;
@@ -940,6 +944,7 @@ overflow: hidden;
 float: right;
 width: 100%;
 position: relative;
+margin-top: 3px;
 }
 .group-you p{
 background-color: #e3f9e2;
@@ -953,7 +958,7 @@ position: relative;
 min-width: 30%;
 padding-bottom: 17px;
 margin-bottom: 0;
-margin-top: 15px;
+
 word-break: break-word;
 }
 .group-other p span {
