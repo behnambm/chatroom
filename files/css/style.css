@@ -955,7 +955,7 @@ font: 12px isans;
 width: auto;
 float: right;
 position: relative;
-min-width: 30%;
+min-width: 42%;
 padding-bottom: 17px;
 margin-bottom: 0;
 
@@ -1199,4 +1199,19 @@ display: none;
         padding: 10px 20px;
         z-index: 1000;
         border-radius: 50px;
+}
+.is-edited-user{
+        position: absolute;
+        left: 3px;
+        bottom: 1px;
+        font-size: 9px;
+        opacity: 0.8;
+}
+.is-edited-group{
+        position: absolute;
+        right: 75px;
+        bottom: 1px;
+        font-size: 10px;
+        opacity: 1;
+        font-weight: 900;
 }

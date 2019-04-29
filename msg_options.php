@@ -21,7 +21,13 @@ if($_SESSION['logged_in'] == 'yes'){
                 }
         }else if($_POST['action'] == 'edit-write'){
                 $id = base64_decode($_POST['msg_id']);
-                $stmt = $con->prepare("UPDATE chat_message SET chat_message = ? , is_edited = 1 WHERE id = ?");
-                $stmt->execute(array(trim($_POST['message']),$id));
+                $stmt = $con->prepare("SELECT chat_message FROM chat_message WHERE id = ?");
+                $stmt->execute(array($id));
+                $msg = $stmt->fetchAll();
+                if($msg[0]['chat_message'] != trim($_POST['message'])){
+                        $stmt2 = $con->prepare("UPDATE chat_message SET chat_message = ? , is_edited = 1 WHERE id = ?");
+                        $stmt2->execute(array(trim($_POST['message']),$id));
+                }
+
         }
 }

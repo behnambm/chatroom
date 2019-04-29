@@ -245,6 +245,12 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 $hour = $time[0];
                                 $min = $time[1];
 
+                                // codes for is_edited feature
+                                $is_edited = null;
+                                if($row['is_edited'] == 1){
+                                        $is_edited = '<small class="is-edited-user">ویرایش شده</small>';
+                                }
+
                                 $current_id = $row['id_per_msg'];
                                 // OR (from_user_id = ? AND to_user_id = ?)
                                 $stmt = $con->prepare("SELECT * FROM chat_message WHERE (from_user_id = ? AND to_user_id = ? AND id_per_msg = ?) OR (from_user_id = ? AND to_user_id = ? AND id_per_msg = ?)");
@@ -297,7 +303,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i><i class="'.$tick2.'" style="margin-right: -5px;"></i></small>
                                         <small class="li-more-option">...</small>
                                         </div>
-
+                                        '.$is_edited.'
                                         </li>';
                                 }else{
                                         $output .= '
@@ -307,6 +313,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <small><em>'.$hour.':'.$min.'</em></small>
                                         </div>
                                         </p>
+                                        '.$is_edited.'
                                         </li>';
                                 }
                                 if($sub_year > 0 ){
@@ -387,8 +394,14 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 $time = explode(':',$time);
                                 $hour = $time[0];
                                 $min = $time[1];
-                                $user = get_user_info(null,$row['from_user_id']);
 
+                                // codes for is_edited feature
+                                $is_edited = null;
+                                if($row['is_edited'] == 1){
+                                        $is_edited = '<small class="is-edited-group">ویرایش شده</small>';
+                                }
+
+                                $user = get_user_info(null,$row['from_user_id']);
                                 // codes for computing messages date
                                 $current_id = $row['id_per_msg'];
                                 $stmt = $con->prepare("SELECT * FROM chat_message WHERE to_user_id = 0 AND id_per_msg = ? ");
@@ -441,6 +454,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <small><em>'.$hour.':'.$min.'</em><i class="'.$tick1.'"></i>'.$tick2.'</small>
                                         <small class="li-more-option">...</small>
                                         </span>
+                                        '.$is_edited.'
                                         </li>';
                                 }else{
                                         $output .= '
@@ -451,6 +465,7 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         <small><em>'.$hour.':'.$min.'</em></small>
                                         </span>
                                         </p>
+                                        '.$is_edited.'
                                         </li>';
                                 }
                                 if($sub_year > 0 ){
