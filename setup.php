@@ -66,7 +66,8 @@ function setup(){
                         timestamp VARCHAR(16),
                         is_sent VARCHAR(2) DEFAULT '0' ,
                         is_seen VARCHAR(2) DEFAULT '0',
-                        id_per_msg INT DEFAULT 0
+                        id_per_msg INT DEFAULT 0,
+                        is_edited INT DEFAULT 0
                 );";
                 $con->exec($sql5);
                 file_put_contents('db.conf','CHAT_MSG_TBL::1;', FILE_APPEND);
