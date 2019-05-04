@@ -111,10 +111,24 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         <div class="modal-bg" id="modal-3">
                 <ul class="list-group">
                         <li class="list-group-item">
-                                <img src="" alt="">
-                                <div class="form-group">نام :
-                                        <span class="user-name"></span>
+                                <div class="form-group">
+                                        <img src="" alt="">
+                                </div>
+
+                                <i class="fa fa-info-circle stick"></i>
+
+                                <div class="form-group">
+                                        <span class="stick">نام :</span>
+                                        <span class="user-display-name"></span>
                                         <em class="last-activity"></em>
+                                </div>
+                                <div class="form-group">
+                                        <span class="stick">نام کاربری :</span>
+                                        <span class="user-name"></span>
+                                </div>
+                                <div class="form-group">
+                                        <span class="stick">فعالیت : </span>
+                                        <span class="user-status"></span>
                                 </div>
                         </li>
                         <li class="list-group-item"><a href="javascript:;" id="close">بستن</a></li>
@@ -627,7 +641,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         var txt = $(e.target).parents('.message-time').siblings('.msg-txt').html();
                         navigator.clipboard.writeText(txt);
                         var wid = $('#copy-alert').width();
-                        console.log(wid);
                         var allWid = $(window).width();
                         var wid = (allWid/2) - ((wid/2)+20);
                         $('#modal-2').hide();
@@ -641,7 +654,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 $('#modal-2').hide();
         });
         $('.modal-bg .edit-msg').click(()=>{
-                console.log('user id =>> '+userId);
                 if(userId == 0){
                         console.log(msgId);
                 }
@@ -671,7 +683,6 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         //----------------------------------------------------------------------
         // show profile in a modal when user click's on پروفایل کاربر button
         $(document).on('click','.user-profile-btn',(e)=>{
-                console.log(  $('#acitivity-status-'+userId).data('activity')  );
                 $.ajax({
                         url:'get_user_profile.php',
                         type:'POST',
@@ -680,9 +691,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         },
                         success:(responce)=>{
                                 responce = JSON.parse(responce);
-                                console.log(responce);
                                 $('#modal-3 li img').attr('src',responce['profile_pic']).attr('alt',responce['display_name']);
-                                $('#modal-3 .user-name').html(responce['display_name']);
+                                $('#modal-3 .user-display-name').html(responce['display_name']);
+                                $('#modal-3 .user-name').html(responce['username']);
+                                $('#modal-3 .user-status').html(responce['status']);
                         }
                 });
                 $('#modal-3').show();
@@ -690,6 +702,10 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
         });
         $('#close').click(()=>{
                 $('#modal-3').hide();
+        });
+        $('#modal-3').click((e)=>{
+                if($(e.target).attr('class') == 'modal-bg')
+                        $('#modal-3').hide();
         });
 });   // ready {}
 </script>

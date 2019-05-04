@@ -1180,14 +1180,11 @@ display: none;
         padding: 7px;
         float: left;
 }
-#modal-3 li img{
-        width: 86px;
-        float: right;
-}
-#modal-3 .form-group{
-        float: right;
-        margin-top: 30px;
-        margin-right: 10px;
+#modal-3 .form-group img{
+        width: 64px;
+        display: block;
+        margin: 0 auto;
+
 }
 #copy-alert{
         position: fixed;
@@ -1221,4 +1218,14 @@ display: none;
 }
 .group-other p {
         min-width: 40%;
+}
+#modal-3 ul li .form-group:not(:first-child){
+        display: block;
+        margin-right: 20px;
+}
+.stick {
+        color: #6c757d;
+}
+#modal-3 i {
+        font-size: 18px;
 }
