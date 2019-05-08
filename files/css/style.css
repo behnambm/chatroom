@@ -749,7 +749,7 @@ padding: 5px;
 border-radius: 5px;
 color: #000;
 font: 12px isans;
-width: 85%;
+width: 95%;
 float: right;
 margin-top: 3px;
 position: relative;
@@ -760,7 +760,7 @@ padding: 5px;
 border-radius: 5px;
 color: #000;
 font: 12px isans;
-width: 85%;
+width: 95%;
 float: left;
 margin-top: 3px;
 position: relative;
@@ -1228,4 +1228,7 @@ display: none;
 }
 #modal-3 i {
         font-size: 18px;
+}
+.message-time .copy-icon:hover{
+        cursor: pointer;
 }

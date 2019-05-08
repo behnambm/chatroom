@@ -707,6 +707,16 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 if($(e.target).attr('class') == 'modal-bg')
                         $('#modal-3').hide();
         });
+        //----------------------------------------------------------------------
+        // codes for copy icon on other message in both of USER & GROUOP section
+        $(document).on('click','.message-time .copy-icon',(e)=>{
+                var txt = $(e.target).parents('.message-time').siblings('.msg-txt').html().trim();
+                navigator.clipboard.writeText(txt);
+                var wid = $('#copy-alert').width();
+                var allWid = $(window).width();
+                var wid = (allWid/2) - ((wid/2)+20);
+                $('#copy-alert').css('left',wid).show().delay(1000).fadeOut('slow');
+        });
 });   // ready {}
 </script>
 </body>

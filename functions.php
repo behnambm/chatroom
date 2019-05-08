@@ -308,9 +308,10 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                 }else{
                                         $output .= '
                                         <li class="message-other" data-msgId='.base64_encode($row['id']).'>
-                                        <p>'. $row['chat_message'] .'
+                                        <p class="msg-txt">'. $row['chat_message'] .'
                                         <div class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>
+                                        <i class="fa fa-copy copy-icon"></i>
                                         </div>
                                         </p>
                                         '.$is_edited.'
@@ -460,10 +461,12 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         $output .= '
                                         <li class="group-other" data-msgId='.base64_encode($row['id']).'>
                                         <img src="'.$user['profile_pic'].'" id="history-img" >
-                                        <p class="history-text"><span class="group-user-name">'.$user['username'].'</span> <span>'. $row['chat_message'].'</span>
+                                        <p class="history-text"><span class="group-user-name">'.$user['username'].'</span> <span class="msg-txt">'. $row['chat_message'].'</span>
                                         <span class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>
+                                        <i class="fa fa-copy copy-icon"></i>
                                         </span>
+
                                         </p>
                                         '.$is_edited.'
                                         </li>';
