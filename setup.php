@@ -66,7 +66,7 @@ function setup(){
                         timestamp VARCHAR(16),
                         is_sent VARCHAR(2) DEFAULT '0' ,
                         is_seen VARCHAR(2) DEFAULT '0',
-                        id_per_msg INT DEFAULT 0,
+                        id_per_msg INT DEFAULT 0 NOT NULL,
                         is_edited INT DEFAULT 0
                 );";
                 $con->exec($sql5);
