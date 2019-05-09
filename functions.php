@@ -458,9 +458,10 @@ function fetch_chat_history($from_user_id, $to_user_id){
                                         '.$is_edited.'
                                         </li>';
                                 }else{
+                                        $user = get_user_info(null,$row['from_user_id']);
                                         $output .= '
                                         <li class="group-other" data-msgId='.base64_encode($row['id']).'>
-                                        <img src="'.$user['profile_pic'].'" id="history-img" >
+                                        <img src="'.$user['profile_pic'].'" id="profile-btn-'.$user['id'].'" class="user-profile-btn">
                                         <p class="history-text"><span class="group-user-name">'.$user['username'].'</span> <span class="msg-txt">'. $row['chat_message'].'</span>
                                         <span class="message-time">
                                         <small><em>'.$hour.':'.$min.'</em></small>

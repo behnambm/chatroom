@@ -1174,7 +1174,12 @@ display: none;
         padding: 0 !important;
         color: #007bff !important;
 }
-
+.group-other .user-profile-btn{
+        padding: 0;
+}
+.group-other .user-profile-btn:hover{
+        cursor: pointer;
+}
 .user-profile-btn{
         font: 12px isans !important;
         padding: 7px;
