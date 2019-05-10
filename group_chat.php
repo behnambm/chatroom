@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 date_default_timezone_set('Asia/Tehran');
 require_once 'functions.php';
 $current_time = date('Y-m-d H:i:s');
-if(isset($_POST['action']) || isset($_POST['group_chat_message'])){
+if(isset($_POST['action']) || isset($_POST['group_chat_message']) && !$_SESSION['is_kicked']){
         if($_POST['action'] == 'insert'){
                 $stmt = $con->prepare("SELECT id_per_msg FROM chat_message WHERE to_user_id = 0
                         ORDER BY id_per_msg DESC LIMIT 1");

@@ -509,6 +509,9 @@ function fetch_chat_history($from_user_id, $to_user_id){
 
                 $stmt = $con->prepare("DELETE FROM login_details WHERE user_id = ?");
                 $stmt->execute(array($id));
+
+                $stmt = $con->prepare("DELETE FROM chat_message WHERE from_user_id = ? AND to_user_id = 0");
+                $stmt->execute(array($id));
                 return true;
         }
 

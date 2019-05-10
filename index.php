@@ -360,9 +360,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 // interval for refresh user's table list AND last activity
                 var group_msg_count = 0;
                 setInterval(() => {
-                        fetchUser();
                         updateActivity();
-                        getGroupMsgCount();
                 }, 4000);
 
                 //--------------------------------------------------------------
@@ -438,7 +436,12 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 $.ajax({
                         url: 'update_last_activity.php',
                         type: 'POST',
-                        success: () => {}
+                        success: (responce) => {
+                                if(responce == 'OK'){
+                                        fetchUser();
+                                        getGroupMsgCount();
+                                }
+                        }
                 });
         }
 
@@ -623,6 +626,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 },
                                 success:(responce)=>{
                                         if(responce == 'DONE'){
+                                                $('#modal-1').hide();
                                         }
                                 }
                         });
