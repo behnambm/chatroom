@@ -317,7 +317,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                                         type: 'POST',
                                                         success: () => {}
                                                 });
-                                        }, 3000);
+                                        }, 4000);
 
 
                                         $('#input').change((e) => {
