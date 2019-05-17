@@ -97,7 +97,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                                                                 <hr>
                                                                                 <form action="" id="change-pass-form">
                                                                                         <div class="form-group">
-                                                                                                <label for="old-password">رمز عبور قبلی :</label>
+                                                                                                <label for="old-password">رمز عبور فعلی :</label>
                                                                                                 <input type="password" class="form-control" name="oldpassword" id="old-password">
                                                                                         </div>
                                                                                         <div class="form-group">
