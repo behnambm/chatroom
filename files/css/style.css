@@ -1237,3 +1237,48 @@ display: none;
 .message-time .copy-icon:hover{
         cursor: pointer;
 }
+
+#no-username{
+        display: none;
+        padding: 0 10px;
+        color: #dc3545;
+}
+#search-res {
+        z-index: 999;
+        box-shadow: 0 0 6px 0 #007bff;
+        border-radius: 5px;
+        display: none;
+}
+#search-res li{
+        padding: 5px !important;
+}
+#search-res li:hover{
+        background-color: #007bff;
+        cursor: pointer;
+        color: #fff;
+
+}
+
+
+.statistics-result{
+        display: none;
+        max-height: 400px;
+        overflow: scroll;
+        direction: ltr;
+}
+.statistics-result table{
+        direction: rtl;
+}
+.no-scroll{
+        overflow: auto;
+        direction: rtl;
+        color: #dc3545;
+}
+#admin-access-page .list-group {
+        margin-bottom: 30px;
+}
+
+
+
+
+.
