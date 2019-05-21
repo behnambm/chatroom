@@ -1189,7 +1189,52 @@ display: none;
         width: 64px;
         display: block;
         margin: 0 auto;
+        border-radius: 50%;
+}
 
+#modal-3 .form-group:first-child{
+        position: relative;
+}
+#modal-3 .form-group .expand-icon{
+        position: absolute;
+        left: 40.5%;
+        top: 0px;
+        font-size: 30px;
+        color: #fff;
+        background-color: rgba(0,0,0,0.6);
+        padding: 18px 20px 17px 18px;
+        border-radius: 50%;
+        visibility: hidden;
+        z-index: 9999;
+}
+#modal-3 .form-group img:hover + i{   /* this + is for sibling element in CSS*/
+        visibility: visible;
+}
+#modal-3 .form-group .expand-icon:hover{
+        visibility: visible;
+}
+@media (max-width: 381px) {
+        #modal-3 ul.list-group{
+                width: 80%;
+        }
+        #modal-3 .form-group .expand-icon{
+                left: 37%;
+        }
+}
+@media (max-width:347px){
+        #modal-3 .form-group .expand-icon{
+                left: 36%;
+        }
+        @media (max-width: 320px){
+                #modal-3 .form-group .expand-icon{
+                        left: 35%;
+                }
+        }
+        @media (max-width: 305px){
+                #modal-3 .form-group .expand-icon{
+                        left: 34%;
+                }
+        }
 }
 #copy-alert{
         position: fixed;
@@ -1277,8 +1322,29 @@ display: none;
 #admin-access-page .list-group {
         margin-bottom: 30px;
 }
+#modal-4{
+        background-color: rgba(0,0,0,0.7);
+}
 
-
-
+#modal-4 img {
+        width: 80%;
+        height: 90%;
+        margin: 0 auto;
+        display: block;
+        margin-top: 5%;
+}
+#modal-4 span{
+        position: fixed;
+        font-size: 60px;
+        top: 0px;
+        color: rgba(255,255,255,0.6);
+        right: 0px;
+        padding: 0 35px
+}
+#modal-4 span:hover{
+        cursor: pointer;
+        color: rgba(255,255,255,1);
+        background-color: rgba(0,0,0,0.8);
+}
 
 .

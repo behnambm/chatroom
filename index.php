@@ -113,6 +113,7 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         <li class="list-group-item">
                                 <div class="form-group">
                                         <img src="" alt="">
+                                        <i class="fa fa-expand expand-icon"></i>
                                 </div>
 
                                 <i class="fa fa-info-circle stick"></i>
@@ -134,6 +135,13 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                         <li class="list-group-item"><a href="javascript:;" id="close">بستن</a></li>
                 </ul>
         </div>
+
+
+        <div class="modal-bg" id="modal-4">
+                <img src="" alt="">
+                <span>&times;</span>
+        </div
+
 
         <div id="copy-alert">
                 متن کپی شد !
@@ -721,6 +729,23 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                 var wid = (allWid/2) - ((wid/2)+20);
                 $('#copy-alert').css('left',wid).show().delay(1000).fadeOut('slow');
         });
+
+        //----------------------------------------------------------------------
+        // codes for event that execute when user clicks on expand img in profile
+        $('#modal-3 .expand-icon').click((e)=>{
+                let url = $(e.target).siblings('img').attr('src');
+                $('#modal-4').show();
+                $('#modal-4 img').attr('src',url);
+                $('#modal-4').click((e)=>{
+                        if($(e.target).attr('class') == 'modal-bg'){
+                                $('#modal-4').hide();
+                        }
+                });
+                $('#modal-4 span').click((e)=>{
+                        $('#modal-4').hide();
+                });
+        });
+
 });   // ready {}
 </script>
 </body>
