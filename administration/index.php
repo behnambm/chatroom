@@ -123,7 +123,7 @@ $(document).ready(()=>{
                                                         $('#username-id').addClass('verified');
                                                         $('#username-id').val(res[0]['username']);
                                                         $('#search-res').slideUp('slow');
-                                                        $('#search-res li').remove();
+                                                        $('#search-res li').remove();  // removing appended li
                                                         id = res[0]['id'];
                                                         $('#none-operation').prop('selected','selected');
                                                         $('.statistics-result').fadeOut('slow');
@@ -157,7 +157,7 @@ $(document).ready(()=>{
                                                                 output = '<table class="table table-striped">';
                                                                 output += '<thead>';
                                                                 output += '<tr>';
-                                                                output += '<td> ردیف </td><td> تاریخ </td>';
+                                                                output += '<td>#</td><td> تاریخ </td>';
                                                                 output += '</tr>';
                                                                 output += '</thead>';
                                                                 output += '<tbody>';
@@ -172,10 +172,46 @@ $(document).ready(()=>{
                                                                 output += '</table>';
                                                                 $('.statistics-result').html(output).removeClass('no-scroll').show();
                                                         }else if(operation == 'messages'){ // if operation = messges
+                                                                $('.statistics-result').html('').hide();
+                                                                output = '<table class="table table-striped">';
+                                                                output += '<thead>';
+                                                                output += '<tr>';
+                                                                output += '<td>#</td><td> تاریخ </td><td>پیام</td><td>مبدا</td><td>مقصد</td><td>ارسال شده / ویرایش شده</td>';
+                                                                output += '</tr>';
+                                                                output += '</thead>';
+                                                                output += '<tbody>';
+                                                                let num = 1;
+                                                                let chk1 = '<i class="fa fa-check"></i>';
+                                                                for(let i = 0; i < data.length; i++){
+                                                                        output += '<tr>';
+                                                                        output += '<td>'+num+'</td> <td style="direction: ltr;">'+data[i]['timestamp']+'</td> ';
+                                                                        output += '<td>'+ data[i]['chat_message'] +'</td> ';
+                                                                        output += '<td>'+ data[i]['from_display_name'] +' ('+ data[i]['from_username'] +') </td>';
+                                                                        if(data[i]['to_user'] == 'group'){
+                                                                                output += '<td> گروه </td>';
+                                                                        }else{
+                                                                                output += '<td>'+ data[i]['to_user'] +' ('+ data[i]['to_display_name'] +') </td>';
+                                                                        }
+                                                                        if(data[i]['is_sent'] == '1'){
+                                                                                if(data[i]['is_edited'] == '1'){
+                                                                                        output += '<td>'+ chk1 +'&nbsp;'+ chk1 +'</td> ';
+
+                                                                                }else{
+                                                                                        output += '<td>'+ chk1 +'&nbsp;</td> ';
+
+                                                                                }
+
+                                                                        }
+                                                                        output += '</tr>';
+                                                                        num++;
+                                                                }
+                                                                output += '</tbody>';
+                                                                output += '</table>';
+                                                                $('.statistics-result').html(output).removeClass('no-scroll').show();
 
                                                         }
                                                 }else{
-                                                        $('.statistics-result').html('تاریخچه ورود کاربر وجود ندارد.').addClass('no-scroll').show();
+                                                        $('.statistics-result').html('تاریخچه کاربر وجود ندارد.').addClass('no-scroll').show();
                                                 }
 
 

@@ -1327,8 +1327,8 @@ display: none;
 }
 
 #modal-4 img {
-        width: 80%;
-        height: 90%;
+        width: 70%;
+        height: 80%;
         margin: 0 auto;
         display: block;
         margin-top: 5%;
@@ -1347,4 +1347,9 @@ display: none;
         background-color: rgba(0,0,0,0.8);
 }
 
+@media(max-width: 768px){
+        .statistics-result table{
+                font-size: 10px;
+        }
+}
 .
