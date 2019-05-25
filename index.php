@@ -448,6 +448,8 @@ if(isset($_GET['logout']) && $_GET['logout']==1){
                                 if(responce == 'OK'){
                                         fetchUser();
                                         getGroupMsgCount();
+                                }else{
+                                        location.reload();
                                 }
                         }
                 });
