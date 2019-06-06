@@ -7,4 +7,5 @@
 >Otherwise you have to set your own username and password.
 
 
-## For Linux users `chatroom $ sudo chmod 777 profile_pic`
+## For Linux users :
+`chatroom $ sudo chmod 777 profile_pic`
