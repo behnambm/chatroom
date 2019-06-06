@@ -9,3 +9,8 @@
 
 ## For Linux users :
 `chatroom $ sudo chmod 777 profile_pic`
+
+And you can login with these users : 
+1. admin@admin
+2. user1@123
+3. user2@123
