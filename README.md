@@ -5,3 +5,6 @@
 
 >If your OS is Windows you must set root to username and set empty `''` to password.
 >Otherwise you have to set your own username and password.
+
+
+## For Linux users `chatroom $ sudo chmod 777 profile_pic`
